@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Tiêu đề -->
+  <title>RED CARD</title>
+  <!-- Favicon -->
+  <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+  <link rel="icon" type="image/png" sizes="16x16" href="icon2.png">
+  <link rel="icon" href="https://l.top4top.io/p_3697xu4r61.png" sizes="32x32">
+  <!-- Mô tả website -->
+  <meta name="description"
+    content="RED CARD - Tạo profile cá nhân của bạn ngay hôm nay!">
+  <!-- Từ khóa -->
+  <meta name="keywords" content="RED CARD, my profile, my card, profile, card">
+  <!-- Tác giả -->
+  <meta name="author" content="RED CARD">
+  <meta property="og:title" content="RED CARD">
+  <meta property="og:description" content="Tạo profile cá nhân của bạn ngay hôm nay!">
+  <meta property="og:image" content="https://l.top4top.io/p_3697xu4r61.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pisspass6688.github.io">
+  <meta property="og:site_name" content="RED CARD">
+  <meta name="google-site-verification" content="nAE48qqkxB8WjTtJidEPPTRyWYGxT7RnvZZKUUN5eyg" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --card: #1a1a1a;
+      --muted: #888888;
+      --text: #ffffff;
+      --primary: #ff00001a;
+      --secondary: #ce0f0f;
+      --accent: #ff00001a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Poppins, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 0, 0, .1), transparent 30%),
+        radial-gradient(circle at 80% 10%, rgba(173, 74, 231, .08), transparent 25%),
+        radial-gradient(circle at 50% 90%, rgba(255, 51, 51, .05), transparent 30%),
+        var(--bg);
+      overflow: hidden;
+      padding: 20px;
+      cursor: url("cursor/cute-mouse.cur"), auto;
+    }
+
+    a,
+    button,
+    .menu-toggle,
+    .nav-link,
+    [onclick] {
+      cursor: url("cursor/click-mouse.cur"), auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, .05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 20px;
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255, 0, 0, .2),
+        0 0 50px rgba(173, 74, 231, .1);
+      animation: fadeIn 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 20px 20px 0 0;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @font-face {
+      font-family: 'Fz Las Americas';
+      src: url('./fonts/FZLASAMERICAS.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .title {
+      font-size: 39px;
+      font-family: 'Fz Las Americas', Orbitron, sans-serif;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, .4);
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 25px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .form-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--secondary);
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      background: rgba(255, 255, 255, .07);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      transition: all .3s ease;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255, 0, 0, .3),
+        0 0 15px rgba(255, 0, 0, .2);
+      background: rgba(255, 255, 255, .1);
+      transform: translateY(-2px);
+    }
+
+    input::placeholder {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 20px rgba(255, 0, 0, .3);
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+      transition: left 0.6s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 0 30px rgba(255, 0, 0, .5),
+        0 0 40px rgba(173, 74, 231, .3);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button i {
+      margin-right: 8px;
+      font-size: 14px;
+    }
+
+    .buy-access {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 13px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(236, 13, 95, 0.4);
+      font-family: Poppins, sans-serif;
+      transition: all .3s ease;
+      border: 1px solid rgba(255, 255, 255, .1);
+      backdrop-filter: blur(10px);
+    }
+
+    .buy-access:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 25px rgba(236, 13, 95, 0.4);
+    }
+
+    .buy-access i {
+      margin-right: 6px;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 0 20px rgba(255, 0, 0, .4);
+      opacity: 0;
+      animation: fadeInOut 4s ease forwards;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, .1);
+    }
+
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 30px);
+      }
+
+      15% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+
+      85% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 30px);
+      }
+    }
+
+    /* Particle background effect */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+      }
+    }
+
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: all 0.8s ease;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-content {
+      text-align: center;
+    }
+
+    .loading-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .loading-logo i {
+      font-size: 2.5rem;
+      color: #ff0000ee;
+    }
+
+    .loading-logo span {
+      font-size: 1.8rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .loading-bar {
+      width: 250px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 0 auto 20px;
+    }
+
+    .loading-progress {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000ee, #de1818);
+      border-radius: 2px;
+      animation: loadingProgress 3s ease-in-out forwards;
+    }
+
+    .loading-text {
+      color: #ccc;
+      font-size: 1rem;
+    }
+
+    @keyframes loadingProgress {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+    }
+
+    .loading-logo span {
+      font-family: sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+
+      color: #ff2b2b;
+
+      text-shadow:
+        0 0 5px rgba(255, 43, 43, 0.377),
+        0 0 12px rgba(255, 43, 43, 0.377),
+        0 0 24px rgba(255, 43, 43, 0.377);
+
+      letter-spacing: 2px;
+    }
+
+    /*  */
+    .features-section {
+      background: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      max-width: 700px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease;
+      margin: 0 auto;
+    }
+
+    .features-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 18px 18px 0 0;
+    }
+
+    .features-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .features-title i {
+      color: var(--primary);
+      font-size: 24px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg,
+          rgba(173, 6, 6, 0.059),
+          rgba(173, 6, 6, 0.349));
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s ease;
+
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: #e2e8f0;
+    }
+
+    .feature-desc {
+      color: #94a3b8;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <i class="fas fa-shop"></i>
+        <span>RED CARD</span>
+      </div>
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+      <p class="loading-text">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Particle Background -->
+  <div class="particles" id="particles"></div>
+  <div class="card">
+    <div class="title">Welcome to <br>RED CARD</div>
+    <div class="subtitle">
+      <pre>~ Bạn là ai? ~</pre>
+    </div>
+    <form id="buttonForm">
+      <div class="features-section">
+        <div class="features-grid">
+          <div class="feature-card" onclick="location.href='/create'">
+            <h4 class="feature-title">Khách Hàng</h4>
+            <p class="feature-desc">Xin chào Quý Khách!</p>
+          </div>
+          <div class="feature-card" onclick="location.href='/admin'">
+            <h4 class="feature-title">Quản Trị Viên</h4>
+            <p class="feature-desc">Xin chào Quý Quản Trị Viên!</p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div id="toast" class="toast" style="display:none;"></div>
+
+    <!-- footer nằm TRONG card -->
+    <div class="footer">© 2026 - RED CARD</div>
+  </div>
+
+  <script>
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 15;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        const size = Math.random() * 4 + 1;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 5;
+        const duration = Math.random() * 3 + 4;
+
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+
+        const colors = ['#ff0000', '#de1818', '#ff00001a'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.background = randomColor;
+
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const msg = params.get("msg");
+
+    if (msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.style.display = "block";
+    }
+    // Loading Screen
+    document.addEventListener('DOMContentLoaded', function () {
+      const loadingScreen = document.getElementById('loadingScreen');
+
+      // Simulate loading time
+      setTimeout(function () {
+        loadingScreen.classList.add('hidden');
+
+        // Initialize website after loading
+        function initializeWebsite() {
+          initializeParticleSystem();
+        }
+
+      }, 3000);
+    });
+
+    // Particle System
+    function initializeParticleSystem() {
+      const canvas = document.getElementById('particleCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Set canvas size
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const particles = [];
+      const particleCount = Math.min(50, Math.floor(window.innerWidth / 20));
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 1,
+          speedX: (Math.random() - 0.5) * 0.5,
+          speedY: (Math.random() - 0.5) * 0.5,
+          color: `rgba(255, ${Math.floor(Math.random() * 100)}, ${Math.floor(Math.random() * 100)}, ${Math.random() * 0.5 + 0.2})`
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+
+          p.x += p.speedX;
+          p.y += p.speedY;
+
+          if (p.x <= 0 || p.x >= canvas.width) p.speedX *= -1;
+          if (p.y <= 0 || p.y >= canvas.height) p.speedY *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      createParticles();
+
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener('focus', function () {
+          this.parentElement.querySelector('i').style.color = 'var(--primary)';
+        });
+
+        input.addEventListener('blur', function () {
+          this.parentElement.querySelector('i').style.color = 'var(--secondary)';
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
