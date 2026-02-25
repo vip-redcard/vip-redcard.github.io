@@ -19,20 +19,24 @@
     <meta name="author" content="RED CARD">
     <meta property="og:title" content="Mạnh Nguyễn">
     <meta property="og:description" content="Mạnh Nguyễn">
-    <meta property="og:image" content="https://l.top4top.io/p_3697xu4r61.png">
+    <meta property="og:image" content="https://manhkenz.github.io/image/logo.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://manhkenz.github.io/manhkenz">
     <meta property="og:site_name" content="RED CARD">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mạnh Nguyễn">
+    <meta name="twitter:description" content="Mạnh Nguyễn">
+    <meta name="twitter:image" content="https://l.top4top.io/p_3697xu4r61.png">
+
     <meta name="google-site-verification" content="nAE48qqkxB8WjTtJidEPPTRyWYGxT7RnvZZKUUN5eyg" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <div class="autoMusic">
         <audio id="music"
-            autoplay src="https://raw.githubusercontent.com/ManhKenZ/ManhKenZ.github.io/main/music/hoa%20c%E1%BB%8F%20m%C3%B9a%20xu%C3%A2n.mp3"
+            autoplay src="https://raw.githubusercontent.com/ManhKenZ/ManhKenZ.github.io/main/hoa%20c%E1%BB%8F%20m%C3%B9a%20xu%C3%A2n.mp3"
             preload="auto"
             loop
             playsinline>></audio>
@@ -43,9 +47,10 @@
             --card: #1a1a1a;
             --text: #ffffff;
             --muted: #ffffff;
-            --primary: #ff0000;
-            --secondary: #8412c6a3;
+            --primary: #df0a0a;
+            --secondary: #8412c667;
             --accent: #a812a1;
+            --accent2: #b72323;
         }
 
         * {
@@ -933,7 +938,6 @@
         #qrBox {
             background: #111;
             padding: 25px;
-            text-align:center;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(0, 0, 0, .6);
             transform: scale(0.9);
@@ -944,46 +948,240 @@
             transform: scale(1);
         }
 
-        .confirm-btn {
-            margin-top: 25px;
-            padding: 14px 32px;
-            background: linear-gradient(135deg, #ff2e2e, #ff4d4d);
-            border: none;
-            border-radius: 14px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
-            transition: all 0.25s ease;
-            letter-spacing: 0.5px;
+        /* =========================
+           VARIABLES & RESET
+        ========================= */
+
+        /* =========================
+           BODY
+        ========================= */
+
+        /* =========================
+           BACKGROUND GRID TEXTURE
+        ========================= */
+
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+
+            background-image:
+                linear-gradient(rgba(0, 136, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1px, transparent 1px);
+
+            background-size: 30px 30px;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .confirm-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 0, 0, 0.5);
+        /* =========================
+           GLOW CARD EXAMPLE
+        ========================= */
+
+        .loader-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .confirm-btn:active {
-            transform: scale(0.96);
-            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+        .spinner-box {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* RINGS */
+
+        .circle-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        /* Outer Glow Ring */
+
+        .ring-1 {
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top: 2px solid #b11226;
+            border-left: 2px solid transparent;
+            border-right: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 35s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 136, 255, 0.2);
+        }
+
+        /* The Conic Gradient Ring (The "Tail" Effect) */
+
+        .ring-2 {
+            width: 85%;
+            height: 85%;
+            border-radius: 50%;
+            position: absolute;
+
+            background: conic-gradient(from 0deg,
+                    transparent 0%,
+                    transparent 40%,
+                    var(--accent2) 60%,
+                    transparent 100%);
+
+            mask: radial-gradient(farthest-side,
+                    transparent calc(100% - 4px),
+                    #fff calc(100% - 3px));
+
+            -webkit-mask: radial-gradient(farthest-side,
+                    transparent calc(100% - 4px),
+                    #fff calc(100% - 3px));
+
+            animation: spin 1.5s linear infinite;
+        }
+
+        /* Inner Dashed Ring */
+
+        .ring-3 {
+            width: 65%;
+            height: 65%;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: spinReverse 10s linear infinite;
+        }
+
+        .percentage {
+            position: absolute;
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary);
+            z-index: 10;
+            transform: translateY(-20px);
+            /* Move up slightly to clear the core */
+        }
+
+        .status-text {
+            margin-top: 15px;
+            /* Spacing from center */
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: #ed0404f9;
+            text-transform: uppercase;
+            position: absolute;
+            bottom: 80px;
+            /* Position inside ring or below */
+            animation: blinkText 2s infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinReverse {
+            0% {
+                transform: rotate(360deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes blinkText {
+
+            0%,
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 10px var(--accent);
+            }
+
+            50% {
+                opacity: 0.5;
+                text-shadow: none;
+            }
+        }
+
+        /*
+        ---FINISH STATES ---
+        */
+
+        .loader-container.finished .ring-1,
+        .loader-container.finished .ring-2,
+        .loader-container.finished .ring-3 {
+            opacity: 0;
+            transition: all 0.8s ease-out;
+            transform: scale(1.5);
+            /* Rings expand out */
+        }
+
+        .loader-container.finished .core {
+            transform: scale(30);
+            /* Flash effect */
+            opacity: 0;
+            transition: all 0.5s ease-out;
+        }
+
+        .loader-container.finished .percentage {
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+            transform: scale(1.1) translateY(0);
+            transition: all 0.5s ease;
+        }
+
+        .loader-container.finished .status-text {
+            animation: none;
+            opacity: 1;
+            letter-spacing: 6px;
+            transition: all 0.5s ease;
+            color: var(--white);
+        }
+
+        #loaderContainer {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            /* hoặc nền của bạn */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loaderContainer.finished {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
-        <canvas id="particleCanvas"></canvas>
-    <div class="scroll-progress" id="scrollProgress"></div>
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <i class="fas fa-id-card"></i>
-                <span>RED CARD</span>
-            </div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-            <p class="loading-text">Loading...</p>
+    <canvas id="particleCanvas"></canvas>
+    <div class="grid-overlay"></div>
+
+    <div class="loader-container" id="loaderContainer">
+        <div class="spinner-box">
+            <div class="circle-border ring-1"></div>
+            <div class="circle-border ring-2"></div>
+            <div class="circle-border ring-3"></div>
+
+            <div class="percentage" id="counter">0%</div>
+            <div class="status-text" id="status">RED CARD</div>
         </div>
     </div>
 
@@ -1049,48 +1247,22 @@
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">Tik Tok</h4>
                     </div>
 
-                    <!-- <div class="feature-card" onclick="openZalo()" style="cursor:pointer;">
-                        <h4 class="feature-icon"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <img src="zalo.svg" alt="Zalo" style="width:40px; height:40px; object-fit:contain;  filter: invert(16%) sepia(100%) saturate(7000%) hue-rotate(0deg);">
-                            Zalo
-                        </h4>
-                    </div> -->
                     <div class="feature-card" onclick="openZalo()" style="cursor:pointer;">
                         <h4 class="feature-icon"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <img src="image/zalo.svg" alt="Zalo"
-                                style="width:60px; height:60px; object-fit:contain; fill: #1164ea;">
+                            <img src="zalo.svg" alt="Zalo"
+                                style="width:40px; height:40px; object-fit:contain;  filter: invert(16%) sepia(100%) saturate(7000%) hue-rotate(0deg);">
+                            Zalo
                         </h4>
+                    </div>
+
+                    <div class="feature-card" onclick="createQR()" style="cursor:pointer;">
+                        <div class="feature-icon"
+                            style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-gift"></i>
+                        </div>
                         <h4 class="feature-title"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Zalo</h4>
-                    </div>
-
-                    <div class="feature-card" onclick="createQR('techcom')" style="cursor:pointer;">
-                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <i class="fas fa-bank"></i>
-                        </div>
-                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            TechcomBank
-                        </h4>
-                    </div>
-
-                    <div class="feature-card" onclick="createQR('vietcom')" style="cursor:pointer;">
-                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <i class="fas fa-bank"></i>
-                        </div>
-                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            VietcomBank
-                        </h4>
-                    </div>
-
-                    <div class="feature-card" onclick="createQR('mbbank')" style="cursor:pointer;">
-                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <i class="fas fa-bank"></i>
-                        </div>
-                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            MB Bank
-                        </h4>
+                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Tặng Quà</h4>
                     </div>
                     <div id="qrContainer" style="margin-top:20px; text-align:center;"></div>
                 </div>
@@ -1152,13 +1324,13 @@
                 initializeParticleSystem();
             }
 
-        }, 15);
+        }, 3000);
     });
 </script>
 <script>
     function createSnowflake() {
         const snowflake = document.createElement('div');
-        snowflake.textContent = '💖';
+        snowflake.textContent = '🌸';
         snowflake.classList.add('snowflake');
 
         // Tạo vị trí, kích thước, tốc độ rơi và độ mờ ngẫu nhiên
@@ -1214,11 +1386,11 @@
     }`;
     document.head.appendChild(style);
 
-    setInterval(createSnowflake, 400);
+    setInterval(createSnowflake, 50);
 </script>
 <script>
     function openTikTok() {
-        const username = "thjtchugmamtep";
+        const username = "pmanh8386";
         const appLink = "tiktok://user?username=" + username;
         const webLink = "https://www.tiktok.com/@" + username;
         window.location.href = appLink;
@@ -1229,7 +1401,7 @@
     }
 
     function openFacebook() {
-        const username = "100058589017328";
+        const username = "100087890537475";
         const appLink = "fb://profile/" + username;
         const webLink = "https://www.facebook.com/" + username;
         window.location.href = appLink;
@@ -1261,110 +1433,120 @@
     }
 </script>
 <script>
-    const banks = {
-        techcom: {
-            name: "admin1",
-            label: "TechcomBank"
-        },
-        vietcom: {
-            name: "admin2",
-            label: "VietcomBank"
-        },
-        mbbank: {
-            name: "admin3",
-            label: "MB Bank"
+    async function createQR() {
+
+        const name = "Mạnh";
+
+        const apiURL = "https://script.google.com/macros/s/AKfycby-M_qQ7L7VXZCXZO8G7jAE8RHQUHCCq7_PDpXJ9oWmn-DPtsLX5pBUHNjO9ASPJ04e/exec?name="
+            + encodeURIComponent(name);
+
+        try {
+
+            const response = await fetch(apiURL);
+            const data = await response.json();
+
+            if (data.status !== "success") {
+
+                alert("Chưa có mã QR cho người này.");
+                return;
+            }
+
+            const maCode = data.maCode;
+
+            const qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
+                + encodeURIComponent(maCode);
+
+            document.getElementById("qrImage").src = qrURL;
+
+            document.getElementById("qrOverlay").classList.add("active");
+
+        } catch (error) {
+            console.error(error);
+            alert("Lỗi kết nối API.");
         }
-    };
-
-</script>
-<script>
-async function createQR(bankKey) {
-
-    const bank = banks[bankKey];
-    if (!bank) return;
-
-    const apiURL =
-        "https://script.google.com/macros/s/AKfycby-M_qQ7L7VXZCXZO8G7jAE8RHQUHCCq7_PDpXJ9oWmn-DPtsLX5pBUHNjO9ASPJ04e/exec?name="
-        + encodeURIComponent(bank.name);
-
-    try {
-
-        const response = await fetch(apiURL);
-        const data = await response.json();
-
-        if (data.status !== "success") {
-            alert("Chưa có mã QR cho người này.");
-            return;
-        }
-
-        const qrURL =
-            "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
-            + encodeURIComponent(data.maCode);
-
-        // Đổi ảnh QR
-        document.getElementById("qrImage").src = qrURL;
-
-        // 🔥 Đổi luôn tên ngân hàng
-        document.getElementById("bankName").innerText = bank.label;
-
-        document.getElementById("qrOverlay").classList.add("active");
-
-    } catch (error) {
-        console.error(error);
-        alert("Lỗi kết nối API.");
     }
-}
+
+    function closeQR() {
+        document.getElementById("qrOverlay").classList.remove("active");
+    }
 </script>
 <script>
-function closeQR(){
-    document.getElementById("overlay").classList.remove("active");
-}
+    const counterElement = document.getElementById('counter');
 
-async function captureOptimized() {
+    const statusElement = document.getElementById('status');
 
-    const qrBox = document.getElementById("qrBox");
-    const btn = document.getElementById("saveBtn");
+    const container = document.getElementById('loaderContainer');
 
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    let count = 0;
 
-    try {
 
-        btn.style.display = "none";
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
 
-        const canvas = await html2canvas(qrBox, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: "#000"
-        });
+    function updateLoader() {
+        if (count < 100) {
 
-        const imageData = canvas.toDataURL("image/png");
+            // Increment by random amount (1-3) to simulate real data
+            let increment = (Math.random() > 0.8) ? 2 : 1;
+            count = Math.min(count + increment, 100);
+            counterElement.innerText = count + '%';
 
-        if (isIOS) {
+            if (count === 30) statusElement.innerText = "Verifying...";
+            if (count === 70) statusElement.innerText = "Optimizing...";
+            if (count === 90) statusElement.innerText = "Finalizing...";
 
-            qrBox.innerHTML = `
-                <img src="${imageData}" 
-                     style="width:100%; border-radius:20px; display:block;">
-                <button class="confirm-btn" 
-                        style="margin-top:20px;">
-                    Iphone cần giữ ảnh để lưu
-                </button>
-            `;
+            let speed = getRandom(30, 150);
+            if (count === 90) statusElement.innerText = "Finalizing...";
 
+            if (count > 95) speed = 300;
+
+            setTimeout(updateLoader, speed);
         } else {
-
-            const link = document.createElement("a");
-            link.download = "KenZ_REDCARD.png";
-            link.href = imageData;
-            link.click();
-
-            // Android: đóng popup luôn
-            closeQR();
+            finishLoading();
         }
+    }
+    function finishLoading() {
+        statusElement.innerText = "RED CARD";
+        container.classList.add('finished');
+    }
 
-    } catch (error) {
-        console.error(error);
-        btn.style.display = "inline-block";
+    setTimeout(updateLoader, 300); 
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+async function captureQRSection() {
+
+    const overlay = document.getElementById("qrOverlay");
+    const button = overlay.querySelector("button");
+
+    button.style.display = "none";
+
+    const canvas = await html2canvas(overlay, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true
+    });
+
+    button.style.display = "block";
+
+    const imageData = canvas.toDataURL("image/png");
+
+    // Detect iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 0);
+
+    if (isIOS) {
+        // iPhone mở tab mới để người dùng lưu
+        const newTab = window.open();
+        newTab.document.write('<img src="' + imageData + '" style="width:100%;">');
+    } else {
+        // Android + PC tự download
+        const link = document.createElement("a");
+        link.download = "KenZ-REDCARD.png";
+        link.href = imageData;
+        link.click();
     }
 }
 </script>
@@ -1394,36 +1576,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { once: true });
 });
 </script>
-
 <div id="qrOverlay" onclick="closeQR()">
     <div id="qrBox" onclick="event.stopPropagation()" style="text-align:center;">
 
-        <p id="bankName"
-           style="color:#ff4343; font-size:30px; margin-bottom:10px;">
-            VietComBank
+        <p style="color:#ff4343; font-size:30px; margin-bottom:10px;">
+            TechComBank
         </p>
+
         <img id="qrImage" style="display:inline-block;
                     padding:23px;
                     background:#111;
                     border-radius:20px;
                     box-shadow:0 0 30px rgba(255,0,0,0.4);">
-        <br>
-        <button id="saveBtn" class="confirm-btn" onclick="captureOptimized()" style="text-align:center;">
-            Lưu
+        <button onclick="captureQRSection()" style="display:block;
+                       margin:25px auto 0;
+                       padding:12px 26px;
+                       background:#ff2e2e;
+                       border:none;
+                       border-radius:12px;
+                       color:white;
+                       font-weight:bold;
+                       cursor:pointer;">
+            📸 Lấy QR Nhanh Chóng
         </button>
     </div>
 </div>
-<script>
-    const overlay = document.getElementById("qrOverlay");
-
-    function openQR() {
-        overlay.classList.add("active");
-    }
-
-    function closeQR() {
-        overlay.classList.remove("active");
-    }
-</script>
 </body>
-
+</html>
 </html>
