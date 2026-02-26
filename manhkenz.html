@@ -49,7 +49,7 @@
             --muted: #ffffff;
             --primary: #df0a0a;
             --secondary: #8412c667;
-            --accent: #a812a1;
+            --accent: #771072;
             --accent2: #b72323;
         }
 
@@ -1250,7 +1250,7 @@
                     <div class="feature-card" onclick="openZalo()" style="cursor:pointer;">
                         <h4 class="feature-icon"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <img src="image/zalo.svg" alt="Zalo"
+                            <img src="zalo.svg" alt="Zalo"
                                 style="width:40px; height:40px; object-fit:contain;  filter: invert(16%) sepia(100%) saturate(7000%) hue-rotate(0deg);">
                             Zalo
                         </h4>
@@ -1390,16 +1390,25 @@
 </script>
 <script>
     function openTikTok() {
-        const username = "pmanh8386";
-        const appLink = "tiktok://user?username=" + username;
-        const webLink = "https://www.tiktok.com/@" + username;
-        window.location.href = appLink;
 
-        setTimeout(function () {
-            window.location.href = webLink;
-        }, 1500);
+        const isMobile =
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        const appLink =
+            "https://www.tiktokv.com/redirect/?redirect_url=snssdk1180://user/profile/7030812343152624641";
+
+        const webLink =
+            "https://www.tiktok.com/@pmanh8386";
+
+        if (isMobile) {
+            // Mobile → mở app TikTok
+            window.location.href = appLink;
+        } else {
+            // PC → mở website
+            window.open(webLink, "_blank");
+        }
     }
-
+    
     function openFacebook() {
         const username = "100087890537475";
         const appLink = "fb://profile/" + username;
@@ -1433,124 +1442,121 @@
     }
 </script>
 <script>
-    async function createQR() {
+const counterElement = document.getElementById('counter');
+const statusElement = document.getElementById('status');
+const container = document.getElementById('loaderContainer');
 
-        const name = "Mạnh";
+let count = 0;
 
-        const apiURL = "https://script.google.com/macros/s/AKfycby-M_qQ7L7VXZCXZO8G7jAE8RHQUHCCq7_PDpXJ9oWmn-DPtsLX5pBUHNjO9ASPJ04e/exec?name="
-            + encodeURIComponent(name);
+function updateLoader() {
 
-        try {
-
-            const response = await fetch(apiURL);
-            const data = await response.json();
-
-            if (data.status !== "success") {
-
-                alert("Chưa có mã QR cho người này.");
-                return;
-            }
-
-            const maCode = data.maCode;
-
-            const qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
-                + encodeURIComponent(maCode);
-
-            document.getElementById("qrImage").src = qrURL;
-
-            document.getElementById("qrOverlay").classList.add("active");
-
-        } catch (error) {
-            console.error(error);
-            alert("Lỗi kết nối API.");
-        }
+    if (count >= 100) {
+        finishLoading();
+        return;
     }
 
-    function closeQR() {
-        document.getElementById("qrOverlay").classList.remove("active");
-    }
-</script>
-<script>
-    const counterElement = document.getElementById('counter');
+    // tốc độ theo giai đoạn (realistic loading)
+    let speed;
 
-    const statusElement = document.getElementById('status');
-
-    const container = document.getElementById('loaderContainer');
-
-    let count = 0;
-
-
-    function getRandom(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+    if (count < 10) {
+        speed = 125;          // nhanh lúc đầu
+    } else if (count < 30) {
+        speed = 30;          // chậm lại giai đoạn giữa
+    } else if (count < 70) {
+        speed = 45;
+    } else if (count < 90) {
+        speed = 70;
+    } else {
+        speed = 120;         // chậm dần cuối
     }
 
-    function updateLoader() {
-        if (count < 100) {
+    // tăng %
+    count += 1;
+    counterElement.innerText = count + "%";
 
-            // Increment by random amount (1-3) to simulate real data
-            let increment = (Math.random() > 0.8) ? 2 : 1;
-            count = Math.min(count + increment, 100);
-            counterElement.innerText = count + '%';
+    // đổi trạng thái
+    if (count === 30)
+        statusElement.innerText = "Verifying...";
 
-            if (count === 30) statusElement.innerText = "Verifying...";
-            if (count === 70) statusElement.innerText = "Optimizing...";
-            if (count === 90) statusElement.innerText = "Finalizing...";
+    if (count === 70)
+        statusElement.innerText = "Optimizing...";
 
-            let speed = getRandom(30, 150);
-            if (count === 90) statusElement.innerText = "Finalizing...";
+    if (count === 90)
+        statusElement.innerText = "Finalizing...";
 
-            if (count > 95) speed = 300;
+    setTimeout(updateLoader, speed);
+}
 
-            setTimeout(updateLoader, speed);
-        } else {
-            finishLoading();
-        }
-    }
-    function finishLoading() {
-        statusElement.innerText = "RED CARD";
+function finishLoading() {
+    statusElement.innerText = "RED CARD";
+
+    setTimeout(() => {
         container.classList.add('finished');
-    }
+    }, 300);
+}
 
-    setTimeout(updateLoader, 300); 
+// start
+setTimeout(updateLoader, 200);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-async function captureQRSection() {
+    const banks = {
+        bidv: {
+            name: "HuongPhung1",
+            label: "BIDV"
+        },
+        vietcom: {
+            name: "HuongPhung2",
+            label: "VietcomBank"
+        },
+        vietin: {
+            name: "HuongPhung3",
+            label: "VietinBank"
+        }
+    };
 
-    const overlay = document.getElementById("qrOverlay");
-    const button = overlay.querySelector("button");
+</script>
+<script>
+async function createQR(bankKey) {
 
-    button.style.display = "none";
+    const bank = banks[bankKey];
+    if (!bank) return;
 
-    const canvas = await html2canvas(overlay, {
-        backgroundColor: null,
-        scale: 2,
-        useCORS: true
-    });
+    const apiURL =
+        "https://script.google.com/macros/s/AKfycby-M_qQ7L7VXZCXZO8G7jAE8RHQUHCCq7_PDpXJ9oWmn-DPtsLX5pBUHNjO9ASPJ04e/exec?name="
+        + encodeURIComponent(bank.name);
 
-    button.style.display = "block";
+    try {
 
-    const imageData = canvas.toDataURL("image/png");
+        const response = await fetch(apiURL);
+        const data = await response.json();
 
-    // Detect iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 0);
+        if (data.status !== "success") {
+            alert("Chưa có mã QR cho người này.");
+            return;
+        }
 
-    if (isIOS) {
-        // iPhone mở tab mới để người dùng lưu
-        const newTab = window.open();
-        newTab.document.write('<img src="' + imageData + '" style="width:100%;">');
-    } else {
-        // Android + PC tự download
-        const link = document.createElement("a");
-        link.download = "KenZ-REDCARD.png";
-        link.href = imageData;
-        link.click();
+        const qrURL =
+            "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
+            + encodeURIComponent(data.maCode);
+
+        // Đổi ảnh QR
+        document.getElementById("qrImage").src = qrURL;
+
+        // 🔥 Đổi luôn tên ngân hàng
+        document.getElementById("bankName").innerText = bank.label;
+
+        document.getElementById("qrOverlay").classList.add("active");
+
+    } catch (error) {
+        console.error(error);
+        alert("Lỗi kết nối API.");
     }
 }
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const audio = document.getElementById("music");
@@ -1576,31 +1582,90 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { once: true });
 });
 </script>
+<script>
+function closeQR(){
+    document.getElementById("overlay").style.display = "none";
+}
+
+async function captureOptimized() {
+
+    const qrBox = document.getElementById("qrBox");
+    const btn = document.getElementById("saveBtn");
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    try {
+
+        btn.style.display = "none";
+
+        const canvas = await html2canvas(qrBox, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#000"
+        });
+
+        const imageData = canvas.toDataURL("image/png");
+
+        if (isIOS) {
+
+            qrBox.innerHTML = `
+                <img src="${imageData}" 
+                     style="width:100%; border-radius:20px; display:block;">
+                <button class="confirm-btn" 
+                        style="margin-top:20px;">
+                    Iphone cần giữ ảnh để lưu
+                </button>
+            `;
+
+        } else {
+
+            const link = document.createElement("a");
+            link.download = "KenZ_REDCARD.png";
+            link.href = imageData;
+            link.click();
+
+            // Android: đóng popup luôn
+            closeQR();
+        }
+
+    } catch (error) {
+        console.error(error);
+        btn.style.display = "inline-block";
+    }
+}
+</script>
+
 <div id="qrOverlay" onclick="closeQR()">
     <div id="qrBox" onclick="event.stopPropagation()" style="text-align:center;">
 
-        <p style="color:#ff4343; font-size:30px; margin-bottom:10px;">
-            TechComBank
+        <p id="bankName"
+           style="color:#ff4343; font-size:30px; margin-bottom:10px;">
+            VietTinBank
         </p>
-
         <img id="qrImage" style="display:inline-block;
                     padding:23px;
                     background:#111;
                     border-radius:20px;
                     box-shadow:0 0 30px rgba(255,0,0,0.4);">
-        <button onclick="captureQRSection()" style="display:block;
-                       margin:25px auto 0;
-                       padding:12px 26px;
-                       background:#ff2e2e;
-                       border:none;
-                       border-radius:12px;
-                       color:white;
-                       font-weight:bold;
-                       cursor:pointer;">
-            📸 Lấy QR Nhanh Chóng
+        <br>
+        <button id="saveBtn" class="confirm-btn" onclick="captureOptimized()" style="text-align:center;">
+            Lưu
         </button>
     </div>
 </div>
+<script>
+    const overlay = document.getElementById("qrOverlay");
+
+    function openQR() {
+        overlay.classList.add("active");
+    }
+
+    function closeQR() {
+        overlay.classList.remove("active");
+    }
+
+</script>
 </body>
 </html>
 </html>

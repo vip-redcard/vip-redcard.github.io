@@ -1070,7 +1070,7 @@
                         <h4 class="feature-icon"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">
                             <img src="image/zalo.svg" alt="Zalo"
-                                style="width:60px; height:60px; object-fit:contain; fill: #1164ea;">
+                                style="width:60px; height:60px; object-fit:contain; filter: invert(16%) sepia(100%) saturate(7000%) hue-rotate(0deg);">
                         </h4>
                         <h4 class="feature-title"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">Zalo</h4>
@@ -1210,14 +1210,21 @@
 </script>
 <script>
     function openTikTok() {
-        const username = "thjtchugmamtep";
-        const appLink = "tiktok://user?username=" + username;
-        const webLink = "https://www.tiktok.com/@" + username;
-        window.location.href = appLink;
 
-        setTimeout(function () {
-            window.location.href = webLink;
-        }, 1500);
+        const isMobile =
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        const app =
+            "https://www.tiktokv.com/redirect/?redirect_url=snssdk1180://user/profile/6954378264178803713";
+
+        const web =
+            "https://www.tiktok.com/@thjtchugmamtep";
+
+        if (isMobile) {
+            window.location.href = app;
+        } else {
+            window.open(web, "_blank");
+        }
     }
 
     function openFacebook() {
