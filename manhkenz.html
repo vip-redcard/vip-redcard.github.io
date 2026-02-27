@@ -693,6 +693,9 @@
             padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 0, .3);
+            position: relative;
+            overflow: hidden;
 
         }
 
@@ -701,6 +704,26 @@
             box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3);
             border-color: var(--primary);
         }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+      transition: left 0.6s;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:active {
+      transform: scale(0.98);
+    }
+
 
         .feature-icon {
             font-size: 2.5rem;
@@ -1167,6 +1190,7 @@
             visibility: hidden;
             pointer-events: none;
         }
+
     </style>
 </head>
 
@@ -1250,10 +1274,11 @@
                     <div class="feature-card" onclick="openZalo()" style="cursor:pointer;">
                         <h4 class="feature-icon"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <img src="zalo.svg" alt="Zalo"
-                                style="width:40px; height:40px; object-fit:contain;  filter: invert(16%) sepia(100%) saturate(7000%) hue-rotate(0deg);">
-                            Zalo
+                            <img src="image/zalo.svg" alt="Zalo"
+                                style="width:60px; height:60px; object-fit:contain; filter: invert(16%) sepia(100%) saturate(7000%) hue-rotate(0deg);">
                         </h4>
+                        <h4 class="feature-title"
+                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Zalo</h4>
                     </div>
 
                     <div class="feature-card" onclick="createQR()" style="cursor:pointer;">
@@ -1395,7 +1420,7 @@
             /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
         const appLink =
-            "https://www.tiktokv.com/redirect/?redirect_url=snssdk1180://user/profile/7030812343152624641";
+            "https://www.tiktokv.com/redirect/?redirect_url=snssdk1180://user/profile/7030812343152624641;decode_once=1";
 
         const webLink =
             "https://www.tiktok.com/@pmanh8386";

@@ -554,20 +554,19 @@
     <div class="subtitle">
       <pre>~ Bạn là ai? ~</pre>
     </div>
-    <form id="buttonForm">
-      <div class="features-section">
-        <div class="features-grid">
-          <div class="feature-card" onclick="location.href='/create'">
-            <h4 class="feature-title">Khách Hàng</h4>
-            <p class="feature-desc">Xin chào Quý Khách!</p>
-          </div>
-          <div class="feature-card" onclick="location.href='/admin'">
-            <h4 class="feature-title">Quản Trị Viên</h4>
-            <p class="feature-desc">Xin chào Quý Quản Trị Viên!</p>
-          </div>
-        </div>
-      </div>
-    </form>
+
+      <div class="form-group">
+        <i class="fab fa-tiktok"></i>
+        <input id="tiktokUrl"
+            placeholder="Dán link TikTok khách hàng...">
+    </div>
+
+    <button type="button" onclick="runGetID()">
+        GET USER ID
+    </button>
+
+    <div id="result"
+    style="margin-top:15px;color:#00ffcc;"></div>
 
     <div id="toast" class="toast" style="display:none;"></div>
 
@@ -695,7 +694,86 @@
         });
       });
     });
-  </script>
+</script>
+<script>
+async function runGetID(){
+
+    const input =
+        document.getElementById("tiktokUrl").value.trim();
+
+    if(!input){
+        showToast("Nhập link TikTok trước!");
+        return;
+    }
+
+    try{
+
+        const res = await fetch(
+            "https://damp-poetry-3889.manh112007.workers.dev/?url="
+            + encodeURIComponent(input)
+        );
+
+        const html = await res.text();
+
+        // ✅ bắt mọi redirect thật
+        const match =
+            html.match(/https:\/\/www\.tiktokv\.com\/redirect\/[^"' <]+/);
+
+        if(!match){
+            console.log(html); // debug
+            showToast("Không tìm thấy redirect!");
+            return;
+        }
+
+        let link = match[0].replace(/&amp;/g,"&");
+
+        // decode nhiều lớp
+        function fullDecode(u){
+            let prev;
+            do{
+                prev = u;
+                try{
+                    u = decodeURIComponent(u);
+                }catch{
+                    break;
+                }
+            }while(prev !== u);
+            return u;
+        }
+
+        const decoded = fullDecode(link);
+
+        const idMatch =
+            decoded.match(/user\/profile\/(\d+)/);
+
+        if(!idMatch){
+            showToast("Không lấy được ID!");
+            return;
+        }
+
+        const userID = idMatch[1];
+
+        document.getElementById("result").innerHTML = `
+        ✅ User ID: <b>${userID}</b><br><br>
+        🔗 FULL Redirect:<br>
+        <textarea style="
+            width:100%;
+            height:100px;
+            background:#000;
+            color:#00ffcc;
+            border-radius:8px;
+            padding:8px;
+        ">${decoded}</textarea>
+        `;
+
+        showToast("Thành công ✅");
+
+    }catch(e){
+        console.error(e);
+        showToast("Worker lỗi");
+    }
+}
+</script>
 </body>
 
 </html>
