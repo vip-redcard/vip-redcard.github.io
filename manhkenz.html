@@ -17,22 +17,26 @@
     <meta name="keywords" content="RED CARD, my profile, my card, profile, card">
     <!-- Tác giả -->
     <meta name="author" content="RED CARD">
-    <meta property="og:title" content="Coconut">
-    <meta property="og:description" content="Coconut">
-    <meta property="og:image" content="https://l.top4top.io/p_3697xu4r61.png">
+    <meta property="og:title" content="Mạnh Nguyễn">
+    <meta property="og:description" content="Mạnh Nguyễn">
+    <meta property="og:image" content="https://manhkenz.github.io/image/logo.png">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://manhkenz.github.io/thachdat">
+    <meta property="og:url" content="https://manhkenz.github.io/manhkenz">
     <meta property="og:site_name" content="RED CARD">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mạnh Nguyễn">
+    <meta name="twitter:description" content="Mạnh Nguyễn">
+    <meta name="twitter:image" content="https://l.top4top.io/p_3697xu4r61.png">
+
     <meta name="google-site-verification" content="nAE48qqkxB8WjTtJidEPPTRyWYGxT7RnvZZKUUN5eyg" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <div class="autoMusic">
         <audio id="music"
-            autoplay src="https://raw.githubusercontent.com/vip-redcard/vip-redcard.github.io/main/music/hoa%20c%E1%BB%8F%20m%C3%B9a%20xu%C3%A2n.mp3"
+            autoplay src="https://raw.githubusercontent.com/vip-redcard/vip-redcard.github.io/main/music/tranbonho.mp3"
             preload="auto"
             loop
             playsinline>></audio>
@@ -43,9 +47,10 @@
             --card: #1a1a1a;
             --text: #ffffff;
             --muted: #ffffff;
-            --primary: #ff0000;
-            --secondary: #8412c6a3;
-            --accent: #a812a1;
+            --primary: #df0a0a;
+            --secondary: #8412c667;
+            --accent: #771072;
+            --accent2: #b72323;
         }
 
         * {
@@ -688,6 +693,9 @@
             padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 0, .3);
+            position: relative;
+            overflow: hidden;
 
         }
 
@@ -696,6 +704,26 @@
             box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3);
             border-color: var(--primary);
         }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+      transition: left 0.6s;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:active {
+      transform: scale(0.98);
+    }
+
 
         .feature-icon {
             font-size: 2.5rem;
@@ -943,7 +971,227 @@
             transform: scale(1);
         }
 
-        .confirm-btn {
+        /* =========================
+           VARIABLES & RESET
+        ========================= */
+
+        /* =========================
+           BODY
+        ========================= */
+
+        /* =========================
+           BACKGROUND GRID TEXTURE
+        ========================= */
+
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+
+            background-image:
+                linear-gradient(rgba(0, 136, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1px, transparent 1px);
+
+            background-size: 30px 30px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* =========================
+           GLOW CARD EXAMPLE
+        ========================= */
+
+        .loader-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner-box {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* RINGS */
+
+        .circle-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        /* Outer Glow Ring */
+
+        .ring-1 {
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top: 2px solid #b11226;
+            border-left: 2px solid transparent;
+            border-right: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 35s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 136, 255, 0.2);
+        }
+
+        /* The Conic Gradient Ring (The "Tail" Effect) */
+
+        .ring-2 {
+            width: 85%;
+            height: 85%;
+            border-radius: 50%;
+            position: absolute;
+
+            background: conic-gradient(from 0deg,
+                    transparent 0%,
+                    transparent 40%,
+                    var(--accent2) 60%,
+                    transparent 100%);
+
+            mask: radial-gradient(farthest-side,
+                    transparent calc(100% - 4px),
+                    #fff calc(100% - 3px));
+
+            -webkit-mask: radial-gradient(farthest-side,
+                    transparent calc(100% - 4px),
+                    #fff calc(100% - 3px));
+
+            animation: spin 1.5s linear infinite;
+        }
+
+        /* Inner Dashed Ring */
+
+        .ring-3 {
+            width: 65%;
+            height: 65%;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: spinReverse 10s linear infinite;
+        }
+
+        .percentage {
+            position: absolute;
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary);
+            z-index: 10;
+            transform: translateY(-20px);
+            /* Move up slightly to clear the core */
+        }
+
+        .status-text {
+            margin-top: 15px;
+            /* Spacing from center */
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: #ed0404f9;
+            text-transform: uppercase;
+            position: absolute;
+            bottom: 80px;
+            /* Position inside ring or below */
+            animation: blinkText 2s infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinReverse {
+            0% {
+                transform: rotate(360deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes blinkText {
+
+            0%,
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 10px var(--accent);
+            }
+
+            50% {
+                opacity: 0.5;
+                text-shadow: none;
+            }
+        }
+
+        /*
+        ---FINISH STATES ---
+        */
+
+        .loader-container.finished .ring-1,
+        .loader-container.finished .ring-2,
+        .loader-container.finished .ring-3 {
+            opacity: 0;
+            transition: all 0.8s ease-out;
+            transform: scale(1.5);
+            /* Rings expand out */
+        }
+
+        .loader-container.finished .core {
+            transform: scale(30);
+            /* Flash effect */
+            opacity: 0;
+            transition: all 0.5s ease-out;
+        }
+
+        .loader-container.finished .percentage {
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+            transform: scale(1.1) translateY(0);
+            transition: all 0.5s ease;
+        }
+
+        .loader-container.finished .status-text {
+            animation: none;
+            opacity: 1;
+            letter-spacing: 6px;
+            transition: all 0.5s ease;
+            color: var(--white);
+        }
+
+        #loaderContainer {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            /* hoặc nền của bạn */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loaderContainer.finished {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+                .confirm-btn {
             margin-top: 25px;
             padding: 14px 32px;
             background: linear-gradient(135deg, #ff2e2e, #ff4d4d);
@@ -971,18 +1219,17 @@
 </head>
 
 <body>
-        <canvas id="particleCanvas"></canvas>
-    <div class="scroll-progress" id="scrollProgress"></div>
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <i class="fas fa-id-card"></i>
-                <span>RED CARD</span>
-            </div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-            <p class="loading-text">Loading...</p>
+    <canvas id="particleCanvas"></canvas>
+    <div class="grid-overlay"></div>
+
+    <div class="loader-container" id="loaderContainer">
+        <div class="spinner-box">
+            <div class="circle-border ring-1"></div>
+            <div class="circle-border ring-2"></div>
+            <div class="circle-border ring-3"></div>
+
+            <div class="percentage" id="counter">0%</div>
+            <div class="status-text" id="status">RED CARD</div>
         </div>
     </div>
 
@@ -994,12 +1241,12 @@
         <div class="header">
             <div class="main-logo-container">
                 <div class="main-logo-ring"></div>
-                <img src="https://k.top4top.io/p_3698qu0vx1.jpg" class="main-logo" alt="RED CARD Logo">
+                <img src="https://a.top4top.io/p_3697gidex1.png" class="main-logo" alt="RED CARD Logo">
             </div>
         </div>
         <div>
-            <div class="main-app-title">Thạch Đạt Nomember</div>
-            <div class="main-access-info"><b>Coconut</b></div>
+            <div class="main-app-title">Nguyễn Phụ Mạnh</div>
+            <div class="main-access-info"><b>Mạnh KenZ</b></div>
         </div>
         <div class="container">
             <h2 class="section-title">
@@ -1009,9 +1256,9 @@
 
             <div class="input-group">
                 <div class="label">
-                    <p class="label">
-                        Đôi khi những điều đơn giản
-                        <br>Lại khiến ta cảm thấy tốt hơn
+                    <p class="label">🌜⛩️ KenZ🎭 ⛩️🌛
+                        <br>"不寻常的事件总有其隐藏的动机；
+                        <br>不寻常的人总有其不可告人的目的"
                     </p>
                 </div>
             </div>
@@ -1048,24 +1295,6 @@
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">Tik Tok</h4>
                     </div>
 
-                    <div class="feature-card" onclick="openInstagram()" style="cursor:pointer;">
-                        <div class="feature-icon"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <h4 class="feature-title"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Instagram</h4>
-                    </div>
-
-                    <div class="feature-card" onclick="openLocket()" style="cursor:pointer;">
-                        <div class="feature-icon"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <i class="fa-solid fa-heart"></i>
-                        </div>
-                        <h4 class="feature-title"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Locket</h4>
-                    </div>
-
                     <div class="feature-card" onclick="openZalo()" style="cursor:pointer;">
                         <h4 class="feature-icon"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">
@@ -1076,12 +1305,30 @@
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">Zalo</h4>
                     </div>
 
+                    <div class="feature-card" onclick="createQR('bidv')" style="cursor:pointer;">
+                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-bank"></i>
+                        </div>
+                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            VietinBank
+                        </h4>
+                    </div>
+
                     <div class="feature-card" onclick="createQR('vietcom')" style="cursor:pointer;">
                         <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
                             <i class="fas fa-bank"></i>
                         </div>
                         <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
                             VietcomBank
+                        </h4>
+                    </div>
+
+                    <div class="feature-card" onclick="createQR('vietin')" style="cursor:pointer;">
+                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-bank"></i>
+                        </div>
+                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            MB Bank
                         </h4>
                     </div>
                     <div id="qrContainer" style="margin-top:20px; text-align:center;"></div>
@@ -1144,69 +1391,8 @@
                 initializeParticleSystem();
             }
 
-        }, 15);
+        }, 3000);
     });
-</script>
-<script>
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.textContent = '🌸';
-        snowflake.classList.add('snowflake');
-
-        // Tạo vị trí, kích thước, tốc độ rơi và độ mờ ngẫu nhiên
-        const size = Math.random() * 20 + 5;
-        const duration = Math.random() * 5 + 5; // 5–10s
-        const delay = Math.random() * 3;
-        const opacity = Math.random() * 0.7 + 0.3;
-
-        snowflake.style.left = Math.random() * 100 + 'vw';
-        snowflake.style.fontSize = size + 'px';
-        snowflake.style.opacity = opacity;
-        snowflake.style.animationDuration = duration + 's';
-        snowflake.style.animationDelay = delay + 's';
-
-        document.body.appendChild(snowflake);
-
-        // Xóa khi rơi xong để tránh đầy bộ nhớ
-        snowflake.addEventListener('animationend', () => snowflake.remove());
-    }
-
-    // CSS hiệu ứng rơi và đung đưa
-    const style = document.createElement('style');
-    style.textContent = `
-    .snowflake {
-      position: fixed;
-      top: -5%;
-      color: white;
-      pointer-events: none;
-      user-select: none;
-      z-index: 9999;
-      animation-name: fallAndSway;
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: 1;
-    }
-
-    @keyframes fallAndSway {
-      0% {
-        transform: translateX(0vw) translateY(0vh) rotate(0deg);
-      }
-      25% {
-        transform: translateX(10vw) translateY(25vh) rotate(90deg);
-      }
-      50% {
-        transform: translateX(-10vw) translateY(50vh) rotate(180deg);
-      }
-      75% {
-        transform: translateX(10vw) translateY(75vh) rotate(270deg);
-      }
-      100% {
-        transform: translateX(-10vw) translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }`;
-    document.head.appendChild(style);
-
-    setInterval(createSnowflake, 400);
 </script>
 <script>
     function openTikTok() {
@@ -1214,21 +1400,23 @@
         const isMobile =
             /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        const app =
-            "https://www.tiktokv.com/redirect/?redirect_url=snssdk1180://user/profile/6954378264178803713";
+        const appLink =
+            "https://www.tiktokv.com/redirect/?redirect_url=snssdk1180://user/profile/7030812343152624641;decode_once=1";
 
-        const web =
-            "https://www.tiktok.com/@thjtchugmamtep";
+        const webLink =
+            "https://www.tiktok.com/@pmanh8386";
 
         if (isMobile) {
-            window.location.href = app;
+            // Mobile → mở app TikTok
+            window.location.href = appLink;
         } else {
-            window.open(web, "_blank");
+            // PC → mở website
+            window.open(webLink, "_blank");
         }
     }
-
+    
     function openFacebook() {
-        const username = "100058589017328";
+        const username = "100087890537475";
         const appLink = "fb://profile/" + username;
         const webLink = "https://www.facebook.com/" + username;
         window.location.href = appLink;
@@ -1239,7 +1427,7 @@
     }
 
     function openZalo() {
-        const username = "0376687737";
+        const username = "0395904226";
         const appLink = "zalo://profile/" + username;
         const webLink = "https://zalo.me/" + username;
         let opened = false;
@@ -1258,37 +1446,80 @@
     
         window.location.href = appLink;
     }
-
-    function openInstagram() {
-        const username = "thachdat299";
-
-        const appLink = "instagram://user?username=" + username;
-        const webLink = "https://www.instagram.com/" + username;
-
-        window.location.href = appLink;
-
-        setTimeout(function () {
-            window.location.href = webLink;
-        }, 1500);
-    }
-
-    function openLocket() {
-        const appLink = "locket://";
-        const webLink = "https://locket.cam/galaxy_luxury";
-
-        window.location.href = appLink;
-
-        setTimeout(function () {
-            window.location.href = webLink;
-        }, 1500);
-    }
 </script>
 <script>
+const counterElement = document.getElementById('counter');
+const statusElement = document.getElementById('status');
+const container = document.getElementById('loaderContainer');
+
+let count = 0;
+
+function updateLoader() {
+
+    if (count >= 100) {
+        finishLoading();
+        return;
+    }
+
+    // tốc độ theo giai đoạn (realistic loading)
+    let speed;
+
+    if (count < 10) {
+        speed = 125;          // nhanh lúc đầu
+    } else if (count < 30) {
+        speed = 30;          // chậm lại giai đoạn giữa
+    } else if (count < 70) {
+        speed = 45;
+    } else if (count < 90) {
+        speed = 70;
+    } else {
+        speed = 120;         // chậm dần cuối
+    }
+
+    // tăng %
+    count += 1;
+    counterElement.innerText = count + "%";
+
+    // đổi trạng thái
+    if (count === 30)
+        statusElement.innerText = "Verifying...";
+
+    if (count === 70)
+        statusElement.innerText = "Optimizing...";
+
+    if (count === 90)
+        statusElement.innerText = "Finalizing...";
+
+    setTimeout(updateLoader, speed);
+}
+
+function finishLoading() {
+    statusElement.innerText = "RED CARD";
+
+    setTimeout(() => {
+        container.classList.add('finished');
+    }, 300);
+}
+
+// start
+setTimeout(updateLoader, 200);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
     const banks = {
+        bidv: {
+            name: "admin1",
+            label: "VietinBank"
+        },
         vietcom: {
-            name: "Nguyễn Thạch Đạt",
+            name: "admin2",
             label: "VietcomBank"
         },
+        vietin: {
+            name: "admin3",
+            label: "MB Bank"
+        }
     };
 
 </script>
@@ -1330,9 +1561,36 @@ async function createQR(bankKey) {
     }
 }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("music");
+
+    function playMusic() {
+        audio.play().then(() => {
+            console.log("Auto play thành công");
+        }).catch(() => {
+            console.log("Bị chặn, chờ user tương tác...");
+        });
+    }
+
+    // Thử phát ngay
+    playMusic();
+
+    // Nếu bị chặn → click bất kỳ đâu sẽ phát
+    document.addEventListener("click", function () {
+        playMusic();
+    }, { once: true });
+
+    document.addEventListener("touchstart", function () {
+        playMusic();
+    }, { once: true });
+});
+</script>
 <script>
 function closeQR(){
-    document.getElementById("overlay").classList.remove("active");
+    document.getElementById("overlay").style.display = "none";
 }
 
 async function captureOptimized() {
@@ -1384,38 +1642,12 @@ async function captureOptimized() {
 }
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const audio = document.getElementById("music");
-
-    function playMusic() {
-        audio.play().then(() => {
-            console.log("Auto play thành công");
-        }).catch(() => {
-            console.log("Bị chặn, chờ user tương tác...");
-        });
-    }
-
-    // Thử phát ngay
-    playMusic();
-
-    // Nếu bị chặn → click bất kỳ đâu sẽ phát
-    document.addEventListener("click", function () {
-        playMusic();
-    }, { once: true });
-
-    document.addEventListener("touchstart", function () {
-        playMusic();
-    }, { once: true });
-});
-</script>
-
 <div id="qrOverlay" onclick="closeQR()">
     <div id="qrBox" onclick="event.stopPropagation()" style="text-align:center;">
 
         <p id="bankName"
            style="color:#ff4343; font-size:30px; margin-bottom:10px;">
-            VietComBank
+            VietTinBank
         </p>
         <img id="qrImage" style="display:inline-block;
                     padding:23px;
@@ -1438,7 +1670,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeQR() {
         overlay.classList.remove("active");
     }
+
 </script>
 </body>
-
+</html>
 </html>
