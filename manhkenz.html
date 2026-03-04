@@ -1191,6 +1191,30 @@
             pointer-events: none;
         }
 
+                .confirm-btn {
+            margin-top: 25px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #ff2e2e, #ff4d4d);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
+            transition: all 0.25s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 0, 0, 0.5);
+        }
+
+        .confirm-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+        }
     </style>
 </head>
 
@@ -1281,13 +1305,31 @@
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">Zalo</h4>
                     </div>
 
-                    <div class="feature-card" onclick="createQR()" style="cursor:pointer;">
-                        <div class="feature-icon"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                            <i class="fas fa-gift"></i>
+                    <div class="feature-card" onclick="createQR('bidv')" style="cursor:pointer;">
+                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-bank"></i>
                         </div>
-                        <h4 class="feature-title"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Tặng Quà</h4>
+                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            VietinBank
+                        </h4>
+                    </div>
+
+                    <div class="feature-card" onclick="createQR('vietcom')" style="cursor:pointer;">
+                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-bank"></i>
+                        </div>
+                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            VietcomBank
+                        </h4>
+                    </div>
+
+                    <div class="feature-card" onclick="createQR('vietin')" style="cursor:pointer;">
+                        <div class="feature-icon" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-bank"></i>
+                        </div>
+                        <h4 class="feature-title" style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                            MB Bank
+                        </h4>
                     </div>
                     <div id="qrContainer" style="margin-top:20px; text-align:center;"></div>
                 </div>
@@ -1351,67 +1393,6 @@
 
         }, 3000);
     });
-</script>
-<script>
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.textContent = '🌸';
-        snowflake.classList.add('snowflake');
-
-        // Tạo vị trí, kích thước, tốc độ rơi và độ mờ ngẫu nhiên
-        const size = Math.random() * 20 + 5;
-        const duration = Math.random() * 5 + 5; // 5–10s
-        const delay = Math.random() * 3;
-        const opacity = Math.random() * 0.7 + 0.3;
-
-        snowflake.style.left = Math.random() * 100 + 'vw';
-        snowflake.style.fontSize = size + 'px';
-        snowflake.style.opacity = opacity;
-        snowflake.style.animationDuration = duration + 's';
-        snowflake.style.animationDelay = delay + 's';
-
-        document.body.appendChild(snowflake);
-
-        // Xóa khi rơi xong để tránh đầy bộ nhớ
-        snowflake.addEventListener('animationend', () => snowflake.remove());
-    }
-
-    // CSS hiệu ứng rơi và đung đưa
-    const style = document.createElement('style');
-    style.textContent = `
-    .snowflake {
-      position: fixed;
-      top: -5%;
-      color: white;
-      pointer-events: none;
-      user-select: none;
-      z-index: 9999;
-      animation-name: fallAndSway;
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: 1;
-    }
-
-    @keyframes fallAndSway {
-      0% {
-        transform: translateX(0vw) translateY(0vh) rotate(0deg);
-      }
-      25% {
-        transform: translateX(10vw) translateY(25vh) rotate(90deg);
-      }
-      50% {
-        transform: translateX(-10vw) translateY(50vh) rotate(180deg);
-      }
-      75% {
-        transform: translateX(10vw) translateY(75vh) rotate(270deg);
-      }
-      100% {
-        transform: translateX(-10vw) translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }`;
-    document.head.appendChild(style);
-
-    setInterval(createSnowflake, 50);
 </script>
 <script>
     function openTikTok() {
@@ -1528,16 +1509,16 @@ setTimeout(updateLoader, 200);
 <script>
     const banks = {
         bidv: {
-            name: "HuongPhung1",
-            label: "BIDV"
+            name: "admin1",
+            label: "VietinBank"
         },
         vietcom: {
-            name: "HuongPhung2",
+            name: "admin2",
             label: "VietcomBank"
         },
         vietin: {
-            name: "HuongPhung3",
-            label: "VietinBank"
+            name: "admin3",
+            label: "MB Bank"
         }
     };
 
