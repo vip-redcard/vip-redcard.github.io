@@ -1464,14 +1464,12 @@ function updateLoader() {
     // tốc độ theo giai đoạn (realistic loading)
     let speed;
 
-    if (count < 10) {
-        speed = 125;          // nhanh lúc đầu
-    } else if (count < 30) {
+    if (count < 30) {
         speed = 30;          // chậm lại giai đoạn giữa
     } else if (count < 70) {
         speed = 45;
     } else if (count < 90) {
-        speed = 70;
+        speed = 50;
     } else {
         speed = 120;         // chậm dần cuối
     }
@@ -1495,9 +1493,12 @@ function updateLoader() {
 
 function finishLoading() {
     statusElement.innerText = "RED CARD";
-    statusElement.style.fontSize = "50px";
+    statusElement.style.fontSize = "45px";
     statusElement.style.top = "150px";
     statusElement.style.fontWeight = "bold";
+    statusElement.style.left = "50%";
+    statusElement.style.transform = "translateX(-50%)";
+    statusElement.style.whiteSpace = "nowrap";
 
     setTimeout(() => {
         container.classList.add('finished');
@@ -1596,6 +1597,7 @@ function closeQR(){
     document.getElementById("overlay").style.display = "none";
 }
 
+name = "Mạnh Nguyễn";
 async function captureOptimized() {
 
     const qrBox = document.getElementById("qrBox");
@@ -1630,7 +1632,7 @@ async function captureOptimized() {
         } else {
 
             const link = document.createElement("a");
-            link.download = "KenZ_REDCARD.png";
+            link.download = name + " Banking_REDCARD.png";
             link.href = imageData;
             link.click();
 
