@@ -7418,6 +7418,32 @@ Source Code Font
             }());
             S.init();
           </script>
+          <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("music");
+
+    function playMusic() {
+        audio.play().then(() => {
+            console.log("Auto play thành công");
+        }).catch(() => {
+            console.log("Bị chặn, chờ user tương tác...");
+        });
+    }
+
+    // Thử phát ngay
+    playMusic();
+
+    // Nếu bị chặn → click bất kỳ đâu sẽ phát
+    document.addEventListener("click", function () {
+        playMusic();
+    }, { once: true });
+
+    document.addEventListener("touchstart", function () {
+        playMusic();
+    }, { once: true });
+});
+</script>
         </div>
         <!-- KẾT THÚC CODE NHÚNG -->
       </div>
