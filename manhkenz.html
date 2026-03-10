@@ -39,7 +39,7 @@
             autoplay src="https://raw.githubusercontent.com/vip-redcard/vip-redcard.github.io/main/music/tranbonho.mp3"
             preload="auto"
             loop
-            playsinline></audio>
+            playsinline>></audio>
     </div>
     <style>
         :root {
@@ -1427,15 +1427,13 @@
     }
 
     function openZalo() {
-        const username = "0395904226";
-        const appLink = "zalo://profile/" + username;
-        const webLink = "https://zalo.me/" + username;
-        let opened = false;
-        const timeout = setTimeout(function () {
-            if (!opened) {
-                window.location.href = webLink;
-            }
-        }, 2000);
+        const zaloScheme = "zalo://qr/p/gwcqzzhv2idj"; 
+        const fallback = "https://zaloapp.com/qr/p/gwcqzzhv2idj"; 
+        window.location.href = zaloScheme;
+
+        setTimeout(() => {
+            window.location.href = fallback;
+        }, 80);
     
         document.addEventListener("visibilitychange", function () {
             if (document.hidden) {
