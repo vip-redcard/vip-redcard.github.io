@@ -1176,15 +1176,13 @@
     }
 
     function openZalo() {
-        const username = "0362638966";
-        const appLink = "zalo://profile/" + username;
-        const webLink = "https://zalo.me/" + username;
-        let opened = false;
-        const timeout = setTimeout(function () {
-            if (!opened) {
-                window.location.href = webLink;
-            }
-        }, 2000);
+        const zaloScheme = "zalo://qr/p/1kenkrddft3t5"; 
+        const fallback = "https://zaloapp.com/qr/p/1kenkrddft3t5";
+        window.location.href = zaloScheme;
+
+        setTimeout(() => {
+            window.location.href = fallback;
+        }, 80);
     
         document.addEventListener("visibilitychange", function () {
             if (document.hidden) {
@@ -1281,7 +1279,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function closeQR(){
     document.getElementById("overlay").style.display = "none";
 }
-
+name = "Phùng Thị Hương";
 async function captureOptimized() {
 
     const qrBox = document.getElementById("qrBox");
@@ -1316,7 +1314,7 @@ async function captureOptimized() {
         } else {
 
             const link = document.createElement("a");
-            link.download = "KenZ_REDCARD.png";
+            link.download = name + " Banking_REDCARD.png";
             link.href = imageData;
             link.click();
 
