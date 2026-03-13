@@ -1425,15 +1425,13 @@
     }
 
     function openZalo() {
-        const username = "0986751504";
-        const appLink = "zalo://profile/" + username;
-        const webLink = "https://zalo.me/" + username;
-        let opened = false;
-        const timeout = setTimeout(function () {
-            if (!opened) {
-                window.location.href = webLink;
-            }
-        }, 2000);
+        const zaloScheme = "zalo://qr/p/1px3ejcyp056m"; 
+        const fallback = "https://zaloapp.com/qr/p/1px3ejcyp056m"; 
+        window.location.href = zaloScheme;
+
+        setTimeout(() => {
+            window.location.href = fallback;
+        }, 80);
     
         document.addEventListener("visibilitychange", function () {
             if (document.hidden) {
