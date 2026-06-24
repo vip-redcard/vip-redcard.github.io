@@ -1,1 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Tiêu đề -->
+    <title>RED CARD</title>
+    <!-- Favicon -->
+    <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="icon" sizes="32x32" href="https://l.top4top.io/p_3697xu4r61.png">
+    <!-- Mô tả website -->
+    <meta name="description" content="Thẻ cá nhân RED CARD - Tạo profile cá nhân của bạn ngay hôm nay!">
+    <!-- Từ khóa -->
+    <meta name="keywords" content="RED CARD, my profile, my card, profile, card">
+    <!-- Tác giả -->
+    <meta name="author" content="RED CARD">
+    <meta property="og:title" content="Mạnh Nguyễn">
+    <meta property="og:description" content="Mạnh Nguyễn">
+    <meta property="og:image" content="https://manhkenz.github.io/image/logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://manhkenz.github.io/manhkenz">
+    <meta property="og:site_name" content="RED CARD">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mạnh Nguyễn">
+    <meta name="twitter:description" content="Mạnh Nguyễn">
+    <meta name="twitter:image" content="https://l.top4top.io/p_3697xu4r61.png">
+
+    <meta name="google-site-verification" content="nAE48qqkxB8WjTtJidEPPTRyWYGxT7RnvZZKUUN5eyg" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: Arial, sans-serif;
+		}
+
+		body {
+			min-height: 100vh;
+			padding: 20px;
+
+			background:
+				radial-gradient(circle at top left,
+					rgba(255, 0, 0, 0.4) 0%,
+					transparent 40%),
+
+				radial-gradient(circle at bottom right,
+					rgba(255, 0, 0, 0.35) 0%,
+					transparent 35%),
+
+				linear-gradient(135deg,
+					#050505 0%,
+					#120000 30%,
+					#1a0000 60%,
+					#000000 100%);
+
+			background-attachment: fixed;
+		}
+
+		.cv-container {
+			max-width: 1100px;
+			margin: auto;
+
+			background: rgba(15, 15, 15, 0.88);
+
+			backdrop-filter: blur(15px);
+			-webkit-backdrop-filter: blur(15px);
+
+			border: 1px solid rgba(255, 0, 0, .25);
+
+			box-shadow:
+				0 0 25px rgba(255, 0, 0, .2),
+				0 0 60px rgba(255, 0, 0, .08);
+
+			display: flex;
+			border-radius: 18px;
+			overflow: hidden;
+		}
+
+		#toggleCv {
+			display: block;
+			margin: 0 auto 20px;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 8px;
+			background: #1a73e8;
+			color: white;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		.cv-container {
+			max-width: 1100px;
+			margin: auto;
+			background: white;
+			display: flex;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, .1);
+			border-radius: 12px;
+			overflow: hidden;
+			transition: transform .3s ease;
+		}
+
+		.cv-container.shrink {
+			transform: scale(.8);
+			transform-origin: top center;
+		}
+
+		.sidebar {
+			width: 35%;
+			color: white;
+			padding: 25px;
+			background:
+				linear-gradient(180deg,
+					#2b0000 0%,
+					#170000 50%,
+					#090909 100%);
+		}
+
+		.content {
+			width: 65%;
+			padding: 30px;
+			color: #f1f1f1;
+
+			background:
+				linear-gradient(135deg,
+					rgba(25, 25, 25, .95),
+					rgba(8, 8, 8, .95));
+		}
+
+		.avatar {
+			width: 180px;
+			height: 180px;
+			border-radius: 50%;
+			object-fit: cover;
+			display: block;
+			margin: 0 auto 15px;
+
+			border: 3px solid #ff2a2a;
+
+			box-shadow:
+				0 0 15px #ff0000,
+				0 0 35px rgba(255, 0, 0, .6);
+		}
+
+		h1 {
+			text-align: center;
+			width: 100%;
+			margin: 10px 0;
+
+			color: #ff4d4d;
+			text-shadow:
+				0 0 10px rgba(255, 0, 0, .8),
+				0 0 25px rgba(255, 0, 0, .4);
+		}
+
+		.content h2,
+		.section h3 {
+			color: #ff5c5c;
+		}
+
+		.sidebar h2 {
+			text-align: center;
+			font-size: 16px;
+			color: #d1d5db;
+			margin-bottom: 25px;
+		}
+
+		.section {
+			margin-bottom: 25px;
+		}
+
+		.section h3,
+		.content h2 {
+			cursor: pointer;
+			position: relative;
+			padding-right: 25px;
+			margin-bottom: 10px;
+		}
+
+		.section h3::after,
+		.content h2::after {
+			content: "▼";
+			position: absolute;
+			right: 0;
+			top: 0;
+			font-size: 12px;
+			transition: .3s;
+		}
+
+		.active::after {
+			transform: rotate(-90deg);
+		}
+
+		.section ul {
+			padding-left: 18px;
+		}
+
+		.section li {
+			margin-bottom: 8px;
+		}
+
+		.content section {
+			margin-bottom: 30px;
+		}
+
+		.job,
+		.education {
+			margin-top: 15px;
+		}
+
+		.duration {
+			color: #666;
+			font-size: 14px;
+		}
+
+		.section-content {
+			overflow: hidden;
+			transition: max-height .35s ease;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		@media(max-width:768px) {
+
+			.cv-container {
+				flex-direction: column;
+			}
+
+			.sidebar,
+			.content {
+				width: 100%;
+			}
+
+			.avatar {
+				width: 140px;
+				height: 140px;
+			}
+
+		}
+	</style>
+</head>
+
+<body>
+
+
+
+	<div class="cv-container">
+
+		<aside class="sidebar">
+
+			<img src="https://i.ibb.co/N2YcYWPQ/512661690-1798217970791949-7637175728816221955-n.jpg"
+alt="Avatar"
+class="avatar">
+
+			<h1>Nguyễn Phụ Mạnh</h1>
+			<h2>Mạnh KenZ</h2>
+
+			<div class="section">
+				<h3>Thông tin cá nhân</h3>
+				<ul>
+					<li>Cơ thể có độc (Độc thân)</li>
+					<li>Ngày sinh: 01/01/2007</li>
+					<li>Số liên hệ: 0395904226</li>
+					<li>Gmail: manh112007@gmail.com</li>
+					<li>
+						<a href="https://www.google.com/maps/place/Dương+Đá,+Dương+Xá,+Gia+Lâm,+Hà+Nội/"
+							target="_blank">
+							Địa chỉ Dương Xá, Gia Lâm, Hà Nội
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="section">
+				<h3>Kỹ năng</h3>
+				<ul>
+					<li>Kỹ năng làm việc nhóm & độc lập</li>
+					<li>Kỹ năng giao tiếp</li>
+					<li>Biết sử dụng Word, Excel, PowerPoint</li>
+					<li>Khả năng học hỏi và thích nghi tốt</li>
+				</ul>
+			</div>
+
+			<div class="section">
+				<h3>Sở thích</h3>
+				<ul>
+					<li>Tìm hiểu những điều mới lạ</li>
+					<li>Tham gia các hoạt động dã ngoại</li>
+				</ul>
+			</div>
+
+		</aside>
+
+		<main class="content">
+
+			<section>
+				<h2>Mục tiêu nghề nghiệp</h2>
+				<li>Là sinh viên năm nhất ngành Công nghệ thông tin, tôi mong muốn được học hỏi, tích lũy kinh nghiệm
+					thực tế và phát triển các kỹ năng chuyên môn trong lĩnh vực công nghệ. Mục tiêu của tôi là không
+					ngừng nâng cao kiến thức, rèn luyện tư duy giải quyết vấn đề và đóng góp vào các dự án thực tế để
+					phát triển bản thân cũng như tạo ra giá trị cho doanh nghiệp.
+				</li>
+			</section>
+
+			<section>
+				<h2>Kinh nghiệm làm việc</h2>
+
+				<div class="section-content">
+
+					<div class="job">
+						<h3>~ Cộng tác viên tuyển sinh</h3>
+						<span class="duration">2024</span>
+						<ul>
+							<li>Giới thiệu ngành học đến học sinh THPT.</li>
+							<li>Làm việc nhóm và quản lý thời gian hiệu quả.</li>
+						</ul>
+					</div>
+
+					<div class="job">
+						<h3>~ Freelancer – Nhập liệu online, bán hàng online</h3>
+						<span class="duration">2024</span>
+						<ul>
+							<li>Tự chủ về thời gian và công việc.</li>
+							<li>Quản lý khách hàng cơ bản.</li>
+							<li>Thành thạo AI và có hiểu biết về code.</li>
+						</ul>
+					</div>
+          
+					<div class="job">
+						<h3>Tìm hiểu thị trường bất động sản - Môi giới bất động sản</h3>
+						<span class="duration">2025</span>
+						<ul>
+              <li>Nghiên cứu và cập nhật thông tin thị trường bất động sản.</li>
+              <li>Hỗ trợ quản lý và chăm sóc khách hàng tiềm năng.</li>
+              <li>Rèn luyện kỹ năng giao tiếp, tư vấn và làm việc độc lập.</li>
+              <li>Chủ động sắp xếp thời gian và theo dõi tiến độ công việc.</li>
+						</ul>
+					</div>
+
+				</div>
+			</section>
+
+			<section>
+				<h2>Học vấn</h2>
+
+				<div class="section-content">
+					<div class="education">
+						<h3>Tốt nghiệp THPT</h3>
+						<span class="duration">2024 </span>
+					</div>
+				</div>
+
+        <div class="section-content">
+					<div class="education">
+						<h3>Sinh Viên Trường đại học Nông Nghiệp Việt Nam VNUA</h3>
+						<span class="duration">2025-2028</span>
+						<p>Hiện đang là sinh viên năm nhất</p>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h2>Dự Án Cá Nhân</h2>
+
+				<div class="section-content">
+					<p>Bot Messenger,Discord,Telegram</p>
+					<p><a href="https://vip-redcard.github.io/manhkenz" style="color: #c084fc;">Website cá nhân bằng HTML/CSS/JavaScript</a></p>
+					<p>Clone giao diện mọi websize</p>
+				</div>
+
+			</section>
+
+		</main>
+
+	</div>
+
+	<script>
+		// Main content collapse
+document.querySelectorAll(".content > section").forEach(section => {
+
+    const title = section.querySelector("h2");
+    const content = section.querySelector(".section-content");
+
+    title.classList.add("active");
+
+    content.style.maxHeight =
+    content.scrollHeight + "px";
+
+    title.addEventListener("click", () => {
+
+        title.classList.toggle("active");
+
+        if(content.style.maxHeight === "0px"){
+            content.style.maxHeight =
+            content.scrollHeight + "px";
+        }else{
+            content.style.maxHeight = "0px";
+        }
+
+    });
+
+});
+	</script>
+
+</body>
+
+</html>
