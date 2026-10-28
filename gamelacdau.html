@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lắc đầu chọn đáp án</title>
+<style>
+:root{--pri:#667eea;--bg:#f4f6fb;--tx:#222;--mut:#6c757d;--bd:#e9ecef}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+header.top{background:#fff;border-bottom:1px solid var(--bd);padding:.7rem 1rem;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+header.top h1{font-size:1.1rem;margin:0 auto 0 0}
+.wrap{max-width:900px;margin:1rem auto;padding:0 1rem}
+.card{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:1rem}
+h2,h3,h5{margin:.2rem 0 .8rem}
+label.fl{display:block;font-weight:600;margin:.6rem 0 .25rem}
+input[type=text],textarea,select{width:100%;padding:.6rem .7rem;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
+textarea{min-height:70px;resize:vertical}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--pri);background:#fff;color:var(--pri);padding:.5rem .9rem}
+button:hover{filter:brightness(.96)}
+button.pri{background:var(--pri);color:#fff}
+button.dng{border-color:#dc3545;color:#dc3545}
+button.sm{padding:.25rem .6rem;font-size:.85rem}
+.grad{border:none;color:#fff;font-weight:700;padding:.7rem 1rem;flex:1 1 150px}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.opt{display:flex;gap:.6rem;align-items:flex-start;margin:.6rem 0}
+.opt input{margin-top:.3rem}
+.opt small,.cap{display:block;color:var(--mut);font-size:.8rem}
+.tog{display:inline-flex}
+.tog button{border-radius:0}
+.tog button:first-child{border-radius:8px 0 0 8px}
+.tog button:last-child{border-radius:0 8px 8px 0}
+.tog button.on{background:var(--pri);color:#fff}
+.qitem{border:1px solid var(--bd);border-radius:8px;padding:.7rem;margin-bottom:.5rem;background:#fafbfc}
+.qitem b{display:block;margin-bottom:.3rem}
+.ans{font-size:.9rem;color:#444}
+.ans.ok{color:#2e7d32;font-weight:700}
+.empty{text-align:center;padding:2rem;background:#f8f9fa;border-radius:8px;color:var(--mut)}
+.colors{display:flex;gap:1.2rem;flex-wrap:wrap}
+.colors label{display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.colors input{width:34px;height:34px;padding:0;border:none;border-radius:6px;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:20;padding:1rem}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:12px;padding:1.2rem;max-width:620px;width:100%;max-height:90vh;overflow:auto}
+.pill{display:inline-block;background:#eef0ff;color:var(--pri);border-radius:999px;padding:.1rem .6rem;font-size:.8rem;margin-right:.3rem}
+.code{font-size:2rem;font-weight:800;letter-spacing:.3rem;color:var(--pri)}
+.hide{display:none!important}
+/* play */
+#play{position:fixed;inset:0;background:#10131c;color:#fff;display:flex;flex-direction:column;z-index:30}
+#play .bar{display:flex;gap:.6rem;align-items:center;padding:.5rem 1rem;background:#181c28;flex-wrap:wrap}
+#play .bar span{font-size:.9rem}
+#play .bar .sp{margin-left:auto}
+#pstage{flex:1;display:flex;flex-direction:column;padding:.8rem;gap:.8rem;min-height:0}
+#pq{border-radius:14px;padding:1rem;text-align:center;display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:20vh;color:#111;font-weight:700}
+#pans{flex:1;display:grid;gap:.8rem;min-height:0}
+.pa{border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;color:#fff;text-align:center;padding:.6rem;cursor:pointer;position:relative;overflow:hidden;border:5px solid transparent;transition:transform .15s}
+.pa .k{font-size:1.6rem;opacity:.85}
+.pa .fill{position:absolute;left:0;bottom:0;height:8px;background:#fff;width:0}
+.pa.hot{transform:scale(1.03);border-color:#fff}
+.pa.right{border-color:#2ecc71;box-shadow:0 0 0 6px rgba(46,204,113,.5)}
+.pa.wrong{border-color:#e74c3c;opacity:.6}
+#cam{position:absolute;right:12px;bottom:12px;width:170px;border-radius:10px;transform:scaleX(-1);border:2px solid #fff;z-index:3;background:#000}
+#gauge{position:absolute;right:12px;bottom:calc(12px + 130px);width:170px;background:rgba(0,0,0,.65);border-radius:8px;padding:.3rem .5rem;font-size:.8rem;z-index:3;text-align:center}
+#center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:rgba(16,19,28,.94);z-index:6;text-align:center;padding:1rem}
+#center h1{margin:0;font-size:2rem}
+#result{position:absolute;inset:0;background:#10131c;z-index:10;overflow:auto;padding:1rem}
+#result .rbox{max-width:760px;margin:0 auto}
+.rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1rem}
+.rstats div{border-radius:10px;padding:.6rem;text-align:center;background:#1e2333}
+.rstats b{display:block;font-size:1.6rem}
+.rstats small{opacity:.8}
+.ri{border-radius:10px;padding:.7rem .9rem;margin-bottom:.5rem;background:#1e2333;border-left:6px solid #888}
+.ri.ok{border-left-color:#2ecc71}.ri.bad{border-left-color:#e74c3c}.ri.none{border-left-color:#f1c40f}
+.ri .st{font-weight:700;font-size:.85rem}
+.ri.ok .st{color:#2ecc71}.ri.bad .st{color:#ff6b5e}.ri.none .st{color:#f1c40f}
+.ri .q{font-weight:700;margin:.2rem 0}
+.ri .a{font-size:.9rem;opacity:.9}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>🙂↔️ Lắc đầu chọn đáp án</h1>
+  <button onclick="go('home')">🏠 Bài học</button>
+  <button onclick="go('bank')">📚 Kho câu hỏi</button>
+  <button class="pri" onclick="newLesson()">➕ Tạo bài học mới</button>
+</header>
+
+<div class="wrap">
+
+<!-- HOME -->
+<section id="v-home">
+  <div class="card">
+    <h2>Bài học của tôi</h2>
+    <div id="lessonList"></div>
+  </div>
+  <div class="card">
+    <h3>Vào phòng bằng mã</h3>
+    <div class="row"><input type="text" id="joinCode" placeholder="Nhập mã phòng, ví dụ AB12CD" style="max-width:280px;text-transform:uppercase">
+    <button class="pri" onclick="joinRoom()">Vào chơi</button></div>
+    <small class="cap">Mã phòng chỉ tìm được trên cùng trình duyệt đã tạo phòng. Muốn chơi trên máy khác, hãy dùng liên kết đầy đủ (có kèm dữ liệu) khi bấm "Sao chép liên kết".</small>
+  </div>
+</section>
+
+<!-- EDITOR -->
+<section id="v-edit" class="hide">
+ <div class="card">
+  <h5 style="font-size:1.3rem">Tạo bài học mới</h5>
+  <label class="fl" for="f-title">Tên bài học</label>
+  <input type="text" id="f-title" placeholder="Tên bài học">
+
+  <label class="fl">🧭 Số đáp án mỗi câu</label>
+  <div class="tog" id="f-mode">
+    <button type="button" data-v="2" class="on">2 đáp án</button>
+    <button type="button" data-v="4">4 đáp án</button>
+  </div>
+  <small class="cap">Nghiêng trái = A, nghiêng phải = B. Với 4 đáp án: ngửa đầu = C, cúi đầu = D.</small>
+
+  <div class="opt"><input type="checkbox" id="f-shufq"><div><b>Xáo trộn thứ tự câu hỏi</b><small>Mỗi lần chơi, các câu hiện theo thứ tự khác nhau</small></div></div>
+  <div class="opt"><input type="checkbox" id="f-shufa"><div><b>🔀 Đảo đáp án khi vào chơi</b><small>Hoán đổi vị trí các đáp án ngẫu nhiên mỗi câu — không ảnh hưởng đến đáp án đúng</small></div></div>
+  <div class="opt"><input type="checkbox" id="f-cam" checked><div><b>📷 Dùng camera (nghiêng đầu chọn đáp án)</b><small>Bật: học sinh nghiêng đầu trước camera. Tắt: bấm tay vào đáp án, không cần camera.</small></div></div>
+  <div class="opt"><input type="checkbox" id="f-tts"><div><b>🔊 Giọng đọc</b><small>Tự động đọc câu hỏi bằng giọng đọc của trình duyệt</small></div></div>
+
+  <label class="fl">Độ nghiêng đầu cần đạt: <span id="f-angv">45</span>°</label>
+  <input type="range" id="f-ang" min="15" max="60" value="45" style="width:100%">
+  <small class="cap">Đầu thẳng hoặc nghiêng nhẹ (dưới ngưỡng) thì CHƯA chọn. Phải nghiêng đủ góc về phía đáp án mới chọn (mặc định 45°).</small>
+
+  <label class="fl">Thời gian tự động chuyển câu: <span id="f-nxtv">3</span> giây</label>
+  <input type="range" id="f-nxt" min="1" max="10" value="3" style="width:100%">
+
+  <label class="fl">🎨 Màu nền khung</label>
+  <div class="colors">
+    <label><input type="color" id="c-q" value="#ffffff">❓ Khung câu hỏi</label>
+    <label><input type="color" id="c-a" value="#29b6f6">👈 Đáp án A</label>
+    <label><input type="color" id="c-b" value="#ff7043">👉 Đáp án B</label>
+    <label class="d4"><input type="color" id="c-c" value="#66bb6a">⬆️ Đáp án C</label>
+    <label class="d4"><input type="color" id="c-d" value="#ab47bc">⬇️ Đáp án D</label>
+  </div>
+
+  <div style="margin-top:1.2rem">
+    <h3>Câu hỏi (<span id="qcount">0</span>)</h3>
+    <div class="row" style="margin-bottom:.8rem">
+      <button class="grad" style="background:linear-gradient(135deg,#a855f7,#6366f1)" onclick="alert('Tính năng tạo bằng AI cần máy chủ (backend). File HTML đơn lẻ chưa hỗ trợ.')">🤖 Tạo bằng AI</button>
+      <button class="grad" style="background:linear-gradient(135deg,#43a047,#1b5e20)" onclick="openImport()">📥 Nhập nhanh (CSV/văn bản)</button>
+      <button class="grad" style="background:linear-gradient(135deg,#f59e0b,#d97706)" onclick="openPick()">📚 Từ kho</button>
+      <button class="grad" style="background:#6c757d" onclick="openQ(null,'lesson')">✏️ Nhập thủ công</button>
+    </div>
+    <div id="lessonQs"></div>
+  </div>
+
+  <div class="row" style="margin-top:1rem">
+    <label class="fl" style="margin:0">Cấp học *</label>
+    <select id="f-level" style="max-width:170px"><option value="">Chọn</option><option>Mầm non</option><option>Tiểu học</option><option>THCS</option><option>THPT</option><option>Khác</option></select>
+    <label class="fl" style="margin:0">Môn học *</label>
+    <input type="text" id="f-subj" style="max-width:170px" placeholder="Toán, Tiếng Anh…">
+    <label class="fl" style="margin:0">Khối lớp *</label>
+    <input type="text" id="f-grade" style="max-width:100px" placeholder="1…12">
+  </div>
+
+  <div class="row" style="justify-content:flex-end;margin-top:1.2rem">
+    <button onclick="go('home')">Hủy</button>
+    <button class="pri" onclick="saveLesson()">Lưu bài học</button>
+  </div>
+ </div>
+</section>
+
+<!-- BANK -->
+<section id="v-bank" class="hide">
+ <div class="card">
+  <h2>📚 Kho câu hỏi và đáp án</h2>
+  <div class="row" style="margin-bottom:.8rem">
+    <input type="text" id="bankSearch" placeholder="Tìm câu hỏi…" oninput="renderBank()" style="flex:1">
+    <button class="pri" onclick="openQ(null,'bank')">➕ Thêm câu hỏi</button>
+    <button onclick="openImport('bank')">📥 Nhập nhanh</button>
+    <button onclick="exportBank()">⬇️ Xuất JSON</button>
+  </div>
+  <div id="bankList"></div>
+ </div>
+</section>
+</div>
+
+<!-- Modal: question editor -->
+<div class="modal" id="m-q"><div class="box">
+  <h3 id="mq-title">Câu hỏi</h3>
+  <label class="fl">Nội dung câu hỏi</label>
+  <textarea id="mq-text"></textarea>
+  <label class="fl">Đáp án (chọn nút tròn ở đáp án đúng)</label>
+  <div id="mq-ans"></div>
+  <div class="row" style="margin-top:.4rem">
+    <button class="sm" onclick="addAnsRow()" id="mq-add">+ Thêm đáp án (C/D)</button>
+  </div>
+  <div class="opt"><input type="checkbox" id="mq-tobank" checked><div><b>Lưu vào kho câu hỏi</b></div></div>
+  <div class="row" style="justify-content:flex-end;margin-top:.8rem">
+    <button onclick="closeM('m-q')">Hủy</button>
+    <button class="pri" onclick="saveQ()">Lưu câu hỏi</button>
+  </div>
+</div></div>
+
+<!-- Modal: pick from bank -->
+<div class="modal" id="m-pick"><div class="box">
+  <h3>📚 Chọn từ kho</h3>
+  <input type="text" id="pickSearch" placeholder="Tìm…" oninput="renderPick()">
+  <div id="pickList" style="margin:.8rem 0"></div>
+  <div class="row" style="justify-content:flex-end">
+    <button onclick="closeM('m-pick')">Đóng</button>
+    <button class="pri" onclick="addPicked()">Thêm vào bài</button>
+  </div>
+</div></div>
+
+<!-- Modal: import -->
+<div class="modal" id="m-imp"><div class="box">
+  <h3>📥 Nhập nhanh</h3>
+  <p class="cap">Mỗi dòng một câu, ngăn cách bằng dấu <b>|</b> hoặc tab (dán từ Excel được):<br><code>Câu hỏi | Đáp án A | Đáp án B | [Đáp án C | Đáp án D |] Đáp án đúng (A/B/C/D)</code></p>
+  <textarea id="imp-text" style="min-height:160px" placeholder="2 + 3 bằng mấy? | 4 | 5 | B"></textarea>
+  <div class="row" style="margin:.5rem 0"><input type="file" id="imp-file" accept=".csv,.txt,.tsv"></div>
+  <div class="row" style="justify-content:flex-end">
+    <button onclick="closeM('m-imp')">Hủy</button>
+    <button class="pri" onclick="doImport()">Nhập</button>
+  </div>
+</div></div>
+
+<!-- Modal: room -->
+<div class="modal" id="m-room"><div class="box" style="text-align:center">
+  <h3>🎮 Phòng đã sẵn sàng</h3>
+  <div class="code" id="roomCode">------</div>
+  <p class="cap" id="roomLink" style="word-break:break-all;margin:.6rem 0"></p>
+  <div class="row" style="justify-content:center">
+    <button class="pri" onclick="openRoomPage()">▶️ Mở trang chơi</button>
+    <button onclick="copyLink(false)">Sao chép liên kết</button>
+    <button onclick="copyLink(true)">Sao chép liên kết (kèm dữ liệu, dùng cho máy khác)</button>
+    <button onclick="closeM('m-room')">Đóng</button>
+  </div>
+</div></div>
+
+<!-- PLAY PAGE -->
+<div id="play" class="hide">
+  <div class="bar">
+    <b id="pTitle"></b>
+    <span id="pProg"></span>
+    <span id="pScore"></span>
+    <span class="sp"></span>
+    <button class="sm" id="pInvert" title="Đảo trái/phải nếu camera nhận ngược" onclick="toggleInvert()">⇄ Đảo hướng</button>
+    <button class="sm" id="pStop" style="background:#e67e22;border-color:#e67e22;color:#fff;font-weight:700" onclick="stopGame()">⏹ Dừng &amp; tính điểm</button>
+    <button class="sm" onclick="exitPlay()">Thoát</button>
+  </div>
+  <div id="pstage">
+    <div id="pq"></div>
+    <div id="pans"></div>
+  </div>
+  <video id="cam" class="hide" playsinline muted></video>
+  <div id="gauge" class="hide"></div>
+  <div id="center">
+    <h1 id="cTitle">Bắt đầu làm bài!</h1>
+    <p id="cInfo" style="max-width:520px;opacity:.85"></p>
+    <button class="pri" id="cBtn" style="font-size:1.3rem;padding:.8rem 2rem" onclick="startGame()">▶ Bắt đầu làm bài!</button>
+    <small id="cNote" style="opacity:.7"></small>
+  </div>
+  <div id="result" class="hide">
+    <div class="rbox">
+      <h2 id="rTitle" style="text-align:center;margin:0 0 .3rem"></h2>
+      <p id="rSub" style="text-align:center;margin:0 0 .8rem;opacity:.85"></p>
+      <div class="rstats" id="rStats"></div>
+      <div id="rList"></div>
+      <div class="row" style="justify-content:center;margin-top:1rem">
+        <button class="pri" onclick="playAgain()">↻ Chơi lại</button>
+        <button onclick="exitPlay()" style="background:#fff">Thoát</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+window.__mp = { FaceLandmarker, FilesetResolver };
+</script>
+
+<script>
+/* ===================== Lưu trữ ===================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+let bank = load('htq_bank', []);
+let lessons = load('htq_lessons', []);
+let rooms = load('htq_rooms', {});
+const KEYS = ['A','B','C','D'];
+
+/* ===================== Điều hướng ===================== */
+function go(v){
+  ['home','edit','bank'].forEach(n => $('v-'+n).classList.toggle('hide', n !== v));
+  if (v === 'home') renderHome();
+  if (v === 'bank') renderBank();
+}
+window.go = go;
+
+/* ===================== Trang chủ ===================== */
+function renderHome(){
+  $('lessonList').innerHTML = lessons.length ? lessons.map(l => `
+    <div class="qitem">
+      <b>${esc(l.title)}</b>
+      <span class="pill">${l.mode} đáp án</span><span class="pill">${l.questions.length} câu</span>
+      ${l.level ? `<span class="pill">${esc(l.level)}</span>` : ''}${l.subject ? `<span class="pill">${esc(l.subject)}</span>` : ''}${l.grade ? `<span class="pill">Lớp ${esc(l.grade)}</span>` : ''}
+      <div class="row" style="margin-top:.5rem">
+        <button class="sm pri" onclick="makeRoom('${l.id}')">🎮 Tạo phòng</button>
+        <button class="sm" onclick="editLesson('${l.id}')">Sửa</button>
+        <button class="sm dng" onclick="delLesson('${l.id}')">Xóa</button>
+      </div>
+    </div>`).join('') : '<div class="empty">Chưa có bài học nào. Bấm "Tạo bài học mới".</div>';
+}
+function delLesson(id){ if(!confirm('Xóa bài học này?')) return; lessons = lessons.filter(l => l.id !== id); save('htq_lessons', lessons); renderHome(); }
+window.delLesson = delLesson;
+
+/* ===================== Soạn bài ===================== */
+let cur = null; // bài đang soạn
+function blankLesson(){
+  return { id: uid(), title:'', mode:2, shuffleQ:false, shuffleA:false, camera:true, tts:false, angle:45, next:3,
+    colors:{q:'#ffffff',a:'#29b6f6',b:'#ff7043',c:'#66bb6a',d:'#ab47bc'}, level:'', subject:'', grade:'', questions:[] };
+}
+function newLesson(){ cur = blankLesson(); fillForm(); go('edit'); }
+function editLesson(id){ cur = JSON.parse(JSON.stringify(lessons.find(l => l.id === id))); fillForm(); go('edit'); }
+window.newLesson = newLesson; window.editLesson = editLesson;
+
+function fillForm(){
+  $('f-title').value = cur.title;
+  setMode(cur.mode);
+  $('f-shufq').checked = cur.shuffleQ; $('f-shufa').checked = cur.shuffleA;
+  $('f-cam').checked = cur.camera; $('f-tts').checked = cur.tts;
+  $('f-ang').value = cur.angle; $('f-angv').textContent = cur.angle;
+  $('f-nxt').value = cur.next; $('f-nxtv').textContent = cur.next;
+  $('c-q').value = cur.colors.q; $('c-a').value = cur.colors.a; $('c-b').value = cur.colors.b;
+  $('c-c').value = cur.colors.c; $('c-d').value = cur.colors.d;
+  $('f-level').value = cur.level; $('f-subj').value = cur.subject; $('f-grade').value = cur.grade;
+  renderLessonQs();
+}
+function setMode(m){
+  cur.mode = m;
+  document.querySelectorAll('#f-mode button').forEach(b => b.classList.toggle('on', +b.dataset.v === m));
+  document.querySelectorAll('.d4').forEach(e => e.style.display = m === 4 ? '' : 'none');
+}
+document.querySelectorAll('#f-mode button').forEach(b => b.onclick = () => {
+  const m = +b.dataset.v;
+  if (m === 2 && cur.questions.some(q => q.answers.length > 2) && !confirm('Có câu có hơn 2 đáp án. Chuyển về 2 đáp án sẽ bỏ C/D. Tiếp tục?')) return;
+  setMode(m);
+});
+$('f-ang').oninput = e => $('f-angv').textContent = e.target.value;
+$('f-nxt').oninput = e => $('f-nxtv').textContent = e.target.value;
+
+function readForm(){
+  cur.title = $('f-title').value.trim();
+  cur.shuffleQ = $('f-shufq').checked; cur.shuffleA = $('f-shufa').checked;
+  cur.camera = $('f-cam').checked; cur.tts = $('f-tts').checked;
+  cur.angle = +$('f-ang').value; cur.next = +$('f-nxt').value;
+  cur.colors = { q:$('c-q').value, a:$('c-a').value, b:$('c-b').value, c:$('c-c').value, d:$('c-d').value };
+  cur.level = $('f-level').value; cur.subject = $('f-subj').value.trim(); cur.grade = $('f-grade').value.trim();
+}
+function renderLessonQs(){
+  $('qcount').textContent = cur.questions.length;
+  $('lessonQs').innerHTML = cur.questions.length ? cur.questions.map((q, i) => qHtml(q, `
+      <button class="sm" onclick="openQ(${i},'lesson')">Sửa</button>
+      <button class="sm dng" onclick="rmLessonQ(${i})">Xóa</button>`, i + 1)).join('')
+    : `<div class="empty"><p>Chưa có câu hỏi nào</p><p class="cap">Chọn từ Kho câu hỏi hoặc nhập thủ công để thêm câu hỏi.</p></div>`;
+}
+function qHtml(q, actions, n){
+  return `<div class="qitem"><b>${n ? n + '. ' : ''}${esc(q.text)}</b>${q.answers.map((a, i) => `<div class="ans ${i === q.correct ? 'ok' : ''}">${KEYS[i]}. ${esc(a)} ${i === q.correct ? '✔' : ''}</div>`).join('')}<div class="row" style="margin-top:.4rem">${actions}</div></div>`;
+}
+function rmLessonQ(i){ cur.questions.splice(i, 1); renderLessonQs(); }
+window.rmLessonQ = rmLessonQ;
+
+function saveLesson(){
+  readForm();
+  if (!cur.title) return alert('Hãy nhập tên bài học.');
+  if (!cur.questions.length) return alert('Bài học cần ít nhất 1 câu hỏi.');
+  if (!cur.level || !cur.subject || !cur.grade) return alert('Hãy điền Cấp học, Môn học và Khối lớp.');
+  if (cur.mode === 2) cur.questions.forEach(q => { if (q.correct > 1) q.correct = 0; q.answers = q.answers.slice(0, 2); });
+  const i = lessons.findIndex(l => l.id === cur.id);
+  if (i >= 0) lessons[i] = cur; else lessons.push(cur);
+  save('htq_lessons', lessons);
+  go('home');
+}
+window.saveLesson = saveLesson;
+
+/* ===================== Modal câu hỏi ===================== */
+let qCtx = { idx: null, where: 'lesson' };
+function openM(id){ $(id).classList.add('show'); }
+function closeM(id){ $(id).classList.remove('show'); }
+window.closeM = closeM;
+function ansRow(val = '', i = 0, checked = false){
+  return `<div class="row ar" style="margin-bottom:.4rem"><input type="radio" name="mq-ok" ${checked ? 'checked' : ''}><b>${KEYS[i]}</b><input type="text" value="${esc(val)}" placeholder="Đáp án ${KEYS[i]}" style="flex:1"></div>`;
+}
+function openQ(idx, where){
+  qCtx = { idx, where };
+  let q = { text:'', answers:['',''], correct:0 };
+  if (idx !== null) q = where === 'bank' ? bank[idx] : cur.questions[idx];
+  $('mq-title').textContent = idx === null ? 'Thêm câu hỏi' : 'Sửa câu hỏi';
+  $('mq-text').value = q.text;
+  const n = Math.max(q.answers.length, where === 'lesson' && cur.mode === 4 ? 4 : 2);
+  $('mq-ans').innerHTML = Array.from({length:n}, (_, i) => ansRow(q.answers[i] || '', i, i === q.correct)).join('');
+  $('mq-add').classList.toggle('hide', n >= 4);
+  $('mq-tobank').checked = where === 'lesson' && idx === null;
+  $('mq-tobank').closest('.opt').classList.toggle('hide', where === 'bank');
+  openM('m-q');
+}
+window.openQ = openQ;
+function addAnsRow(){
+  const n = $('mq-ans').children.length;
+  if (n >= 4) return;
+  $('mq-ans').insertAdjacentHTML('beforeend', ansRow('', n, false));
+  if (n + 1 >= 4) $('mq-add').classList.add('hide');
+  if (qCtx.where === 'lesson' && cur.mode === 2) setMode(4);
+}
+window.addAnsRow = addAnsRow;
+function saveQ(){
+  const text = $('mq-text').value.trim();
+  const rows = [...document.querySelectorAll('#mq-ans .ar')];
+  let answers = rows.map(r => r.querySelector('input[type=text]').value.trim());
+  let correct = rows.findIndex(r => r.querySelector('input[type=radio]').checked);
+  while (answers.length > 2 && !answers[answers.length - 1]) answers.pop();
+  if (!text) return alert('Hãy nhập câu hỏi.');
+  if (answers.length < 2 || answers.slice(0, 2).some(a => !a)) return alert('Cần ít nhất đáp án A và B.');
+  if (answers.some(a => !a)) return alert('Hãy điền hết các đáp án đang hiện.');
+  if (correct < 0 || correct >= answers.length) correct = 0;
+  const q = { id: uid(), text, answers, correct };
+  if (qCtx.where === 'bank'){
+    if (qCtx.idx !== null) bank[qCtx.idx] = { ...bank[qCtx.idx], text, answers, correct }; else bank.push(q);
+    save('htq_bank', bank); renderBank();
+  } else {
+    if (qCtx.idx !== null) cur.questions[qCtx.idx] = { ...cur.questions[qCtx.idx], text, answers, correct };
+    else { cur.questions.push(q); if ($('mq-tobank').checked) { bank.push({ ...q, id: uid() }); save('htq_bank', bank); } }
+    if (answers.length > 2) setMode(4);
+    renderLessonQs();
+  }
+  closeM('m-q');
+}
+window.saveQ = saveQ;
+
+/* ===================== Kho câu hỏi ===================== */
+function renderBank(){
+  const s = ($('bankSearch').value || '').toLowerCase();
+  const list = bank.map((q, i) => ({ q, i })).filter(({ q }) => !s || q.text.toLowerCase().includes(s) || q.answers.some(a => a.toLowerCase().includes(s)));
+  $('bankList').innerHTML = list.length ? list.map(({ q, i }) => qHtml(q, `
+      <button class="sm" onclick="openQ(${i},'bank')">Sửa</button>
+      <button class="sm dng" onclick="delBank(${i})">Xóa</button>`)).join('') : '<div class="empty">Kho trống. Thêm câu hỏi để dùng lại cho nhiều bài.</div>';
+}
+function delBank(i){ if(!confirm('Xóa câu hỏi khỏi kho?')) return; bank.splice(i, 1); save('htq_bank', bank); renderBank(); }
+function exportBank(){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(bank, null, 2)], {type:'application/json'}));
+  a.download = 'kho-cau-hoi.json'; a.click();
+}
+window.renderBank = renderBank; window.delBank = delBank; window.exportBank = exportBank;
+
+/* Chọn từ kho */
+let picked = new Set();
+function openPick(){ picked = new Set(); $('pickSearch').value = ''; renderPick(); openM('m-pick'); }
+function renderPick(){
+  const s = $('pickSearch').value.toLowerCase();
+  const html = bank.map((q, i) => ({ q, i })).filter(({ q }) => !s || q.text.toLowerCase().includes(s)).map(({ q, i }) =>
+    `<label class="qitem" style="display:flex;gap:.6rem;cursor:pointer"><input type="checkbox" ${picked.has(i) ? 'checked' : ''} onchange="togPick(${i},this.checked)"><div><b>${esc(q.text)}</b><span class="cap">${q.answers.length} đáp án · đúng: ${KEYS[q.correct]}</span></div></label>`).join('');
+  $('pickList').innerHTML = html || '<div class="empty">Kho chưa có câu hỏi phù hợp.</div>';
+}
+function togPick(i, on){ on ? picked.add(i) : picked.delete(i); }
+function addPicked(){
+  [...picked].sort((a, b) => a - b).forEach(i => cur.questions.push({ ...JSON.parse(JSON.stringify(bank[i])), id: uid() }));
+  if (cur.questions.some(q => q.answers.length > 2)) setMode(4);
+  renderLessonQs(); closeM('m-pick');
+}
+window.openPick = openPick; window.renderPick = renderPick; window.togPick = togPick; window.addPicked = addPicked;
+
+/* Nhập nhanh */
+let impTo = 'lesson';
+function openImport(where){ impTo = where || 'lesson'; $('imp-text').value = ''; $('imp-file').value = ''; openM('m-imp'); }
+$('imp-file').onchange = e => { const f = e.target.files[0]; if (f) f.text().then(t => $('imp-text').value = t); };
+function doImport(){
+  const lines = $('imp-text').value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  const out = []; let bad = 0;
+  for (const line of lines){
+    const p = line.split(/\t|\|/).map(x => x.trim());
+    if (p.length < 3){ bad++; continue; }
+    const last = p[p.length - 1].toUpperCase();
+    let correct = 0, ans;
+    if (/^[A-D]$/.test(last) && p.length >= 4){ correct = KEYS.indexOf(last); ans = p.slice(1, -1); } else ans = p.slice(1);
+    ans = ans.filter(Boolean).slice(0, 4);
+    if (ans.length < 2 || correct >= ans.length){ bad++; continue; }
+    out.push({ id: uid(), text: p[0], answers: ans, correct });
+  }
+  if (!out.length) return alert('Không đọc được dòng nào. Kiểm tra lại định dạng.');
+  if (impTo === 'bank'){ bank.push(...out); save('htq_bank', bank); renderBank(); }
+  else { cur.questions.push(...out); bank.push(...out.map(q => ({ ...q, id: uid() }))); save('htq_bank', bank); if (out.some(q => q.answers.length > 2)) setMode(4); renderLessonQs(); }
+  closeM('m-imp');
+  alert(`Đã nhập ${out.length} câu${bad ? `, bỏ qua ${bad} dòng lỗi` : ''}.`);
+}
+window.openImport = openImport; window.doImport = doImport;
+
+/* ===================== Mã phòng ===================== */
+let roomCur = null;
+function genCode(){
+  const ch = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c; do { c = Array.from({length:6}, () => ch[Math.floor(Math.random() * ch.length)]).join(''); } while (rooms[c]);
+  return c;
+}
+function makeRoom(id){
+  const l = lessons.find(x => x.id === id);
+  const code = genCode();
+  rooms[code] = JSON.parse(JSON.stringify(l));
+  save('htq_rooms', rooms);
+  roomCur = code;
+  $('roomCode').textContent = code;
+  $('roomLink').textContent = roomUrl(code, false);
+  openM('m-room');
+}
+window.makeRoom = makeRoom;
+function base(){ return location.href.split('#')[0].split('?')[0]; }
+function enc(l){ return btoa(unescape(encodeURIComponent(JSON.stringify(l)))); }
+function dec(s){ return JSON.parse(decodeURIComponent(escape(atob(s)))); }
+function roomUrl(code, withData){ return `${base()}?room=${code}` + (withData ? '#d=' + enc(rooms[code]) : ''); }
+function openRoomPage(){ window.open(roomUrl(roomCur, false), '_blank'); }
+function copyLink(withData){
+  const u = roomUrl(roomCur, withData);
+  (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => alert('Đã sao chép liên kết.'), () => prompt('Sao chép liên kết:', u));
+}
+window.openRoomPage = openRoomPage; window.copyLink = copyLink;
+function joinRoom(){
+  const c = $('joinCode').value.trim().toUpperCase();
+  if (!rooms[c]) return alert('Không tìm thấy phòng trên trình duyệt này. Hãy dùng liên kết đầy đủ từ người tạo phòng.');
+  location.href = `${base()}?room=${c}`;
+}
+window.joinRoom = joinRoom;
+
+/* ===================== TRANG CON: CHƠI ===================== */
+let L = null;            // bài đang chơi
+let order = [], qi = 0, score = 0, locked = false;
+let cam = false, landmarker = null, rafId = null, stream = null;
+let invert = false, baseRatio = null, calib = [];
+let zone = -1, zoneSince = 0, lastTs = 0, nextTimer = null, running = false;
+const HOLD_MS = 700;
+
+function initPlayPage(){
+  const code = (new URLSearchParams(location.search).get('room') || '').toUpperCase();
+  if (!code) return false;
+  let lesson = rooms[code];
+  const m = location.hash.match(/d=([^&]+)/);
+  if (m){ try { lesson = dec(m[1]); } catch {} }
+  document.querySelector('header.top').classList.add('hide');
+  document.querySelector('.wrap').classList.add('hide');
+  $('play').classList.remove('hide');
+  if (!lesson){
+    $('cTitle').textContent = 'Không tìm thấy phòng ' + code;
+    $('cInfo').textContent = 'Phòng này không có trên trình duyệt hiện tại. Hãy xin liên kết đầy đủ (kèm dữ liệu) từ người tạo phòng.';
+    $('cBtn').classList.add('hide');
+    return true;
+  }
+  L = lesson;
+  $('pTitle').textContent = L.title + ' · Phòng ' + code;
+  $('cInfo').textContent = `${L.questions.length} câu · ` + (L.camera ? `Nghiêng đầu ≥ ${L.angle}° về phía đáp án để chọn. Đầu thẳng hoặc nghiêng nhẹ thì chưa chọn.` : 'Bấm vào đáp án để chọn.');
+  $('cNote').textContent = L.camera ? 'Trình duyệt sẽ hỏi quyền dùng camera. Hình ảnh chỉ xử lý trên máy của bạn.' : '';
+  return true;
+}
+
+function shuffle(a){ for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+async function startGame(){
+  $('cBtn').disabled = true;
+  score = 0; qi = 0;
+  order = L.questions.map(q => {
+    let idx = q.answers.map((_, i) => i).slice(0, L.mode === 2 ? 2 : 4);
+    if (L.shuffleA) shuffle(idx);
+    return { text: q.text, answers: idx.map(i => q.answers[i]), correct: Math.max(0, idx.indexOf(q.correct)), picked: -1 };
+  });
+  if (L.shuffleQ) shuffle(order);
+  if (L.camera){
+    $('cTitle').textContent = 'Đang bật camera…';
+    const ok = await startCamera();
+    if (!ok){ cam = false; $('cNote').textContent = 'Không bật được camera, chuyển sang chế độ bấm tay.'; await sleep(1500); }
+    else cam = true;
+  }
+  if (cam && L.mode === 4){
+    $('cTitle').textContent = 'Giữ đầu thẳng, nhìn vào camera…';
+    calib = []; baseRatio = null;
+    await sleep(2500);
+    if (calib.length) baseRatio = calib.reduce((a, b) => a + b, 0) / calib.length;
+  }
+  $('center').classList.add('hide');
+  $('result').classList.add('hide');
+  running = true;
+  showQ();
+}
+window.startGame = startGame;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function startCamera(){
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 640, height: 480 } });
+    const v = $('cam'); v.srcObject = stream; v.classList.remove('hide'); await v.play();
+    $('gauge').classList.remove('hide');
+    let tries = 0;
+    while (!window.__mp && tries++ < 100) await sleep(100);
+    if (!window.__mp) throw new Error('mediapipe');
+    const fs = await window.__mp.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+    landmarker = await window.__mp.FaceLandmarker.createFromOptions(fs, {
+      baseOptions: { modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task' },
+      runningMode: 'VIDEO', numFaces: 1
+    });
+    loop();
+    return true;
+  } catch (e){ console.error(e); stopCamera(); return false; }
+}
+function stopCamera(){
+  cancelAnimationFrame(rafId);
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  stream = null; $('cam').classList.add('hide'); $('gauge').classList.add('hide');
+}
+
+/* Tính góc nghiêng đầu (roll) từ 2 khóe mắt ngoài: 33 (phải) & 263 (trái) */
+function loop(){
+  rafId = requestAnimationFrame(loop);
+  const v = $('cam');
+  if (!landmarker || v.readyState < 2) return;
+  const now = performance.now();
+  if (now - lastTs < 40) return;   // ~25 fps
+  lastTs = now;
+  const res = landmarker.detectForVideo(v, now);
+  const lm = res.faceLandmarks && res.faceLandmarks[0];
+  if (!lm){ $('gauge').textContent = 'Không thấy khuôn mặt'; setZone(-1); return; }
+  const W = v.videoWidth, H = v.videoHeight;
+  const r = lm[33], l = lm[263];
+  let roll = Math.atan2((l.y - r.y) * H, (l.x - r.x) * W) * 180 / Math.PI;   // + = nghiêng về vai TRÁI của người chơi
+  if (invert) roll = -roll;
+  // pitch (ngửa/cúi) cho chế độ 4 đáp án
+  const eyeY = (r.y + l.y) / 2, ratio = (lm[1].y - eyeY) / Math.max(0.001, (lm[152].y - eyeY));
+  if (calib && baseRatio === null && Math.abs(roll) < 12) calib.push(ratio);
+  const dp = baseRatio === null ? 0 : ratio - baseRatio;
+
+  const TH = L.angle;
+  let z = -1;
+  if (roll >= TH) z = 0;                  // trái  -> A
+  else if (roll <= -TH) z = 1;            // phải  -> B
+  else if (L.mode === 4 && baseRatio !== null){
+    if (dp <= -0.10) z = 2;               // ngửa  -> C
+    else if (dp >= 0.10) z = 3;           // cúi   -> D
+  }
+  $('gauge').innerHTML = `Nghiêng: <b>${roll.toFixed(0)}°</b> / cần ${TH}°` + (L.mode === 4 ? `<br>Ngửa/cúi: ${(dp * 100).toFixed(0)}` : '') + `<br>${z < 0 ? 'Chưa chọn (đầu thẳng)' : 'Đang hướng: ' + KEYS[z]}`;
+  setZone(z);
+}
+
+function setZone(z){
+  if (locked || !$('pans').children.length) return;
+  const now = performance.now();
+  if (z !== zone){ zone = z; zoneSince = now; }
+  [...$('pans').children].forEach((el, i) => {
+    const on = i === zone;
+    el.classList.toggle('hot', on);
+    el.querySelector('.fill').style.width = on ? Math.min(100, (now - zoneSince) / HOLD_MS * 100) + '%' : '0';
+  });
+  if (zone >= 0 && now - zoneSince >= HOLD_MS) choose(zone);
+}
+
+function showQ(){
+  locked = false; zone = -1;
+  const q = order[qi];
+  $('pProg').textContent = `Câu ${qi + 1}/${order.length}`;
+  $('pScore').textContent = `Điểm: ${score}`;
+  const c = L.colors;
+  $('pq').style.background = c.q;
+  const len = q.text.length;
+  $('pq').style.fontSize = (len < 40 ? 2.6 : len < 90 ? 2 : len < 160 ? 1.5 : 1.2) + 'rem';
+  $('pq').textContent = q.text;
+  const cols = [c.a, c.b, c.c, c.d];
+  const n = q.answers.length;
+  $('pans').style.gridTemplateColumns = n === 2 ? '1fr 1fr' : '1fr 1fr';
+  $('pans').style.gridTemplateRows = n === 2 ? '1fr' : '1fr 1fr';
+  $('pans').innerHTML = q.answers.map((a, i) => {
+    const fs = a.length < 20 ? 2.2 : a.length < 60 ? 1.6 : 1.2;
+    return `<div class="pa" data-i="${i}" style="background:${cols[i]};font-size:${fs}rem"><span class="k">${KEYS[i]} ${L.mode === 2 ? (i === 0 ? '👈' : '👉') : ['👈', '👉', '⬆️', '⬇️'][i]}</span>${esc(a)}<div class="fill"></div></div>`;
+  }).join('');
+  [...$('pans').children].forEach((el, i) => el.onclick = () => choose(i));
+  if (L.tts && 'speechSynthesis' in window){
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(q.text); u.lang = 'vi-VN'; speechSynthesis.speak(u);
+  }
+}
+
+function choose(i){
+  if (locked) return;
+  locked = true;
+  const q = order[qi];
+  q.picked = i;
+  const els = [...$('pans').children];
+  els.forEach((e, k) => { e.classList.remove('hot'); if (k === q.correct) e.classList.add('right'); else if (k === i) e.classList.add('wrong'); });
+  if (i === q.correct) score++;
+  $('pScore').textContent = `Điểm: ${score}`;
+  nextTimer = setTimeout(() => { qi++; qi < order.length ? showQ() : finish(); }, Math.max(1, L.next) * 1000);
+}
+
+function finish(){ showResult(false); }
+
+function stopGame(){
+  if (!running) return;
+  if (!confirm('Dừng làm bài và tính điểm? Các câu chưa làm sẽ được ghi là "chưa làm".')) return;
+  showResult(true);
+}
+
+function showResult(stopped){
+  running = false;
+  clearTimeout(nextTimer); nextTimer = null;
+  stopCamera();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  $('pans').innerHTML = ''; $('pq').textContent = '';
+  const total = order.length;
+  const ok = order.filter(q => q.picked === q.correct).length;
+  const bad = order.filter(q => q.picked >= 0 && q.picked !== q.correct).length;
+  const none = total - ok - bad;
+  $('rTitle').textContent = stopped ? 'Đã dừng làm bài' : 'Hoàn thành!';
+  $('rSub').textContent = `Điểm: ${ok}/${total} (${Math.round(ok / Math.max(1, total) * 100)}%)`;
+  $('rStats').innerHTML = `<div><b>${total}</b><small>Tổng câu</small></div><div style="color:#2ecc71"><b>${ok}</b><small>Đúng</small></div><div style="color:#ff6b5e"><b>${bad}</b><small>Sai</small></div><div style="color:#f1c40f"><b>${none}</b><small>Chưa làm</small></div>`;
+  $('rList').innerHTML = order.map((q, i) => {
+    const cls = q.picked < 0 ? 'none' : q.picked === q.correct ? 'ok' : 'bad';
+    const st = q.picked < 0 ? '⏳ Chưa làm' : q.picked === q.correct ? '✅ Đúng' : '❌ Sai';
+    const mine = q.picked < 0 ? '—' : `${KEYS[q.picked]}. ${esc(q.answers[q.picked])}`;
+    return `<div class="ri ${cls}"><div class="st">Câu ${i + 1} · ${st}</div><div class="q">${esc(q.text)}</div>` +
+      (cls === 'ok' ? `<div class="a">Bạn chọn: ${mine}</div>` : `<div class="a">Bạn chọn: ${mine}</div><div class="a">Đáp án đúng: ${KEYS[q.correct]}. ${esc(q.answers[q.correct])}</div>`) + `</div>`;
+  }).join('');
+  $('result').classList.remove('hide');
+  $('result').scrollTop = 0;
+}
+
+function playAgain(){
+  $('result').classList.add('hide');
+  $('cBtn').disabled = false;
+  startGame();
+}
+window.stopGame = stopGame; window.playAgain = playAgain;
+function toggleInvert(){ invert = !invert; $('pInvert').style.background = invert ? '#ffd' : ''; }
+function exitPlay(){ stopCamera(); location.href = base(); }
+window.toggleInvert = toggleInvert; window.exitPlay = exitPlay;
+
+/* ===================== Khởi động ===================== */
+if (!initPlayPage()) go('home');
+</script>
+</body>
+</html>
