@@ -595,7 +595,7 @@ function clap(t0, vol){
 let okAudio = null;
 function sfxOk(){
   if (muted) return;
-  if (!okAudio) okAudio = new Audio('.music/dung.mp3');
+  if (!okAudio) okAudio = new Audio('music/dung.mp3');
   okAudio.currentTime = 0;
   okAudio.play().catch(() => {});
 }
@@ -608,7 +608,7 @@ function sfxTick(urgent){
 let cheerAudio = null;
 function sfxCheer(){
   if (muted) return;
-  if (!cheerAudio) cheerAudio = new Audio('.music/hoanho.mp3');
+  if (!cheerAudio) cheerAudio = new Audio('music/hoanho.mp3');
   cheerAudio.currentTime = 0;
   cheerAudio.play().catch(() => {});
 }
