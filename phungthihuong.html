@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="vi">
 <!-- #1164ea -->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#1164ea">
 
     <!-- Tiêu đề -->
     <title>RED CARD</title>
@@ -43,28 +44,28 @@
     </div>
     <style>
         :root {
-            --bg: #000000;
-            --card: #1a1a1a;
+            --bg: #020a1f;
+            --card: #0b1a3a;
             --text: #ffffff;
-            --muted: #ffffff;
+            --muted: #cfe3ff;
             --primary: #1164ea;
-            --primary2: #24094ce2;
-            --secondary: #8412c667;
-            --accent: #a812a1;
-            --accent2: #b72323;
+            --primary2: #0a3d91;
+            --secondary: #38bdf8;
+            --accent: #22d3ee;
+            --accent2: #60a5fa;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'GoAround', sans-serif;
+            font-family: 'GoAround', 'Poppins', sans-serif;
         }
 
         body {
-            background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .1), transparent 30%),
-                radial-gradient(circle at 80% 10%, rgba(255, 255, 255, .08), transparent 25%),
-                radial-gradient(circle at 50% 90%, rgba(255, 255, 255, .05), transparent 30%),
+            background: radial-gradient(circle at 20% 20%, rgba(17, 100, 234, .35), transparent 35%),
+                radial-gradient(circle at 80% 10%, rgba(56, 189, 248, .22), transparent 30%),
+                radial-gradient(circle at 50% 90%, rgba(37, 99, 235, .25), transparent 35%),
                 var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -118,7 +119,7 @@
 
         .sidebar {
             width: 270px;
-            background: rgba(26, 26, 26, 0.97);
+            background: rgba(6, 18, 44, 0.97);
             backdrop-filter: blur(14px);
             border-right: 1px solid rgba(255, 255, 255, 0.12);
             padding: 25px 20px;
@@ -152,10 +153,10 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(#b812125a 0%,
-                    #ff0000 30%,
-                    #4f0f74a6 60%,
-                    #9f09097b 100%);
+            background: conic-gradient(#1164ea99 0%,
+                    #38bdf8 30%,
+                    #0a2a6e 60%,
+                    #2563eb99 100%);
             animation: rotate 3s linear infinite;
             padding: 4px;
         }
@@ -168,7 +169,7 @@
             display: block;
             z-index: 1;
             position: relative;
-            background: #1a1a1a;
+            background: #0b1a3a;
             border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -213,10 +214,10 @@
             right: -2px;
             bottom: -2px;
             background: linear-gradient(45deg,
-                    #790606 0%,
-                    #ff00d457 30%,
-                    #af1818 60%,
-                    #910c93c9 100%);
+                    #0a3d91 0%,
+                    #38bdf8aa 30%,
+                    #1164ea 60%,
+                    #22d3eeaa 100%);
             border-radius: 12px;
             z-index: -1;
             animation: borderGlow 3s linear infinite;
@@ -341,7 +342,7 @@
             display: block;
             z-index: 1;
             position: relative;
-            background: #1a1a1a;
+            background: #0b1a3a;
             border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -374,7 +375,7 @@
 
 
         .container {
-            background: rgba(26, 26, 26, 0.95);
+            background: rgba(8, 22, 54, 0.82);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 18px;
@@ -471,7 +472,7 @@
 
             margin-top: 15px;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(123, 92, 245, 0.4);
+            box-shadow: 0 5px 15px rgba(17, 100, 234, 0.4);
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
@@ -481,7 +482,7 @@
 
         .action-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(123, 92, 245, 0.6);
+            box-shadow: 0 8px 20px rgba(17, 100, 234, 0.6);
         }
 
         .action-btn:active {
@@ -516,15 +517,15 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 10px;
             transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(17, 100, 234, 0.5);
         }
 
         .download-option {
             padding: 1.5rem;
             border-radius: 16px;
             background: linear-gradient(135deg,
-                    rgba(255, 0, 0, 0.2),
-                    rgba(173, 74, 231, 0.2));
+                    rgba(17, 100, 234, 0.2),
+                    rgba(56, 189, 248, 0.2));
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: #e2e8f0;
             text-decoration: none;
@@ -537,10 +538,10 @@
 
         .download-option:hover {
             background: linear-gradient(135deg,
-                    rgba(255, 0, 0, 0.3),
-                    rgba(173, 74, 231, 0.3));
+                    rgba(17, 100, 234, 0.3),
+                    rgba(56, 189, 248, 0.3));
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(17, 100, 234, 0.4);
             border-color: var(--primary);
         }
 
@@ -555,7 +556,7 @@
         }
 
         .features-section {
-            background: rgba(26, 26, 26, 0.95);
+            background: rgba(8, 22, 54, 0.82);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 18px;
@@ -618,14 +619,14 @@
 
             border-radius: 20px;
             padding: 2rem;
-            border: 1px solid rgba(214, 0, 0, 0.893);
+            border: 1px solid rgba(147, 197, 253, 0.55);
             transition: all 0.4s ease;
 
         }
 
         .feature-card:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(17, 100, 234, 0.3);
             border-color: var(--primary);
         }
 
@@ -645,8 +646,8 @@
             margin-bottom: 0.8rem;
             color: #e2e8f0;
             text-shadow: 
-                0 0 5px rgba(255,0,0,0.6),
-                0 0 10px rgba(255,0,0,0.3);
+                0 0 5px rgba(10,40,120,0.6),
+                0 0 10px rgba(10,40,120,0.3);
             font-weight: 600;
         }
 
@@ -749,7 +750,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #020a1f 0%, #06235c 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -777,7 +778,7 @@
 
         .loading-logo i {
             font-size: 2.5rem;
-            color: #ff0000ee;
+            color: #38bdf8;
         }
 
         .loading-logo span {
@@ -798,7 +799,7 @@
         .loading-progress {
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, #ff0000ee, #de1818);
+            background: linear-gradient(90deg, #38bdf8, #1164ea);
             border-radius: 2px;
             animation: loadingProgress 3s ease-in-out forwards;
         }
@@ -825,7 +826,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            background: linear-gradient(135deg, #020a1f 0%, #06235c 50%, #0b3a8a 100%);
         }
 
         .loading-logo span {
@@ -833,12 +834,12 @@
             font-size: 32px;
             font-weight: 600;
 
-            color: #ff2b2b;
+            color: #7dd3fc;
 
             text-shadow:
-                0 0 5px rgba(255, 43, 43, 0.377),
-                0 0 12px rgba(255, 43, 43, 0.377),
-                0 0 24px rgba(255, 43, 43, 0.377);
+                0 0 5px rgba(56, 189, 248, 0.5),
+                0 0 12px rgba(56, 189, 248, 0.5),
+                0 0 24px rgba(56, 189, 248, 0.5);
 
             letter-spacing: 2px;
         }
@@ -862,7 +863,7 @@
         }
 
         #qrBox {
-            background: #111;
+            background: #071a40;
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(0, 0, 0, .6);
@@ -928,28 +929,122 @@
         .confirm-btn {
             margin-top: 25px;
             padding: 14px 32px;
-            background: linear-gradient(135deg, #ff2e2e, #ff4d4d);
+            background: linear-gradient(135deg, #1164ea, #38bdf8);
             border: none;
             border-radius: 14px;
             color: #fff;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
+            box-shadow: 0 8px 20px rgba(17, 100, 234, 0.35);
             transition: all 0.25s ease;
             letter-spacing: 0.5px;
         }
 
         .confirm-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 12px 25px rgba(17, 100, 234, 0.5);
         }
 
         .confirm-btn:active {
             transform: scale(0.96);
-            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 4px 10px rgba(17, 100, 234, 0.4);
         }
         /* RINGS */
+
+
+/* =====================================================
+   GIAO DIỆN TÔNG XANH (ghi đè, đặt cuối cùng)
+===================================================== */
+html{scroll-behavior:smooth}
+::selection{background:#1164ea;color:#fff}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#041539}
+::-webkit-scrollbar-thumb{background:linear-gradient(#1164ea,#38bdf8);border-radius:10px}
+
+#particleCanvas{
+  background:
+    radial-gradient(circle at 15% 10%, rgba(17,100,234,.42), transparent 42%),
+    radial-gradient(circle at 88% 22%, rgba(56,189,248,.24), transparent 36%),
+    radial-gradient(circle at 50% 105%, rgba(37,99,235,.34), transparent 48%),
+    linear-gradient(180deg,#020a1f 0%,#041a45 55%,#052a68 100%);
+}
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;border-radius:50%;opacity:0;box-shadow:0 0 10px rgba(96,165,250,.95);animation:floatUp 6s ease-in infinite}
+@keyframes floatUp{
+  0%{transform:translateY(24px) scale(.6);opacity:0}
+  20%{opacity:.95}
+  100%{transform:translateY(-150px) scale(1.25);opacity:0}
+}
+
+/* Logo + tên */
+.main-logo-ring{
+  background:conic-gradient(#1164ea,#38bdf8,#0a2a6e,#60a5fa,#1164ea);
+  filter:blur(5px);opacity:.95;box-shadow:0 0 40px rgba(56,189,248,.6);
+}
+.main-logo{border:3px solid rgba(147,197,253,.75);box-shadow:0 0 30px rgba(17,100,234,.75)}
+.main-app-title{
+  font-family:'Wolfsbane','Poppins',sans-serif;
+  background:linear-gradient(90deg,#ffffff,#93c5fd 40%,#38bdf8 70%,#ffffff);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;text-shadow:none;
+  filter:drop-shadow(0 0 14px rgba(56,189,248,.6));
+  letter-spacing:.5px;text-align:center;
+}
+
+/* Khung chính */
+.container,.features-section{
+  background:linear-gradient(160deg,rgba(10,30,72,.86),rgba(5,16,42,.92));
+  border:1px solid rgba(96,165,250,.38);
+  box-shadow:0 12px 40px rgba(2,10,31,.7),0 0 40px rgba(17,100,234,.2),inset 0 0 0 1px rgba(56,189,248,.08);
+}
+.container::before,.features-section::before{height:4px;background:linear-gradient(90deg,#1164ea,#38bdf8,#1164ea)}
+.features-title{color:#e0f2fe;text-shadow:0 0 14px rgba(56,189,248,.65)}
+.features-title i{color:#38bdf8}
+.features-grid{gap:1.2rem}
+.feature-section{margin-top:1.6rem}
+
+/* Thẻ tính năng */
+.feature-card{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#2f7df5 0%,#1164ea 45%,#0a3d91 100%);
+  border:1px solid rgba(147,197,253,.55);
+  box-shadow:0 8px 22px rgba(17,100,234,.38);
+  transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+}
+.feature-card::after{
+  content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);
+  transform:skewX(-20deg);transition:left .7s ease;pointer-events:none;
+}
+.feature-card:hover::after{left:140%}
+.feature-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 18px 44px rgba(56,189,248,.55);
+  border-color:#bae6fd;
+}
+.feature-icon{
+  background:none;-webkit-text-fill-color:#fff;color:#fff;
+  text-shadow:0 0 16px rgba(186,230,253,.95);
+}
+.feature-title{color:#fff;text-shadow:0 2px 8px rgba(2,10,60,.55)}
+
+.footer{color:#8db4f0;text-shadow:0 0 10px rgba(56,189,248,.4)}
+
+/* Cửa sổ QR */
+#qrOverlay{background:rgba(2,10,31,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#qrBox{
+  background:linear-gradient(160deg,#0a1f4d,#05122e);
+  border:1px solid rgba(96,165,250,.5);
+  box-shadow:0 0 50px rgba(17,100,234,.6);
+}
+.confirm-btn{background:linear-gradient(135deg,#1164ea,#38bdf8);box-shadow:0 8px 20px rgba(17,100,234,.45)}
+.confirm-btn:hover{box-shadow:0 12px 26px rgba(56,189,248,.6)}
+
+@media (max-width:640px){
+  .main-app-title{font-size:34px}
+  .feature-card{padding:1.4rem}
+}
 
 </style>
 </head>
@@ -997,7 +1092,7 @@
                         <h4 class="feature-icon"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">
                             <img src="image/zalo.svg" alt="Zalo"
-                                style="width:60px; height:60px; object-fit:contain; fill: #1164ea;">
+                                style="width:100px; height:60px; object-fit:contain; fill: #1164ea;">
                         </h4>
                         <h4 class="feature-title"
                             style="display:flex; align-items:center; justify-content:center; gap:10px;">Zalo</h4>
@@ -1033,6 +1128,29 @@
                     <div id="qrContainer" style="margin-top:20px; text-align:center;"></div>
                 </div>
 
+            <div class="feature-section">
+                <h3 class="features-title">
+                    <i class="fas fa-gamepad"></i>
+                    Game
+                </h3>
+
+                <div class="feature-card"
+                     onclick="window.location.href='https://vip-redcard.github.io/gamelacdau'"
+                     style="cursor: pointer;">
+
+                    <div class="feature-icon"
+                         style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                
+                    <h4 class="feature-title"
+                        style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        Game lắc đầu
+                    </h4>
+                
+                </div>
+            </div>
+
             <div class="footer">
                 © 2026 - RED CARD
             </div>
@@ -1041,7 +1159,7 @@
 <script>
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
-        const particleCount = 15;
+        const particleCount = 28;
 
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
@@ -1060,7 +1178,7 @@
             particle.style.animationDelay = `${delay}s`;
             particle.style.animationDuration = `${duration}s`;
 
-            const colors = ['#ff0000', '#de1818', '#ff00001a'];
+            const colors = ['#60a5fa', '#1164ea', '#38bdf81a'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             particle.style.background = randomColor;
 
@@ -1068,6 +1186,7 @@
         }
     }
 
+    createParticles();
     const params = new URLSearchParams(window.location.search);
     const msg = params.get("msg");
 
@@ -1333,14 +1452,14 @@ async function captureOptimized() {
     <div id="qrBox" onclick="event.stopPropagation()" style="text-align:center;">
 
         <p id="bankName"
-           style="color:#ff4343; font-size:30px; margin-bottom:10px;">
+           style="color:#7dd3fc; font-size:30px; margin-bottom:10px;">
             VietTinBank
         </p>
         <img id="qrImage" style="display:inline-block;
                     padding:23px;
-                    background:#111;
+                    background:#0a1f4d;
                     border-radius:20px;
-                    box-shadow:0 0 30px rgba(255,0,0,0.4);">
+                    box-shadow:0 0 30px rgba(56,189,248,0.5);">
         <br>
         <button id="saveBtn" class="confirm-btn" onclick="captureOptimized()" style="text-align:center;">
             Lưu
