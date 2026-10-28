@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <title>Lắc đầu chọn đáp án</title>
+<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+<link rel="icon" sizes="32x32" href="https://l.top4top.io/p_3697xu4r61.png">
 <style>
 :root{--pri:#1164ea;--pri2:#38bdf8;--cy:#22d3ee;--ink:#0b2559;--tx:#16305f;--mut:#61769c;--bd:#d7e5fb;--bg:#eef5ff}
 *{box-sizing:border-box}
@@ -593,7 +595,7 @@ function clap(t0, vol){
 let okAudio = null;
 function sfxOk(){
   if (muted) return;
-  if (!okAudio) okAudio = new Audio('dung.mp3');
+  if (!okAudio) okAudio = new Audio('.music/dung.mp3');
   okAudio.currentTime = 0;
   okAudio.play().catch(() => {});
 }
@@ -606,7 +608,7 @@ function sfxTick(urgent){
 let cheerAudio = null;
 function sfxCheer(){
   if (muted) return;
-  if (!cheerAudio) cheerAudio = new Audio('hoanho.mp3');
+  if (!cheerAudio) cheerAudio = new Audio('.music/hoanho.mp3');
   cheerAudio.currentTime = 0;
   cheerAudio.play().catch(() => {});
 }
