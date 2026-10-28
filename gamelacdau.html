@@ -3,84 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1164ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <title>Lắc đầu chọn đáp án</title>
+<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+<link rel="icon" sizes="32x32" href="https://l.top4top.io/p_3697xu4r61.png">
 <style>
-:root{--pri:#667eea;--bg:#f4f6fb;--tx:#222;--mut:#6c757d;--bd:#e9ecef}
+:root{--pri:#1164ea;--pri2:#38bdf8;--cy:#22d3ee;--ink:#0b2559;--tx:#16305f;--mut:#61769c;--bd:#d7e5fb;--bg:#eef5ff}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
-header.top{background:#fff;border-bottom:1px solid var(--bd);padding:.7rem 1rem;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:5}
-header.top h1{font-size:1.1rem;margin:0 auto 0 0}
-.wrap{max-width:900px;margin:1rem auto;padding:0 1rem}
-.card{background:#fff;border-radius:12px;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:1rem}
-h2,h3,h5{margin:.2rem 0 .8rem}
-label.fl{display:block;font-weight:600;margin:.6rem 0 .25rem}
-input[type=text],textarea,select{width:100%;padding:.6rem .7rem;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
-textarea{min-height:70px;resize:vertical}
-button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--pri);background:#fff;color:var(--pri);padding:.5rem .9rem}
-button:hover{filter:brightness(.96)}
-button.pri{background:var(--pri);color:#fff}
-button.dng{border-color:#dc3545;color:#dc3545}
-button.sm{padding:.25rem .6rem;font-size:.85rem}
-.grad{border:none;color:#fff;font-weight:700;padding:.7rem 1rem;flex:1 1 150px}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:'Nunito','Be Vietnam Pro',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(900px 520px at 8% -8%,rgba(56,189,248,.30),transparent 60%),radial-gradient(820px 520px at 100% 0%,rgba(17,100,234,.20),transparent 55%),linear-gradient(180deg,#eef5ff,#f7fbff 55%,#e9f1ff);background-attachment:fixed}
+::selection{background:#1164ea;color:#fff}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:linear-gradient(#1164ea,#38bdf8);border-radius:10px}
+:focus-visible{outline:3px solid rgba(56,189,248,.65);outline-offset:2px}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes tiltIco{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+@keyframes tilt{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(28deg)}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
+/* ---------- Thanh trên ---------- */
+header.top{background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:.65rem 1.1rem;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:5;box-shadow:0 4px 18px rgba(17,100,234,.08)}
+header.top h1{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.3rem;margin:0 auto 0 0;display:flex;align-items:center;gap:.55rem;color:var(--ink)}
+header.top h1 em{font-style:normal;background:linear-gradient(90deg,#1164ea,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand-ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#1164ea,#38bdf8);box-shadow:0 6px 16px rgba(17,100,234,.4);font-size:1.3rem;animation:tiltIco 3s ease-in-out infinite}
+.wrap{max-width:920px;margin:1.1rem auto;padding:0 1rem}
+#v-home,#v-edit,#v-bank{animation:rise .35s ease}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:1.5rem 1.6rem;margin-bottom:1.1rem;color:#fff;background:linear-gradient(135deg,#0a3d91 0%,#1164ea 55%,#38bdf8 120%);box-shadow:0 16px 40px rgba(17,100,234,.35)}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero::before{width:220px;height:220px;right:-60px;top:-90px}
+.hero::after{width:140px;height:140px;right:90px;bottom:-80px;background:rgba(255,255,255,.08)}
+.hero h2{color:#fff;margin:0 0 .3rem;font-size:1.6rem;position:relative}
+.hero p{margin:0 0 1rem;opacity:.92;position:relative}
+.steps{display:flex;gap:.7rem;flex-wrap:wrap;position:relative}
+.steps div{display:flex;align-items:center;gap:.55rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:14px;padding:.45rem .8rem;font-weight:700;font-size:.9rem}
+.steps b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#1164ea}
+
+/* ---------- Thẻ, chữ, form ---------- */
+.card{background:#fff;border:1px solid var(--bd);border-radius:20px;padding:1.4rem;box-shadow:0 10px 30px rgba(17,100,234,.10);margin-bottom:1.1rem;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#1164ea,#38bdf8)}
+h2,h3,h5{margin:.2rem 0 .8rem;font-family:'Baloo 2','Nunito',sans-serif;color:var(--ink)}
+label.fl{display:block;font-weight:800;margin:.8rem 0 .3rem;color:var(--ink)}
+input[type=text],textarea,select{width:100%;padding:.65rem .85rem;border:1.5px solid var(--bd);border-radius:12px;font:inherit;background:#f9fbff;color:var(--ink);transition:border-color .2s,box-shadow .2s,background .2s}
+input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px rgba(17,100,234,.15);background:#fff}
+textarea{min-height:76px;resize:vertical}
+input[type=range]{accent-color:var(--pri);height:28px}
+input[type=radio],input[type=checkbox]{accent-color:var(--pri)}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:12px;border:1.5px solid var(--pri);background:#fff;color:var(--pri);padding:.5rem 1rem;transition:transform .15s,box-shadow .15s,background .15s,filter .15s}
+button:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(17,100,234,.2);background:#f1f7ff}
+button:active{transform:translateY(1px) scale(.98)}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+button.pri{background:linear-gradient(135deg,#1164ea,#2f9bff);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(17,100,234,.35)}
+button.pri:hover{background:linear-gradient(135deg,#0f5bd6,#2490f5);filter:brightness(1.05)}
+button.dng{border-color:#ef4444;color:#ef4444}
+button.dng:hover{background:#fff5f5;box-shadow:0 8px 18px rgba(239,68,68,.2)}
+button.sm{padding:.28rem .7rem;font-size:.85rem;border-radius:10px}
+.grad{border:none;color:#fff;font-weight:800;padding:.8rem 1rem;flex:1 1 150px;box-shadow:0 8px 18px rgba(17,100,234,.25)}
 .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-.opt{display:flex;gap:.6rem;align-items:flex-start;margin:.6rem 0}
-.opt input{margin-top:.3rem}
-.opt small,.cap{display:block;color:var(--mut);font-size:.8rem}
-.tog{display:inline-flex}
-.tog button{border-radius:0}
-.tog button:first-child{border-radius:8px 0 0 8px}
-.tog button:last-child{border-radius:0 8px 8px 0}
-.tog button.on{background:var(--pri);color:#fff}
-.qitem{border:1px solid var(--bd);border-radius:8px;padding:.7rem;margin-bottom:.5rem;background:#fafbfc}
-.qitem b{display:block;margin-bottom:.3rem}
-.ans{font-size:.9rem;color:#444}
-.ans.ok{color:#2e7d32;font-weight:700}
-.empty{text-align:center;padding:2rem;background:#f8f9fa;border-radius:8px;color:var(--mut)}
-.colors{display:flex;gap:1.2rem;flex-wrap:wrap}
-.colors label{display:flex;align-items:center;gap:.5rem;cursor:pointer}
-.colors input{width:34px;height:34px;padding:0;border:none;border-radius:6px;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:20;padding:1rem}
-.modal.show{display:flex}
-.modal .box{background:#fff;border-radius:12px;padding:1.2rem;max-width:620px;width:100%;max-height:90vh;overflow:auto}
-.pill{display:inline-block;background:#eef0ff;color:var(--pri);border-radius:999px;padding:.1rem .6rem;font-size:.8rem;margin-right:.3rem}
-.code{font-size:2rem;font-weight:800;letter-spacing:.3rem;color:var(--pri)}
+.opt{display:flex;gap:.7rem;align-items:flex-start;margin:.55rem 0;padding:.7rem .9rem;border:1px solid var(--bd);border-radius:14px;background:#f9fbff;transition:border-color .2s,background .2s}
+.opt:hover{border-color:#9cc3ff;background:#f3f8ff}
+.opt input{margin-top:.25rem;width:18px;height:18px;flex:none}
+.opt b{color:var(--ink)}
+.opt small,.cap{display:block;color:var(--mut);font-size:.82rem;line-height:1.4}
+.tog{display:inline-flex;background:#e6f0ff;border-radius:14px;padding:4px;gap:4px}
+.tog button{border:none;background:transparent;border-radius:10px;color:var(--pri);padding:.45rem 1.2rem;box-shadow:none}
+.tog button:hover{background:rgba(17,100,234,.1);transform:none;box-shadow:none}
+.tog button.on{background:linear-gradient(135deg,#1164ea,#38bdf8);color:#fff;box-shadow:0 4px 12px rgba(17,100,234,.35)}
+.qitem{border:1px solid var(--bd);border-left:5px solid var(--pri2);border-radius:14px;padding:.8rem 1rem;margin-bottom:.6rem;background:#fbfdff;transition:box-shadow .2s,transform .2s}
+.qitem:hover{box-shadow:0 8px 20px rgba(17,100,234,.12);transform:translateY(-1px)}
+.qitem b{display:block;margin-bottom:.3rem;color:var(--ink)}
+.ans{font-size:.92rem;color:#3c4f76;padding:.05rem 0}
+.ans.ok{color:#047857;font-weight:800}
+.empty{text-align:center;padding:2rem 1rem;background:#f3f8ff;border:2px dashed #b9d3fb;border-radius:16px;color:var(--mut)}
+.colors{display:flex;gap:.6rem;flex-wrap:wrap}
+.colors label{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.4rem .75rem;border:1px solid var(--bd);border-radius:12px;background:#f9fbff;font-weight:700;font-size:.9rem}
+.colors input{width:34px;height:34px;padding:0;border:none;border-radius:10px;cursor:pointer;background:none}
+.pill{display:inline-block;background:#e6f0ff;color:#1164ea;border-radius:999px;padding:.15rem .7rem;font-size:.78rem;font-weight:800;margin-right:.3rem}
+.code{display:inline-block;font-family:'Baloo 2','Nunito',sans-serif;font-size:2.6rem;font-weight:800;letter-spacing:.45rem;padding:.1rem 1.1rem .1rem 1.5rem;border:2px dashed #9cc3ff;border-radius:18px;background-image:linear-gradient(90deg,#1164ea,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hide{display:none!important}
-/* play */
-#play{position:fixed;inset:0;background:#10131c;color:#fff;display:flex;flex-direction:column;z-index:30}
-#play .bar{display:flex;gap:.6rem;align-items:center;padding:.5rem 1rem;background:#181c28;flex-wrap:wrap}
-#play .bar span{font-size:.9rem}
-#play .bar .sp{margin-left:auto}
-#pstage{flex:1;display:flex;flex-direction:column;padding:.8rem;gap:.8rem;min-height:0}
-#pq{border-radius:14px;padding:1rem;text-align:center;display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:20vh;color:#111;font-weight:700}
-#pans{flex:1;display:grid;gap:.8rem;min-height:0}
-.pa{border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;color:#fff;text-align:center;padding:.6rem;cursor:pointer;position:relative;overflow:hidden;border:5px solid transparent;transition:transform .15s}
-.pa .k{font-size:1.6rem;opacity:.85}
-.pa .fill{position:absolute;left:0;bottom:0;height:8px;background:#fff;width:0}
-.pa.hot{transform:scale(1.03);border-color:#fff}
-.pa.right{border-color:#2ecc71;box-shadow:0 0 0 6px rgba(46,204,113,.5)}
-.pa.wrong{border-color:#e74c3c;opacity:.6}
-#cam{position:absolute;right:12px;bottom:12px;width:170px;border-radius:10px;transform:scaleX(-1);border:2px solid #fff;z-index:3;background:#000}
-#gauge{position:absolute;right:12px;bottom:calc(12px + 130px);width:170px;background:rgba(0,0,0,.65);border-radius:8px;padding:.3rem .5rem;font-size:.8rem;z-index:3;text-align:center}
-#center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:rgba(16,19,28,.94);z-index:6;text-align:center;padding:1rem}
-#center h1{margin:0;font-size:2rem}
-#result{position:absolute;inset:0;background:#10131c;z-index:10;overflow:auto;padding:1rem}
-#result .rbox{max-width:760px;margin:0 auto}
-.rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1rem}
-.rstats div{border-radius:10px;padding:.6rem;text-align:center;background:#1e2333}
-.rstats b{display:block;font-size:1.6rem}
-.rstats small{opacity:.8}
-.ri{border-radius:10px;padding:.7rem .9rem;margin-bottom:.5rem;background:#1e2333;border-left:6px solid #888}
-.ri.ok{border-left-color:#2ecc71}.ri.bad{border-left-color:#e74c3c}.ri.none{border-left-color:#f1c40f}
-.ri .st{font-weight:700;font-size:.85rem}
-.ri.ok .st{color:#2ecc71}.ri.bad .st{color:#ff6b5e}.ri.none .st{color:#f1c40f}
-.ri .q{font-weight:700;margin:.2rem 0}
-.ri .a{font-size:.9rem;opacity:.9}
+
+/* ---------- Cửa sổ nhỏ ---------- */
+.modal{position:fixed;inset:0;background:rgba(4,18,46,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:1rem}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:22px;padding:1.4rem;max-width:640px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 30px 80px rgba(2,10,31,.45);border-top:5px solid var(--pri);animation:pop .25s ease}
+
+/* =====================  TRANG CHƠI  ===================== */
+#play{position:fixed;inset:0;color:#fff;display:flex;flex-direction:column;z-index:30;overflow:hidden;
+  background:radial-gradient(900px 600px at 12% 0%,rgba(17,100,234,.5),transparent 60%),radial-gradient(800px 600px at 100% 100%,rgba(56,189,248,.3),transparent 55%),linear-gradient(180deg,#04122e,#071b45)}
+#play .bar{display:flex;gap:.6rem;align-items:center;padding:.55rem 1rem;background:rgba(255,255,255,.07);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(147,197,253,.2);flex-wrap:wrap}
+#play .bar b{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.05rem}
+#play .bar span{font-size:.9rem;padding:.15rem .75rem;border-radius:999px;background:rgba(56,189,248,.16);border:1px solid rgba(147,197,253,.3);font-weight:800}
+#play .bar span:empty{display:none}
+#play .bar span.sp{display:block;background:none;border:0;padding:0;margin-left:auto}
+#play .bar span#pTime{background:rgba(250,204,21,.18);border-color:rgba(250,204,21,.5);color:#fde68a;min-width:4.6rem;text-align:center}
+#play .bar span#pTime.warn{background:rgba(239,68,68,.35);border-color:#fca5a5;color:#fff;animation:beat .5s ease-in-out infinite}
+#play .bar button{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none}
+#play .bar button:hover{background:rgba(255,255,255,.22)}
+#play .bar button.stop{background:linear-gradient(135deg,#f97316,#ef4444);border-color:transparent;box-shadow:0 6px 16px rgba(239,68,68,.4)}
+#pbar{height:5px;background:rgba(255,255,255,.1)}
+#pbarFill{display:block;height:100%;width:0;background:linear-gradient(90deg,#1164ea,#38bdf8,#22d3ee);border-radius:0 6px 6px 0;transition:width .5s ease;box-shadow:0 0 12px rgba(56,189,248,.8)}
+#tbar{height:6px;background:rgba(255,255,255,.08)}
+#tbarFill{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#facc15);transition:width .1s linear}
+#tbar.warn #tbarFill{background:linear-gradient(90deg,#f97316,#ef4444)}
+#pstage{flex:1;display:flex;flex-direction:column;padding:14px;gap:14px;min-height:0}
+#pq{border-radius:22px;padding:1rem 1.4rem;text-align:center;display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:18vh;max-height:34vh;overflow:auto;color:#0b2559;font-family:'Baloo 2','Nunito',sans-serif;font-weight:800;line-height:1.2;overflow-wrap:anywhere;box-shadow:0 14px 34px rgba(0,0,0,.4),inset 0 0 0 3px rgba(17,100,234,.12)}
+
+/* Khu đáp án + camera ở giữa */
+#pwrap{--D:clamp(96px,min(22vw,24vh),190px);position:relative;flex:1;min-height:0}
+#pans{position:absolute;inset:0;display:grid;gap:14px;grid-template-columns:1fr 1fr;grid-template-rows:1fr}
+#pans.n3,#pans.n4{grid-template-rows:1fr 1fr}
+#pwrap.has-cam #pans{column-gap:calc(var(--D) + 40px)}
+#pwrap.has-cam #pans.n3,#pwrap.has-cam #pans.n4{row-gap:calc(var(--D) + 40px)}
+#camBox{position:absolute;left:50%;top:50%;width:var(--D);height:var(--D);transform:translate(-50%,-50%);z-index:3;--p:0%;--rc:#38bdf8}
+.camring{width:100%;height:100%;border-radius:50%;padding:6px;background:conic-gradient(var(--rc) var(--p),rgba(255,255,255,.22) 0);box-shadow:0 0 0 4px rgba(4,18,46,.85),0 0 30px rgba(56,189,248,.5)}
+#cam{width:100%;height:100%;border-radius:50%;object-fit:cover;transform:scaleX(-1);background:#000;display:block}
+#gauge{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);white-space:nowrap;max-width:calc(var(--D) + 20px);overflow:hidden;text-overflow:ellipsis;padding:.18rem .65rem;border-radius:999px;font-size:.72rem;font-weight:800;background:rgba(4,18,46,.94);border:1px solid rgba(147,197,253,.5);color:#bfdbfe}
+#gauge.on{background:#16a34a;border-color:#86efac;color:#fff}
+
+/* Ô đáp án */
+.pa{border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Baloo 2','Nunito',sans-serif;font-weight:800;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.35);text-align:center;padding:.8rem;cursor:pointer;position:relative;overflow:hidden;min-width:0;min-height:0;border:4px solid rgba(255,255,255,.18);box-shadow:0 12px 26px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s,opacity .2s}
+.pa::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.3),transparent 45%,rgba(0,0,0,.16));pointer-events:none}
+.pa .k{position:relative;display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;z-index:1}
+.pa .k b{width:2.4rem;height:2.4rem;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.96);color:#0b2559;font-size:1.3rem;text-shadow:none;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+.pa .k i{font-style:normal;font-size:1.6rem}
+.pa .at{position:relative;z-index:1;max-width:100%;overflow-wrap:anywhere;line-height:1.2}
+.pa .fill{position:absolute;left:0;bottom:0;height:10px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.7));width:0;box-shadow:0 0 12px rgba(255,255,255,.8)}
+.pa.hot{transform:scale(1.02);border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.9),0 0 38px rgba(255,255,255,.55)}
+.pa.right{border-color:#34d399;box-shadow:0 0 0 4px #10b981,0 0 44px rgba(16,185,129,.75)}
+.pa.wrong{border-color:#f87171;opacity:.55}
+.pa.right::after,.pa.wrong::after{position:absolute;top:10px;right:14px;z-index:2;font-size:1.8rem;width:2.6rem;height:2.6rem;display:grid;place-items:center;border-radius:50%;background:#fff;text-shadow:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.pa.right::after{content:'✔';color:#059669}
+.pa.wrong::after{content:'✖';color:#dc2626}
+
+/* Màn hình bắt đầu */
+#center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:radial-gradient(700px 500px at 50% 30%,rgba(17,100,234,.5),transparent 65%),rgba(4,18,46,.97);z-index:6;text-align:center;padding:1.2rem}
+.headicon{font-size:5rem;line-height:1;animation:tilt 1.8s ease-in-out infinite;filter:drop-shadow(0 10px 24px rgba(56,189,248,.5))}
+#center h1{margin:0;font-family:'Baloo 2','Nunito',sans-serif;font-size:clamp(1.7rem,5vw,2.6rem);background:linear-gradient(90deg,#fff,#93c5fd 50%,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#cInfo{line-height:1.5;color:#cfe3ff}
+#cBtn{border-radius:16px;box-shadow:0 12px 32px rgba(17,100,234,.6)}
+#cNote{color:#9db8e6}
+
+/* Kết quả */
+#result{position:absolute;inset:0;z-index:10;overflow:auto;padding:1.2rem;background:radial-gradient(800px 500px at 10% 0%,rgba(17,100,234,.5),transparent 60%),linear-gradient(180deg,#04122e,#071b45)}
+#result .rbox{max-width:780px;margin:0 auto}
+#rTitle{font-size:2rem;background:linear-gradient(90deg,#fff,#93c5fd 55%,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#rSub{font-size:1.3rem;font-weight:800;color:#bfe0ff}
+.rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+.rstats div{border-radius:16px;padding:.8rem .4rem;text-align:center;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.rstats b{display:block;font-family:'Baloo 2','Nunito',sans-serif;font-size:2rem;line-height:1.1}
+.rstats small{opacity:.9;font-weight:700}
+.t-all{background:linear-gradient(135deg,#1e40af,#1164ea)}
+.t-ok{background:linear-gradient(135deg,#047857,#10b981)}
+.t-bad{background:linear-gradient(135deg,#b91c1c,#ef4444)}
+.t-none{background:linear-gradient(135deg,#b45309,#f59e0b)}
+.ri{border-radius:14px;padding:.75rem 1rem;margin-bottom:.55rem;background:rgba(255,255,255,.08);border:1px solid rgba(147,197,253,.2);border-left:6px solid #94a3b8}
+.ri.ok{border-left-color:#34d399}.ri.bad{border-left-color:#f87171}.ri.none{border-left-color:#fbbf24}
+.ri .st{font-weight:800;font-size:.85rem}
+.ri.ok .st{color:#6ee7b7}.ri.bad .st{color:#fca5a5}.ri.none .st{color:#fcd34d}
+.ri .q{font-weight:800;margin:.2rem 0}
+.ri .a{font-size:.92rem;opacity:.92}
+
+@media (max-width:640px){
+  .wrap{padding:0 .7rem}.card{padding:1rem}.hero{padding:1.1rem}.hero h2{font-size:1.3rem}
+  header.top h1{font-size:1.1rem}
+  .rstats{grid-template-columns:repeat(2,1fr)}
+  .pa .k b{width:2rem;height:2rem;font-size:1.1rem}.pa .k i{font-size:1.3rem}
+}
+@media (max-height:520px){
+  #pwrap{--D:68px}
+  #pwrap.has-cam #pans{column-gap:calc(var(--D) + 36px)}
+  #pwrap.has-cam #pans.n3,#pwrap.has-cam #pans.n4{row-gap:calc(var(--D) + 36px)}
+  #pstage{padding:8px;gap:8px}
+  #pq{min-height:0;max-height:22vh;padding:.3rem .8rem;font-size:1.25rem!important}
+  #pans{gap:8px}
+  .pa{border-radius:16px;padding:.3rem;border-width:3px}
+  .pa .k{display:none}
+  .camring{padding:4px}
+  #play .bar{padding:.3rem .8rem}
+  #center{gap:.5rem}.headicon{font-size:3rem}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style id="skin2">
+/* ===== GIAO DIỆN MỚI: sảnh + game ===== */
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(8deg)}}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.15)}}
+@keyframes paIn{from{opacity:0;transform:translateY(26px) scale(.9)}}
+@keyframes qIn{from{opacity:0;transform:translateY(-14px) scale(.97)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.16)}}
+@keyframes btnPulse{0%,100%{box-shadow:0 12px 32px rgba(17,100,234,.6),0 0 0 0 rgba(56,189,248,.55)}50%{box-shadow:0 12px 32px rgba(17,100,234,.6),0 0 0 16px rgba(56,189,248,0)}}
+@keyframes fall{to{transform:translateY(112vh) rotate(var(--r))}}
+@keyframes shine{from{background-position:200% 0}to{background-position:-200% 0}}
+
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(17,100,234,.09) 1.5px,transparent 1.6px);background-size:26px 26px}
+header.top button{border-radius:999px}
+header.top{box-shadow:0 6px 24px rgba(17,100,234,.10)}
+.card{border-radius:22px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem}
+.sechead h2{margin:0}
+
+/* --- Hero --- */
+.hero{padding:2rem 1.8rem;border-radius:28px;background:linear-gradient(135deg,#0a3d91 0%,#1164ea 50%,#22b8f0 115%)}
+.hero .eyebrow{display:inline-block;position:relative;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:.2rem .85rem;border-radius:999px;font-weight:800;font-size:.8rem;margin-bottom:.7rem}
+.hero h2{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.15}
+.hero .wob{display:inline-block;animation:tiltIco 2.4s ease-in-out infinite}
+.hstats{display:flex;gap:.6rem;flex-wrap:wrap;margin:0 0 1rem;position:relative}
+.hstats span{background:rgba(4,18,46,.28);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:.3rem .85rem;font-weight:700;font-size:.88rem}
+.hstats b{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.35rem;margin-right:.3rem}
+.hero .fx{position:absolute;font-style:normal;font-size:2.2rem;opacity:.9;animation:floaty 5s ease-in-out infinite;pointer-events:none}
+.hero .fx1{right:28px;top:22px}
+.hero .fx2{right:120px;bottom:24px;font-size:1.7rem;animation-delay:-1.5s}
+.hero .fx3{right:210px;top:34px;font-size:1.4rem;animation-delay:-3s}
+.steps div{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+/* --- Thẻ bài học --- */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.lcard{position:relative;overflow:hidden;background:#fff;border:1px solid var(--bd);border-radius:20px;padding:1.1rem 1rem 1rem;box-shadow:0 8px 22px rgba(17,100,234,.09);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:.7rem}
+.lcard::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:var(--g)}
+.lcard:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(17,100,234,.18)}
+.lhead{display:flex;gap:.7rem;align-items:center;margin-top:.2rem}
+.lico{flex:none;width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:1.7rem;background:var(--g);box-shadow:0 8px 18px rgba(17,100,234,.28)}
+.lhead b{display:block;font-family:'Baloo 2','Nunito',sans-serif;font-size:1.12rem;line-height:1.2;color:var(--ink);margin:0;overflow-wrap:anywhere}
+.lhead small{color:var(--mut);font-weight:700;font-size:.8rem}
+.lmeta{display:flex;flex-wrap:wrap;gap:.35rem}
+.lmeta span{background:#eef5ff;color:#1b4fb0;border-radius:999px;padding:.15rem .65rem;font-size:.78rem;font-weight:800}
+.lact{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:auto}
+.lact .pri{flex:1 1 100%;padding:.55rem;font-size:.95rem}
+.lact .sm{flex:1}
+.empty.big{grid-column:1/-1;padding:2.4rem 1rem}
+.empty .eico{font-size:3.2rem;animation:floaty 4s ease-in-out infinite}
+.empty p{margin:.3rem 0 1rem;font-weight:700}
+
+/* --- Vào phòng --- */
+.joincard{background:linear-gradient(135deg,#fff,#eef6ff)}
+.joincard input[type=text]{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.4rem;letter-spacing:.35rem;text-align:center;font-weight:800;border-radius:16px;border-width:2px}
+.joincard .row button{padding:.7rem 1.4rem;border-radius:14px}
+
+/* --- Game: nền & thanh trên --- */
+.bg-orbs{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-orbs i{position:absolute;border-radius:50%;filter:blur(60px);animation:drift 14s ease-in-out infinite}
+.bg-orbs i:nth-child(1){width:340px;height:340px;left:-80px;top:20%;background:#1164ea;opacity:.5}
+.bg-orbs i:nth-child(2){width:300px;height:300px;right:-60px;top:-60px;background:#22d3ee;opacity:.32;animation-delay:-5s}
+.bg-orbs i:nth-child(3){width:280px;height:280px;right:25%;bottom:-100px;background:#7c3aed;opacity:.32;animation-delay:-9s}
+#play>.bar,#play>#pbar,#play>#tbar,#play>#pstage{position:relative;z-index:1}
+#play .bar{background:rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#play .bar button{border-radius:999px}
+#pProg::before{content:'🧩 '}
+#pScore::before{content:'⭐ '}
+#play .bar span#pTime{font-size:1.05rem;padding:.2rem .9rem}
+#pbar{height:6px}
+#tbar{height:9px;background:rgba(255,255,255,.1)}
+#tbarFill{border-radius:0 8px 8px 0;box-shadow:0 0 14px rgba(250,204,21,.7)}
+#tbar.warn #tbarFill{box-shadow:0 0 16px rgba(239,68,68,.9)}
+
+/* --- Game: câu hỏi --- */
+#pq{position:relative;padding-top:2.4rem;border-radius:26px;animation:qIn .45s ease;box-shadow:0 18px 40px rgba(0,0,0,.45),inset 0 0 0 3px rgba(17,100,234,.14),inset 0 -10px 0 rgba(17,100,234,.08)}
+#pq .qno{position:absolute;top:.7rem;left:1rem;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#1164ea,#38bdf8);padding:.18rem .8rem;border-radius:999px;box-shadow:0 4px 10px rgba(17,100,234,.4)}
+#pq .qt{display:block;max-width:100%}
+
+/* --- Game: đáp án --- */
+.pa{border-radius:26px;border-width:3px;box-shadow:0 14px 28px rgba(0,0,0,.38),inset 0 -9px 0 rgba(0,0,0,.16);animation:paIn .45s backwards}
+.pa:nth-child(2){animation-delay:.07s}.pa:nth-child(3){animation-delay:.14s}.pa:nth-child(4){animation-delay:.21s}
+.pa:hover{transform:translateY(-3px)}
+.pa .k b{width:2.7rem;height:2.7rem;font-size:1.45rem;box-shadow:0 5px 12px rgba(0,0,0,.3)}
+.pa .fill{height:12px;border-radius:0 8px 8px 0}
+.pa.right{animation:glow 1s ease-in-out infinite}
+.pa.wrong{animation:shake .45s}
+.camring{box-shadow:0 0 0 4px rgba(4,18,46,.85),0 0 36px rgba(56,189,248,.65),0 12px 28px rgba(0,0,0,.5)}
+
+/* --- Game: màn bắt đầu --- */
+.headicon{font-size:5.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(147,197,253,.3);width:150px;height:150px;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 60px rgba(56,189,248,.35)}
+#cInfo{background:rgba(255,255,255,.08);border:1px solid rgba(147,197,253,.25);border-radius:18px;padding:.8rem 1.2rem;opacity:1!important}
+.dirs{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;max-width:560px}
+.dirs span{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:999px;font-weight:800;font-size:.9rem;background:rgba(255,255,255,.1);border:2px solid var(--c)}
+.dirs b{width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#fff;font-size:.8rem;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+#cBtn{animation:btnPulse 2s ease-in-out infinite;border-radius:999px;padding:.9rem 2.6rem!important}
+
+/* --- Game: kết quả --- */
+.ring{position:relative;width:140px;height:140px;border-radius:50%;margin:.4rem auto .6rem;display:grid;place-items:center;--p:0%;background:conic-gradient(#34d399 var(--p),rgba(255,255,255,.14) 0);box-shadow:0 0 40px rgba(52,211,153,.35)}
+.ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:#0a2150}
+.ring b{position:relative;font-family:'Baloo 2','Nunito',sans-serif;font-size:2.1rem}
+#confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:11}
+#confetti i{position:absolute;top:-30px;border-radius:2px;animation:fall linear forwards}
+.rstats div{border-radius:18px}
+.ri{border-radius:16px}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1>🙂↔️ Lắc đầu chọn đáp án</h1>
+  <h1><span class="brand-ico">🙂</span><span>Lắc đầu <em>chọn đáp án</em></span></h1>
   <button onclick="go('home')">🏠 Bài học</button>
   <button onclick="go('bank')">📚 Kho câu hỏi</button>
   <button class="pri" onclick="newLesson()">➕ Tạo bài học mới</button>
@@ -90,13 +310,25 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
 
 <!-- HOME -->
 <section id="v-home">
-  <div class="card">
-    <h2>Bài học của tôi</h2>
-    <div id="lessonList"></div>
+  <div class="hero">
+    <i class="fx fx1">🎓</i><i class="fx fx2">⭐</i><i class="fx fx3">✏️</i>
+    <span class="eyebrow">✨ Học mà chơi · Chơi mà học</span>
+    <h2>Học vui bằng cách nghiêng đầu <span class="wob">🙂</span></h2>
+    <p>Soạn câu hỏi, tạo phòng, rồi để học sinh nghiêng đầu về phía đáp án đúng.</p>
+    <div class="hstats"><span><b id="hsL">0</b>bài học</span><span><b id="hsT">0</b>câu hỏi trong bài</span><span><b id="hsQ">0</b>câu trong kho</span></div>
+    <div class="steps">
+      <div><b>1</b><span>Soạn bài &amp; kho câu hỏi</span></div>
+      <div><b>2</b><span>Tạo mã phòng</span></div>
+      <div><b>3</b><span>Nghiêng đầu để chọn</span></div>
+    </div>
   </div>
   <div class="card">
-    <h3>Vào phòng bằng mã</h3>
-    <div class="row"><input type="text" id="joinCode" placeholder="Nhập mã phòng, ví dụ AB12CD" style="max-width:280px;text-transform:uppercase">
+    <div class="sechead"><h2>📖 Bài học của tôi</h2><div class="row"><button class="sm" onclick="pickJson('home')">📥 Nhập bài học (JSON)</button><button class="sm pri" onclick="newLesson()">➕ Tạo mới</button></div></div>
+    <div id="lessonList" class="lgrid"></div>
+  </div>
+  <div class="card joincard">
+    <h3>🚪 Vào phòng bằng mã</h3>
+    <div class="row"><input type="text" id="joinCode" placeholder="Nhập mã phòng" style="max-width:280px;text-transform:uppercase">
     <button class="pri" onclick="joinRoom()">Vào chơi</button></div>
     <small class="cap">Mã phòng chỉ tìm được trên cùng trình duyệt đã tạo phòng. Muốn chơi trên máy khác, hãy dùng liên kết đầy đủ (có kèm dữ liệu) khi bấm "Sao chép liên kết".</small>
   </div>
@@ -125,6 +357,10 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
   <input type="range" id="f-ang" min="15" max="60" value="45" style="width:100%">
   <small class="cap">Đầu thẳng hoặc nghiêng nhẹ (dưới ngưỡng) thì CHƯA chọn. Phải nghiêng đủ góc về phía đáp án mới chọn (mặc định 45°).</small>
 
+  <label class="fl">⏱ Thời gian làm mỗi câu: <span id="f-timev">20 giây</span></label>
+  <input type="range" id="f-time" min="0" max="120" step="5" value="20" style="width:100%">
+  <small class="cap">Có đồng hồ đếm ngược kèm tiếng tích tắc. Hết giờ mà chưa chọn thì tính là "chưa làm" và tự chuyển câu. Kéo về 0 = không giới hạn thời gian.</small>
+
   <label class="fl">Thời gian tự động chuyển câu: <span id="f-nxtv">3</span> giây</label>
   <input type="range" id="f-nxt" min="1" max="10" value="3" style="width:100%">
 
@@ -140,10 +376,10 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
   <div style="margin-top:1.2rem">
     <h3>Câu hỏi (<span id="qcount">0</span>)</h3>
     <div class="row" style="margin-bottom:.8rem">
-      <button class="grad" style="background:linear-gradient(135deg,#a855f7,#6366f1)" onclick="alert('Tính năng tạo bằng AI cần máy chủ (backend). File HTML đơn lẻ chưa hỗ trợ.')">🤖 Tạo bằng AI</button>
-      <button class="grad" style="background:linear-gradient(135deg,#43a047,#1b5e20)" onclick="openImport()">📥 Nhập nhanh (CSV/văn bản)</button>
-      <button class="grad" style="background:linear-gradient(135deg,#f59e0b,#d97706)" onclick="openPick()">📚 Từ kho</button>
-      <button class="grad" style="background:#6c757d" onclick="openQ(null,'lesson')">✏️ Nhập thủ công</button>
+      <button class="grad" style="background:linear-gradient(135deg,#0891b2,#22d3ee)" onclick="openImport()">📥 Nhập nhanh (CSV/văn bản)</button>
+      <button class="grad" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)" onclick="pickJson('lesson')">🧾 Nhập JSON</button>
+      <button class="grad" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)" onclick="openPick()">📚 Từ kho</button>
+      <button class="grad" style="background:linear-gradient(135deg,#475569,#64748b)" onclick="openQ(null,'lesson')">✏️ Nhập thủ công</button>
     </div>
     <div id="lessonQs"></div>
   </div>
@@ -158,6 +394,7 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
   </div>
 
   <div class="row" style="justify-content:flex-end;margin-top:1.2rem">
+    <button onclick="exportCurLesson()">⬇️ Xuất JSON</button>
     <button onclick="go('home')">Hủy</button>
     <button class="pri" onclick="saveLesson()">Lưu bài học</button>
   </div>
@@ -172,6 +409,7 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
     <input type="text" id="bankSearch" placeholder="Tìm câu hỏi…" oninput="renderBank()" style="flex:1">
     <button class="pri" onclick="openQ(null,'bank')">➕ Thêm câu hỏi</button>
     <button onclick="openImport('bank')">📥 Nhập nhanh</button>
+    <button onclick="pickJson('bank')">📥 Nhập JSON</button>
     <button onclick="exportBank()">⬇️ Xuất JSON</button>
   </div>
   <div id="bankList"></div>
@@ -210,9 +448,9 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
 <!-- Modal: import -->
 <div class="modal" id="m-imp"><div class="box">
   <h3>📥 Nhập nhanh</h3>
-  <p class="cap">Mỗi dòng một câu, ngăn cách bằng dấu <b>|</b> hoặc tab (dán từ Excel được):<br><code>Câu hỏi | Đáp án A | Đáp án B | [Đáp án C | Đáp án D |] Đáp án đúng (A/B/C/D)</code></p>
+  <p class="cap">Mỗi dòng một câu, ngăn cách bằng dấu <b>|</b> hoặc tab (dán từ Excel được):<br><code>Câu hỏi | Đáp án A | Đáp án B | [Đáp án C | Đáp án D |] Đáp án đúng (A/B/C/D)</code><br>Hoặc dán / chọn file <b>JSON</b> (đúng định dạng khi bấm "Xuất JSON").</p>
   <textarea id="imp-text" style="min-height:160px" placeholder="2 + 3 bằng mấy? | 4 | 5 | B"></textarea>
-  <div class="row" style="margin:.5rem 0"><input type="file" id="imp-file" accept=".csv,.txt,.tsv"></div>
+  <div class="row" style="margin:.5rem 0"><input type="file" id="imp-file" accept=".csv,.txt,.tsv,.json"></div>
   <div class="row" style="justify-content:flex-end">
     <button onclick="closeM('m-imp')">Hủy</button>
     <button class="pri" onclick="doImport()">Nhập</button>
@@ -232,32 +470,47 @@ button.sm{padding:.25rem .6rem;font-size:.85rem}
   </div>
 </div></div>
 
+<input type="file" id="jsonPick" accept=".json,application/json" class="hide">
+
 <!-- PLAY PAGE -->
 <div id="play" class="hide">
+  <div class="bg-orbs"><i></i><i></i><i></i></div>
   <div class="bar">
     <b id="pTitle"></b>
     <span id="pProg"></span>
     <span id="pScore"></span>
+    <span id="pTime"></span>
     <span class="sp"></span>
+    <button class="sm" id="pMute" title="Bật/tắt âm thanh" onclick="toggleMute()">🔊</button>
     <button class="sm" id="pInvert" title="Đảo trái/phải nếu camera nhận ngược" onclick="toggleInvert()">⇄ Đảo hướng</button>
-    <button class="sm" id="pStop" style="background:#e67e22;border-color:#e67e22;color:#fff;font-weight:700" onclick="stopGame()">⏹ Dừng &amp; tính điểm</button>
+    <button class="sm stop" id="pStop" onclick="stopGame()">⏹ Dừng &amp; tính điểm</button>
     <button class="sm" onclick="exitPlay()">Thoát</button>
   </div>
+  <div id="pbar"><i id="pbarFill"></i></div>
+  <div id="tbar"><i id="tbarFill"></i></div>
   <div id="pstage">
     <div id="pq"></div>
-    <div id="pans"></div>
+    <div id="pwrap">
+      <div id="pans" class="n2"></div>
+      <div id="camBox" class="hide">
+        <div class="camring"><video id="cam" playsinline muted></video></div>
+        <div id="gauge"></div>
+      </div>
+    </div>
   </div>
-  <video id="cam" class="hide" playsinline muted></video>
-  <div id="gauge" class="hide"></div>
+  <div id="confetti"></div>
   <div id="center">
+    <div class="headicon" aria-hidden="true">🙂</div>
     <h1 id="cTitle">Bắt đầu làm bài!</h1>
-    <p id="cInfo" style="max-width:520px;opacity:.85"></p>
+    <p id="cInfo" style="max-width:520px"></p>
+    <div id="cDirs" class="dirs"></div>
     <button class="pri" id="cBtn" style="font-size:1.3rem;padding:.8rem 2rem" onclick="startGame()">▶ Bắt đầu làm bài!</button>
     <small id="cNote" style="opacity:.7"></small>
   </div>
   <div id="result" class="hide">
     <div class="rbox">
       <h2 id="rTitle" style="text-align:center;margin:0 0 .3rem"></h2>
+      <div class="ring" id="rRing"><b>0%</b></div>
       <p id="rSub" style="text-align:center;margin:0 0 .8rem;opacity:.85"></p>
       <div class="rstats" id="rStats"></div>
       <div id="rList"></div>
@@ -285,6 +538,70 @@ let bank = load('htq_bank', []);
 let lessons = load('htq_lessons', []);
 let rooms = load('htq_rooms', {});
 const KEYS = ['A','B','C','D'];
+const timeLabel = v => (+v === 0 ? 'Không giới hạn' : v + ' giây');
+
+/* ===================== Âm thanh (tạo bằng WebAudio, không cần file) ===================== */
+let AC = null, muted = false, noiseBuf = null, tickN = 0;
+function audio(){
+  if (!AC){ try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch { AC = null; } }
+  if (AC && AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(f, t0, d, type = 'sine', vol = .25, f2){
+  const a = audio(); if (!a || muted) return;
+  const T = a.currentTime + t0, o = a.createOscillator(), g = a.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, T);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, T + d);
+  g.gain.setValueAtTime(.0001, T);
+  g.gain.exponentialRampToValueAtTime(vol, T + .012);
+  g.gain.exponentialRampToValueAtTime(.0001, T + d);
+  o.connect(g); g.connect(a.destination);
+  o.start(T); o.stop(T + d + .05);
+}
+function noiseBuffer(a){
+  if (!noiseBuf){
+    noiseBuf = a.createBuffer(1, a.sampleRate, a.sampleRate);
+    const d = noiseBuf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  return noiseBuf;
+}
+function clap(t0, vol){
+  const a = audio(); if (!a || muted) return;
+  const T = a.currentTime + t0, s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+  s.buffer = noiseBuffer(a);
+  f.type = 'bandpass'; f.frequency.value = 1200 + Math.random() * 3800; f.Q.value = .8;
+  g.gain.setValueAtTime(vol, T);
+  g.gain.exponentialRampToValueAtTime(.0001, T + .06 + Math.random() * .07);
+  s.connect(f); f.connect(g); g.connect(a.destination);
+  s.start(T, Math.random() * .7, .2);
+}
+let okAudio = null;
+function sfxOk(){
+  if (muted) return;
+  if (!okAudio) okAudio = new Audio('.music/dung.mp3');
+  okAudio.currentTime = 0;
+  okAudio.play().catch(() => {});
+}
+function sfxBad(){ tone(240, 0, .32, 'sawtooth', .2, 120); tone(170, .2, .45, 'sawtooth', .2, 70); }
+function sfxTick(urgent){
+  const hi = (tickN++ % 2 === 0);
+  tone(hi ? 1500 : 1000, 0, .07, 'square', urgent ? .13 : .07);
+  clap(0, urgent ? .35 : .18);
+}
+let cheerAudio = null;
+function sfxCheer(){
+  if (muted) return;
+  if (!cheerAudio) cheerAudio = new Audio('.music/hoanho.mp3');
+  cheerAudio.currentTime = 0;
+  cheerAudio.play().catch(() => {});
+}
+function toggleMute(){
+  muted = !muted;
+  $('pMute').textContent = muted ? '🔇' : '🔊';
+  if (muted && 'speechSynthesis' in window) speechSynthesis.cancel();
+}
+window.toggleMute = toggleMute;
 
 /* ===================== Điều hướng ===================== */
 function go(v){
@@ -295,18 +612,30 @@ function go(v){
 window.go = go;
 
 /* ===================== Trang chủ ===================== */
+const GRADS = ['#1164ea,#38bdf8','#7c3aed,#a78bfa','#059669,#34d399','#ea580c,#fbbf24','#db2777,#f472b6','#0891b2,#22d3ee'];
+function subjEmoji(s){
+  s = (s || '').toLowerCase();
+  if (/toán/.test(s)) return '🧮'; if (/anh|english/.test(s)) return '🔤'; if (/văn|việt/.test(s)) return '📖';
+  if (/lý|hóa|sinh|khoa/.test(s)) return '🔬'; if (/sử|địa/.test(s)) return '🌍'; if (/nhạc/.test(s)) return '🎵';
+  if (/tin/.test(s)) return '💻'; if (/mỹ|họa/.test(s)) return '🎨'; return '📚';
+}
 function renderHome(){
-  $('lessonList').innerHTML = lessons.length ? lessons.map(l => `
-    <div class="qitem">
-      <b>${esc(l.title)}</b>
-      <span class="pill">${l.mode} đáp án</span><span class="pill">${l.questions.length} câu</span>
-      ${l.level ? `<span class="pill">${esc(l.level)}</span>` : ''}${l.subject ? `<span class="pill">${esc(l.subject)}</span>` : ''}${l.grade ? `<span class="pill">Lớp ${esc(l.grade)}</span>` : ''}
-      <div class="row" style="margin-top:.5rem">
+  const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
+  set('hsL', lessons.length); set('hsQ', bank.length); set('hsT', lessons.reduce((s, l) => s + l.questions.length, 0));
+  $('lessonList').innerHTML = lessons.length ? lessons.map((l, i) => {
+    const sub = [l.subject, l.level, l.grade ? 'Lớp ' + l.grade : ''].filter(Boolean).map(esc).join(' · ') || 'Chưa phân loại';
+    return `
+    <div class="lcard" style="--g:linear-gradient(135deg,${GRADS[i % GRADS.length]})">
+      <div class="lhead"><span class="lico">${subjEmoji(l.subject)}</span><div><b>${esc(l.title)}</b><small>${sub}</small></div></div>
+      <div class="lmeta"><span>🧩 ${l.questions.length} câu</span><span>🎯 ${l.mode} đáp án</span><span>⏱ ${timeLabel(l.time ?? 20)}</span><span>${l.camera ? '📷 Nghiêng đầu' : '👆 Bấm tay'}</span></div>
+      <div class="lact">
         <button class="sm pri" onclick="makeRoom('${l.id}')">🎮 Tạo phòng</button>
-        <button class="sm" onclick="editLesson('${l.id}')">Sửa</button>
-        <button class="sm dng" onclick="delLesson('${l.id}')">Xóa</button>
+        <button class="sm" onclick="editLesson('${l.id}')">✏️ Sửa</button>
+        <button class="sm" title="Xuất bài học ra file JSON" onclick="exportLesson('${l.id}')">⬇️ JSON</button>
+        <button class="sm dng" onclick="delLesson('${l.id}')">🗑</button>
       </div>
-    </div>`).join('') : '<div class="empty">Chưa có bài học nào. Bấm "Tạo bài học mới".</div>';
+    </div>`;
+  }).join('') : '<div class="empty big"><div class="eico">🪄</div><p>Chưa có bài học nào</p><button class="pri" onclick="newLesson()">➕ Tạo bài học đầu tiên</button></div>';
 }
 function delLesson(id){ if(!confirm('Xóa bài học này?')) return; lessons = lessons.filter(l => l.id !== id); save('htq_lessons', lessons); renderHome(); }
 window.delLesson = delLesson;
@@ -314,7 +643,7 @@ window.delLesson = delLesson;
 /* ===================== Soạn bài ===================== */
 let cur = null; // bài đang soạn
 function blankLesson(){
-  return { id: uid(), title:'', mode:2, shuffleQ:false, shuffleA:false, camera:true, tts:false, angle:45, next:3,
+  return { id: uid(), title:'', mode:2, shuffleQ:false, shuffleA:false, camera:true, tts:false, angle:45, next:3, time:20,
     colors:{q:'#ffffff',a:'#29b6f6',b:'#ff7043',c:'#66bb6a',d:'#ab47bc'}, level:'', subject:'', grade:'', questions:[] };
 }
 function newLesson(){ cur = blankLesson(); fillForm(); go('edit'); }
@@ -327,6 +656,8 @@ function fillForm(){
   $('f-shufq').checked = cur.shuffleQ; $('f-shufa').checked = cur.shuffleA;
   $('f-cam').checked = cur.camera; $('f-tts').checked = cur.tts;
   $('f-ang').value = cur.angle; $('f-angv').textContent = cur.angle;
+  const tm = cur.time ?? 20;
+  $('f-time').value = tm; $('f-timev').textContent = timeLabel(tm);
   $('f-nxt').value = cur.next; $('f-nxtv').textContent = cur.next;
   $('c-q').value = cur.colors.q; $('c-a').value = cur.colors.a; $('c-b').value = cur.colors.b;
   $('c-c').value = cur.colors.c; $('c-d').value = cur.colors.d;
@@ -344,13 +675,14 @@ document.querySelectorAll('#f-mode button').forEach(b => b.onclick = () => {
   setMode(m);
 });
 $('f-ang').oninput = e => $('f-angv').textContent = e.target.value;
+$('f-time').oninput = e => $('f-timev').textContent = timeLabel(e.target.value);
 $('f-nxt').oninput = e => $('f-nxtv').textContent = e.target.value;
 
 function readForm(){
   cur.title = $('f-title').value.trim();
   cur.shuffleQ = $('f-shufq').checked; cur.shuffleA = $('f-shufa').checked;
   cur.camera = $('f-cam').checked; cur.tts = $('f-tts').checked;
-  cur.angle = +$('f-ang').value; cur.next = +$('f-nxt').value;
+  cur.angle = +$('f-ang').value; cur.next = +$('f-nxt').value; cur.time = +$('f-time').value;
   cur.colors = { q:$('c-q').value, a:$('c-a').value, b:$('c-b').value, c:$('c-c').value, d:$('c-d').value };
   cur.level = $('f-level').value; cur.subject = $('f-subj').value.trim(); cur.grade = $('f-grade').value.trim();
 }
@@ -472,6 +804,11 @@ let impTo = 'lesson';
 function openImport(where){ impTo = where || 'lesson'; $('imp-text').value = ''; $('imp-file').value = ''; openM('m-imp'); }
 $('imp-file').onchange = e => { const f = e.target.files[0]; if (f) f.text().then(t => $('imp-text').value = t); };
 function doImport(){
+  const raw = $('imp-text').value.trim();
+  if (/^[\[{]/.test(raw)){
+    let data; try { data = JSON.parse(raw); } catch { return alert('JSON không hợp lệ. Hãy kiểm tra lại file.'); }
+    const r = parseQs(data); return finishImport(r.out, r.bad);
+  }
   const lines = $('imp-text').value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
   const out = []; let bad = 0;
   for (const line of lines){
@@ -484,13 +821,77 @@ function doImport(){
     if (ans.length < 2 || correct >= ans.length){ bad++; continue; }
     out.push({ id: uid(), text: p[0], answers: ans, correct });
   }
-  if (!out.length) return alert('Không đọc được dòng nào. Kiểm tra lại định dạng.');
+  finishImport(out, bad);
+}
+function finishImport(out, bad){
+  if (!out.length) return alert('Không đọc được câu nào. Kiểm tra lại định dạng.');
   if (impTo === 'bank'){ bank.push(...out); save('htq_bank', bank); renderBank(); }
   else { cur.questions.push(...out); bank.push(...out.map(q => ({ ...q, id: uid() }))); save('htq_bank', bank); if (out.some(q => q.answers.length > 2)) setMode(4); renderLessonQs(); }
   closeM('m-imp');
   alert(`Đã nhập ${out.length} câu${bad ? `, bỏ qua ${bad} dòng lỗi` : ''}.`);
 }
 window.openImport = openImport; window.doImport = doImport;
+
+/* ===================== JSON: nhập / xuất ===================== */
+function normQ(r){
+  if (!r || typeof r !== 'object') return null;
+  const text = String(r.text ?? r.question ?? r.q ?? '').trim();
+  let ans = r.answers ?? r.options ?? r.choices;
+  if (!Array.isArray(ans)) return null;
+  ans = ans.map(a => String(a ?? '').trim()).filter(Boolean).slice(0, 4);
+  if (!text || ans.length < 2) return null;
+  let c = r.correct ?? r.answer ?? 0;
+  if (typeof c === 'string'){
+    const u = c.trim().toUpperCase();
+    if (/^[A-D]$/.test(u)) c = KEYS.indexOf(u);
+    else { const k = ans.findIndex(a => a === c.trim()); c = k >= 0 ? k : 0; }
+  }
+  c = +c; if (!(c >= 0 && c < ans.length)) c = 0;
+  return { id: uid(), text, answers: ans, correct: c };
+}
+function parseQs(data){
+  const arr = Array.isArray(data) ? data : ((data && (data.questions || data.bank)) || []);
+  const out = (Array.isArray(arr) ? arr : []).map(normQ).filter(Boolean);
+  return { out, bad: (Array.isArray(arr) ? arr.length : 0) - out.length };
+}
+function download(name, obj){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(obj, null, 2)], {type:'application/json'}));
+  a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+const slug = s => (s || 'bai-hoc').replace(/[\\\/:*?"<>|]+/g, '').trim().replace(/\s+/g, '-') || 'bai-hoc';
+function lessonOut(l){ const o = JSON.parse(JSON.stringify(l)); delete o.id; return o; }
+function exportLesson(id){ const l = lessons.find(x => x.id === id); if (l) download(slug(l.title) + '.json', lessonOut(l)); }
+function exportCurLesson(){ readForm(); download(slug(cur.title) + '.json', lessonOut(cur)); }
+let jsonTo = 'bank';
+function pickJson(where){ jsonTo = where; const f = $('jsonPick'); f.value = ''; f.click(); }
+$('jsonPick').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t => {
+    let data; try { data = JSON.parse(t); } catch { return alert('File JSON không hợp lệ.'); }
+    importJson(data, f.name.replace(/\.json$/i, ''));
+  });
+};
+function importJson(data, name){
+  const r = parseQs(data);
+  if (!r.out.length) return alert('Không tìm thấy câu hỏi hợp lệ trong file JSON.');
+  const note = `Đã nhập ${r.out.length} câu${r.bad ? `, bỏ qua ${r.bad} câu lỗi` : ''}.`;
+  if (jsonTo === 'bank'){
+    bank.push(...r.out); save('htq_bank', bank); renderBank(); alert(note);
+  } else if (jsonTo === 'lesson'){
+    cur.questions.push(...r.out); bank.push(...r.out.map(q => ({ ...q, id: uid() }))); save('htq_bank', bank);
+    if (r.out.some(q => q.answers.length > 2)) setMode(4);
+    renderLessonQs(); alert(note);
+  } else {
+    const isObj = data && !Array.isArray(data), b = blankLesson();
+    const l = { ...b, ...(isObj ? data : {}), id: uid(), title: (isObj && data.title) || name || 'Bài học nhập vào', questions: r.out };
+    l.colors = { ...b.colors, ...((isObj && data.colors) || {}) };
+    l.mode = (r.out.some(q => q.answers.length > 2) || +l.mode === 4) ? 4 : 2;
+    lessons.push(l); save('htq_lessons', lessons); renderHome(); alert(note);
+  }
+}
+window.pickJson = pickJson; window.exportLesson = exportLesson; window.exportCurLesson = exportCurLesson;
 
 /* ===================== Mã phòng ===================== */
 let roomCur = null;
@@ -533,8 +934,24 @@ let order = [], qi = 0, score = 0, locked = false;
 let cam = false, landmarker = null, rafId = null, stream = null;
 let invert = false, baseRatio = null, calib = [];
 let zone = -1, zoneSince = 0, lastTs = 0, nextTimer = null, running = false;
+let tInt = null, tLastSec = -1, gameStart = 0;
 const HOLD_MS = 700;
 
+function dirsHtml(){
+  const c = L.colors, it = [['A','👈','Nghiêng trái',c.a], ['B','👉','Nghiêng phải',c.b]];
+  if (L.mode === 4) it.push(['C','⬆️','Ngửa đầu',c.c], ['D','⬇️','Cúi đầu',c.d]);
+  return it.map(([k, e, t, col]) => `<span style="--c:${col}"><b>${k}</b>${e} ${L.camera ? t : 'Bấm ô ' + k}</span>`).join('');
+}
+function confetti(){
+  const box = $('confetti'); box.innerHTML = '';
+  const cols = ['#1164ea','#38bdf8','#22d3ee','#facc15','#f97316','#ef4444','#a78bfa','#34d399'];
+  for (let i = 0; i < 70; i++){
+    const s = document.createElement('i');
+    s.style.cssText = `left:${Math.random() * 100}%;background:${cols[i % cols.length]};animation-delay:${Math.random() * 1.5}s;animation-duration:${2.5 + Math.random() * 2.5}s;width:${6 + Math.random() * 8}px;height:${10 + Math.random() * 10}px;--r:${Math.random() * 720}deg`;
+    box.appendChild(s);
+  }
+  setTimeout(() => { box.innerHTML = ''; }, 7000);
+}
 function initPlayPage(){
   const code = (new URLSearchParams(location.search).get('room') || '').toUpperCase();
   if (!code) return false;
@@ -551,8 +968,10 @@ function initPlayPage(){
     return true;
   }
   L = lesson;
+  const T = L.time ?? 20;
   $('pTitle').textContent = L.title + ' · Phòng ' + code;
-  $('cInfo').textContent = `${L.questions.length} câu · ` + (L.camera ? `Nghiêng đầu ≥ ${L.angle}° về phía đáp án để chọn. Đầu thẳng hoặc nghiêng nhẹ thì chưa chọn.` : 'Bấm vào đáp án để chọn.');
+  $('cInfo').textContent = `${L.questions.length} câu` + (T ? ` · ⏱ ${T} giây/câu` : '') + ' · ' + (L.camera ? `Nghiêng đầu ≥ ${L.angle}° về phía đáp án để chọn. Đầu thẳng hoặc nghiêng nhẹ thì chưa chọn.` : 'Bấm vào đáp án để chọn.');
+  $('cDirs').innerHTML = dirsHtml();
   $('cNote').textContent = L.camera ? 'Trình duyệt sẽ hỏi quyền dùng camera. Hình ảnh chỉ xử lý trên máy của bạn.' : '';
   return true;
 }
@@ -560,6 +979,7 @@ function initPlayPage(){
 function shuffle(a){ for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 async function startGame(){
+  audio();   // mở âm thanh ngay khi người dùng bấm nút
   $('cBtn').disabled = true;
   score = 0; qi = 0;
   order = L.questions.map(q => {
@@ -580,9 +1000,11 @@ async function startGame(){
     await sleep(2500);
     if (calib.length) baseRatio = calib.reduce((a, b) => a + b, 0) / calib.length;
   }
+  $('pwrap').classList.toggle('has-cam', !!cam);
   $('center').classList.add('hide');
   $('result').classList.add('hide');
   running = true;
+  gameStart = performance.now();
   showQ();
 }
 window.startGame = startGame;
@@ -591,8 +1013,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function startCamera(){
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 640, height: 480 } });
-    const v = $('cam'); v.srcObject = stream; v.classList.remove('hide'); await v.play();
-    $('gauge').classList.remove('hide');
+    const v = $('cam'); v.srcObject = stream; $('camBox').classList.remove('hide'); await v.play();
     let tries = 0;
     while (!window.__mp && tries++ < 100) await sleep(100);
     if (!window.__mp) throw new Error('mediapipe');
@@ -608,7 +1029,7 @@ async function startCamera(){
 function stopCamera(){
   cancelAnimationFrame(rafId);
   if (stream) stream.getTracks().forEach(t => t.stop());
-  stream = null; $('cam').classList.add('hide'); $('gauge').classList.add('hide');
+  stream = null; $('camBox').classList.add('hide'); $('pwrap').classList.remove('has-cam');
 }
 
 /* Tính góc nghiêng đầu (roll) từ 2 khóe mắt ngoài: 33 (phải) & 263 (trái) */
@@ -621,7 +1042,7 @@ function loop(){
   lastTs = now;
   const res = landmarker.detectForVideo(v, now);
   const lm = res.faceLandmarks && res.faceLandmarks[0];
-  if (!lm){ $('gauge').textContent = 'Không thấy khuôn mặt'; setZone(-1); return; }
+  if (!lm){ $('gauge').classList.remove('on'); $('gauge').textContent = 'Không thấy mặt'; setZone(-1); return; }
   const W = v.videoWidth, H = v.videoHeight;
   const r = lm[33], l = lm[263];
   let roll = Math.atan2((l.y - r.y) * H, (l.x - r.x) * W) * 180 / Math.PI;   // + = nghiêng về vai TRÁI của người chơi
@@ -639,7 +1060,8 @@ function loop(){
     if (dp <= -0.10) z = 2;               // ngửa  -> C
     else if (dp >= 0.10) z = 3;           // cúi   -> D
   }
-  $('gauge').innerHTML = `Nghiêng: <b>${roll.toFixed(0)}°</b> / cần ${TH}°` + (L.mode === 4 ? `<br>Ngửa/cúi: ${(dp * 100).toFixed(0)}` : '') + `<br>${z < 0 ? 'Chưa chọn (đầu thẳng)' : 'Đang hướng: ' + KEYS[z]}`;
+  $('gauge').classList.toggle('on', z >= 0);
+  $('gauge').innerHTML = `${roll.toFixed(0)}° / ${TH}°` + (L.mode === 4 ? ` · ↕${(dp * 100).toFixed(0)}` : '') + (z >= 0 ? ` · <b>${KEYS[z]}</b>` : '');
   setZone(z);
 }
 
@@ -647,49 +1069,100 @@ function setZone(z){
   if (locked || !$('pans').children.length) return;
   const now = performance.now();
   if (z !== zone){ zone = z; zoneSince = now; }
+  const pct = zone >= 0 ? Math.min(100, (now - zoneSince) / HOLD_MS * 100) : 0;
+  const cb = $('camBox');
+  cb.style.setProperty('--p', pct + '%');
+  cb.style.setProperty('--rc', zone >= 0 ? ([L.colors.a, L.colors.b, L.colors.c, L.colors.d][zone] || '#38bdf8') : '#38bdf8');
   [...$('pans').children].forEach((el, i) => {
     const on = i === zone;
     el.classList.toggle('hot', on);
-    el.querySelector('.fill').style.width = on ? Math.min(100, (now - zoneSince) / HOLD_MS * 100) + '%' : '0';
+    el.querySelector('.fill').style.width = on ? pct + '%' : '0';
   });
   if (zone >= 0 && now - zoneSince >= HOLD_MS) choose(zone);
+}
+
+/* ---------- Đồng hồ đếm ngược + tiếng tích tắc ---------- */
+function stopTimer(){ clearInterval(tInt); tInt = null; }
+function resetTimerUI(){
+  $('pTime').textContent = ''; $('pTime').classList.remove('warn');
+  $('tbar').classList.remove('warn'); $('tbarFill').style.width = '0';
+}
+function startTimer(){
+  stopTimer(); resetTimerUI();
+  const T = L.time ?? 20;
+  if (!T) return;
+  const t0 = performance.now();
+  tLastSec = -1; tickN = 0;
+  const upd = () => {
+    const left = Math.max(0, T - (performance.now() - t0) / 1000);
+    const sec = Math.ceil(left);
+    const urgent = sec <= 5;
+    $('pTime').textContent = '⏱ ' + sec + 's';
+    $('pTime').classList.toggle('warn', urgent);
+    $('tbar').classList.toggle('warn', urgent);
+    $('tbarFill').style.width = (left / T * 100) + '%';
+    if (sec !== tLastSec){
+      if (tLastSec !== -1 && sec > 0) sfxTick(urgent);
+      tLastSec = sec;
+    }
+    if (left <= 0){ stopTimer(); timeUp(); }
+  };
+  upd();
+  tInt = setInterval(upd, 100);
+}
+function scheduleNext(){
+  nextTimer = setTimeout(() => { qi++; qi < order.length ? showQ() : finish(); }, Math.max(1, L.next) * 1000);
+}
+function timeUp(){
+  if (locked) return;
+  locked = true;
+  const q = order[qi];
+  [...$('pans').children].forEach((e, k) => { e.classList.remove('hot'); if (k === q.correct) e.classList.add('right'); });
+  $('camBox').style.setProperty('--p', '0%');
+  $('pTime').textContent = '⏰ Hết giờ!';
+  sfxBad();
+  scheduleNext();
 }
 
 function showQ(){
   locked = false; zone = -1;
   const q = order[qi];
   $('pProg').textContent = `Câu ${qi + 1}/${order.length}`;
+  $('pbarFill').style.width = (qi / order.length * 100) + '%';
   $('pScore').textContent = `Điểm: ${score}`;
   const c = L.colors;
   $('pq').style.background = c.q;
   const len = q.text.length;
   $('pq').style.fontSize = (len < 40 ? 2.6 : len < 90 ? 2 : len < 160 ? 1.5 : 1.2) + 'rem';
-  $('pq').textContent = q.text;
+  $('pq').innerHTML = `<span class="qno">Câu ${qi + 1}/${order.length}</span><span class="qt">${esc(q.text)}</span>`;
+  $('pq').style.animation = 'none'; void $('pq').offsetWidth; $('pq').style.animation = '';
   const cols = [c.a, c.b, c.c, c.d];
   const n = q.answers.length;
-  $('pans').style.gridTemplateColumns = n === 2 ? '1fr 1fr' : '1fr 1fr';
-  $('pans').style.gridTemplateRows = n === 2 ? '1fr' : '1fr 1fr';
+  $('pans').className = 'n' + n;
+  $('camBox').style.setProperty('--p', '0%');
   $('pans').innerHTML = q.answers.map((a, i) => {
     const fs = a.length < 20 ? 2.2 : a.length < 60 ? 1.6 : 1.2;
-    return `<div class="pa" data-i="${i}" style="background:${cols[i]};font-size:${fs}rem"><span class="k">${KEYS[i]} ${L.mode === 2 ? (i === 0 ? '👈' : '👉') : ['👈', '👉', '⬆️', '⬇️'][i]}</span>${esc(a)}<div class="fill"></div></div>`;
+    return `<div class="pa" data-i="${i}" style="background:${cols[i]};font-size:${fs}rem"><span class="k"><b>${KEYS[i]}</b><i>${L.mode === 2 ? (i === 0 ? '👈' : '👉') : ['👈', '👉', '⬆️', '⬇️'][i]}</i></span><span class="at">${esc(a)}</span><div class="fill"></div></div>`;
   }).join('');
   [...$('pans').children].forEach((el, i) => el.onclick = () => choose(i));
-  if (L.tts && 'speechSynthesis' in window){
+  if (L.tts && !muted && 'speechSynthesis' in window){
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(q.text); u.lang = 'vi-VN'; speechSynthesis.speak(u);
   }
+  startTimer();
 }
 
 function choose(i){
   if (locked) return;
   locked = true;
+  stopTimer();
   const q = order[qi];
   q.picked = i;
   const els = [...$('pans').children];
   els.forEach((e, k) => { e.classList.remove('hot'); if (k === q.correct) e.classList.add('right'); else if (k === i) e.classList.add('wrong'); });
-  if (i === q.correct) score++;
+  if (i === q.correct){ score++; sfxOk(); } else sfxBad();
   $('pScore').textContent = `Điểm: ${score}`;
-  nextTimer = setTimeout(() => { qi++; qi < order.length ? showQ() : finish(); }, Math.max(1, L.next) * 1000);
+  scheduleNext();
 }
 
 function finish(){ showResult(false); }
@@ -700,9 +1173,16 @@ function stopGame(){
   showResult(true);
 }
 
+function fmtTime(ms){
+  const s = Math.round(ms / 1000);
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+}
+
 function showResult(stopped){
   running = false;
+  const elapsed = performance.now() - gameStart;
   clearTimeout(nextTimer); nextTimer = null;
+  stopTimer(); resetTimerUI();
   stopCamera();
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   $('pans').innerHTML = ''; $('pq').textContent = '';
@@ -710,9 +1190,9 @@ function showResult(stopped){
   const ok = order.filter(q => q.picked === q.correct).length;
   const bad = order.filter(q => q.picked >= 0 && q.picked !== q.correct).length;
   const none = total - ok - bad;
-  $('rTitle').textContent = stopped ? 'Đã dừng làm bài' : 'Hoàn thành!';
-  $('rSub').textContent = `Điểm: ${ok}/${total} (${Math.round(ok / Math.max(1, total) * 100)}%)`;
-  $('rStats').innerHTML = `<div><b>${total}</b><small>Tổng câu</small></div><div style="color:#2ecc71"><b>${ok}</b><small>Đúng</small></div><div style="color:#ff6b5e"><b>${bad}</b><small>Sai</small></div><div style="color:#f1c40f"><b>${none}</b><small>Chưa làm</small></div>`;
+  $('rTitle').textContent = stopped ? '⏹ Đã dừng làm bài' : '🎉 Hoàn thành!';
+  $('rSub').textContent = `Điểm: ${ok}/${total} (${Math.round(ok / Math.max(1, total) * 100)}%) · ⏱ ${fmtTime(elapsed)}`;
+  $('rStats').innerHTML = `<div class="t-all"><b>${total}</b><small>Tổng câu</small></div><div class="t-ok"><b>${ok}</b><small>Đúng</small></div><div class="t-bad"><b>${bad}</b><small>Sai</small></div><div class="t-none"><b>${none}</b><small>Chưa làm</small></div>`;
   $('rList').innerHTML = order.map((q, i) => {
     const cls = q.picked < 0 ? 'none' : q.picked === q.correct ? 'ok' : 'bad';
     const st = q.picked < 0 ? '⏳ Chưa làm' : q.picked === q.correct ? '✅ Đúng' : '❌ Sai';
@@ -722,16 +1202,22 @@ function showResult(stopped){
   }).join('');
   $('result').classList.remove('hide');
   $('result').scrollTop = 0;
+  const pct = Math.round(ok / Math.max(1, total) * 100);
+  $('rRing').style.setProperty('--p', pct + '%'); $('rRing').firstElementChild.textContent = pct + '%';
+  if (!stopped) $('rTitle').textContent = pct >= 80 ? '🏆 Xuất sắc!' : pct >= 50 ? '🎉 Làm tốt lắm!' : '💪 Cố gắng lên nhé!';
+  confetti();
+  sfxCheer();   // 👏 tiếng vỗ tay + hoan hô
 }
 
 function playAgain(){
+  $('confetti').innerHTML = '';
   $('result').classList.add('hide');
   $('cBtn').disabled = false;
   startGame();
 }
 window.stopGame = stopGame; window.playAgain = playAgain;
 function toggleInvert(){ invert = !invert; $('pInvert').style.background = invert ? '#ffd' : ''; }
-function exitPlay(){ stopCamera(); location.href = base(); }
+function exitPlay(){ stopTimer(); stopCamera(); location.href = base(); }
 window.toggleInvert = toggleInvert; window.exitPlay = exitPlay;
 
 /* ===================== Khởi động ===================== */
