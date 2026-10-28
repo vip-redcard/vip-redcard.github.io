@@ -8,8 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <title>Lắc đầu chọn đáp án</title>
-<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-<link rel="icon" sizes="32x32" href="https://l.top4top.io/p_3697xu4r61.png">
 <style>
 :root{--pri:#1164ea;--pri2:#38bdf8;--cy:#22d3ee;--ink:#0b2559;--tx:#16305f;--mut:#61769c;--bd:#d7e5fb;--bg:#eef5ff}
 *{box-sizing:border-box}
@@ -293,6 +291,15 @@ header.top{box-shadow:0 6px 24px rgba(17,100,234,.10)}
 .ring b{position:relative;font-family:'Baloo 2','Nunito',sans-serif;font-size:2.1rem}
 #confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:11}
 #confetti i{position:absolute;top:-30px;border-radius:2px;animation:fall linear forwards}
+.qrbox{display:inline-block;position:relative;padding:14px;background:#fff;border-radius:24px;border:2px dashed #9cc3ff;box-shadow:0 14px 34px rgba(17,100,234,.22);margin:.4rem 0}
+.qrbox img{display:block;width:260px;max-width:68vw;height:auto;aspect-ratio:1;border-radius:8px}
+.qrbox img.hide{display:none}
+.qrmsg{width:260px;max-width:68vw;padding:2rem .6rem;color:#b45309;font-weight:800;line-height:1.4}
+.scanbox{position:relative;width:100%;max-width:360px;aspect-ratio:1;margin:.4rem auto;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 14px 34px rgba(17,100,234,.3)}
+.scanbox video{width:100%;height:100%;object-fit:cover;display:block}
+.scanframe{position:absolute;inset:14%;border:3px solid rgba(255,255,255,.9);border-radius:18px;box-shadow:0 0 0 999px rgba(4,18,46,.45)}
+.scanframe i{position:absolute;left:6px;right:6px;top:0;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#22d3ee,transparent);box-shadow:0 0 12px #22d3ee;animation:scanline 2s ease-in-out infinite}
+@keyframes scanline{0%,100%{top:4%}50%{top:94%}}
 .rstats div{border-radius:18px}
 .ri{border-radius:16px}
 </style>
@@ -327,10 +334,8 @@ header.top{box-shadow:0 6px 24px rgba(17,100,234,.10)}
     <div id="lessonList" class="lgrid"></div>
   </div>
   <div class="card joincard">
-    <h3>🚪 Vào phòng bằng mã</h3>
-    <div class="row"><input type="text" id="joinCode" placeholder="Nhập mã phòng" style="max-width:280px;text-transform:uppercase">
-    <button class="pri" onclick="joinRoom()">Vào chơi</button></div>
-    <small class="cap">Mã phòng chỉ tìm được trên cùng trình duyệt đã tạo phòng. Muốn chơi trên máy khác, hãy dùng liên kết đầy đủ (có kèm dữ liệu) khi bấm "Sao chép liên kết".</small>
+    <div class="sechead"><div><h3 style="margin:0">📷 Vào phòng bằng mã QR</h3><small class="cap">Quét mã QR do người tạo phòng hiển thị để vào chơi ngay.</small></div>
+    <button class="pri" onclick="openScan()">📷 Quét QR phòng</button></div>
   </div>
 </section>
 
@@ -460,14 +465,23 @@ header.top{box-shadow:0 6px 24px rgba(17,100,234,.10)}
 <!-- Modal: room -->
 <div class="modal" id="m-room"><div class="box" style="text-align:center">
   <h3>🎮 Phòng đã sẵn sàng</h3>
-  <div class="code" id="roomCode">------</div>
-  <p class="cap" id="roomLink" style="word-break:break-all;margin:.6rem 0"></p>
+  <div class="qrbox"><img id="roomQR" alt="Mã QR vào phòng" width="260" height="260"><div id="qrMsg" class="qrmsg hide"></div></div>
+  <div style="margin-top:.5rem"><span class="pill" id="roomCode">------</span></div>
+  <p class="cap" style="margin:.4rem 0">📱 Quét mã QR bằng điện thoại / máy khác để vào chơi ngay (liên kết đã kèm dữ liệu bài học).</p>
+  <p class="cap hide" id="roomLink"></p>
   <div class="row" style="justify-content:center">
     <button class="pri" onclick="openRoomPage()">▶️ Mở trang chơi</button>
     <button onclick="copyLink(false)">Sao chép liên kết</button>
     <button onclick="copyLink(true)">Sao chép liên kết (kèm dữ liệu, dùng cho máy khác)</button>
     <button onclick="closeM('m-room')">Đóng</button>
   </div>
+</div></div>
+
+<div class="modal" id="m-scan"><div class="box" style="text-align:center">
+  <h3>📷 Quét QR phòng</h3>
+  <div class="scanbox"><video id="scanVideo" playsinline muted></video><div class="scanframe"><i></i></div></div>
+  <p id="scanMsg" class="cap" style="margin:.7rem 0;font-weight:700"></p>
+  <button onclick="closeScan()">Đóng</button>
 </div></div>
 
 <input type="file" id="jsonPick" accept=".json,application/json" class="hide">
@@ -579,7 +593,7 @@ function clap(t0, vol){
 let okAudio = null;
 function sfxOk(){
   if (muted) return;
-  if (!okAudio) okAudio = new Audio('.music/dung.mp3');
+  if (!okAudio) okAudio = new Audio('dung.mp3');
   okAudio.currentTime = 0;
   okAudio.play().catch(() => {});
 }
@@ -592,7 +606,7 @@ function sfxTick(urgent){
 let cheerAudio = null;
 function sfxCheer(){
   if (muted) return;
-  if (!cheerAudio) cheerAudio = new Audio('.music/hoanho.mp3');
+  if (!cheerAudio) cheerAudio = new Audio('hoanho.mp3');
   cheerAudio.currentTime = 0;
   cheerAudio.play().catch(() => {});
 }
@@ -900,6 +914,85 @@ function genCode(){
   let c; do { c = Array.from({length:6}, () => ch[Math.floor(Math.random() * ch.length)]).join(''); } while (rooms[c]);
   return c;
 }
+/* ===================== Quét QR để vào phòng ===================== */
+let scanStream = null, scanRaf = null, scanDet = null, scanOn = false, scanLast = 0;
+function loadJsQR(){
+  if (window.jsQR) return Promise.resolve();
+  return new Promise((res, rej) => {
+    const el = document.createElement('script');
+    el.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
+    el.onload = res; el.onerror = rej; document.head.appendChild(el);
+  });
+}
+async function openScan(){
+  openM('m-scan');
+  const msg = $('scanMsg'); msg.textContent = 'Đang bật camera…';
+  try {
+    scanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } } });
+    const v = $('scanVideo'); v.srcObject = scanStream; await v.play();
+    scanDet = null;
+    if ('BarcodeDetector' in window){ try { scanDet = new BarcodeDetector({ formats: ['qr_code'] }); } catch {} }
+    if (!scanDet) await loadJsQR();
+    msg.textContent = 'Đưa mã QR của phòng vào khung';
+    scanOn = true; scanLoop();
+  } catch (e){
+    console.error(e);
+    msg.textContent = window.jsQR || scanDet ? '⚠️ Không bật được camera. Hãy cho phép dùng camera cho trang này (cần mở bằng https).' : '⚠️ Không bật được camera hoặc không tải được thư viện quét (cần có mạng và quyền camera).';
+    stopScan();
+  }
+}
+function stopScan(){
+  scanOn = false; cancelAnimationFrame(scanRaf);
+  if (scanStream) scanStream.getTracks().forEach(t => t.stop());
+  scanStream = null;
+}
+function closeScan(){ stopScan(); closeM('m-scan'); }
+async function scanLoop(){
+  if (!scanOn) return;
+  scanRaf = requestAnimationFrame(scanLoop);
+  const now = performance.now();
+  if (now - scanLast < 120) return;
+  scanLast = now;
+  const v = $('scanVideo');
+  if (v.readyState < 2 || !v.videoWidth) return;
+  let text = '';
+  try {
+    if (scanDet){
+      const r = await scanDet.detect(v);
+      if (r.length) text = r[0].rawValue;
+    } else if (window.jsQR){
+      const k = Math.min(1, 520 / v.videoWidth), w = Math.round(v.videoWidth * k), h = Math.round(v.videoHeight * k);
+      const c = scanLoop.c || (scanLoop.c = document.createElement('canvas'));
+      c.width = w; c.height = h;
+      const ctx = c.getContext('2d', { willReadFrequently: true });
+      ctx.drawImage(v, 0, 0, w, h);
+      const q = jsQR(ctx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: 'dontInvert' });
+      if (q) text = q.data;
+    }
+  } catch {}
+  if (!text || !scanOn) return;
+  let u = null;
+  try { u = new URL(text); } catch {}
+  if (u && /^(https?|file):$/.test(u.protocol) && u.searchParams.get('room')){
+    scanOn = false;
+    $('scanMsg').textContent = '✅ Đã nhận mã phòng, đang vào…';
+    stopScan();
+    location.href = u.href;
+  } else {
+    $('scanMsg').textContent = '⚠️ Đây không phải mã QR của phòng. Hãy quét lại.';
+  }
+}
+window.openScan = openScan; window.closeScan = closeScan;
+
+/* QR = liên kết "kèm dữ liệu" (giống nút Sao chép liên kết kèm dữ liệu) */
+function showQR(code){
+  const img = $('roomQR'), msg = $('qrMsg'), url = roomUrl(code, true);
+  const fail = t => { img.classList.add('hide'); msg.classList.remove('hide'); msg.textContent = t; };
+  img.classList.remove('hide'); msg.classList.add('hide'); img.removeAttribute('src');
+  if (url.length > 2800) return fail('⚠️ Bài học quá dài để chứa trong mã QR. Hãy bấm "Sao chép liên kết (kèm dữ liệu)" rồi gửi liên kết.');
+  img.onerror = () => fail('⚠️ Không tạo được mã QR (cần có mạng). Hãy dùng nút sao chép liên kết.');
+  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&ecc=L&margin=2&data=' + encodeURIComponent(url);
+}
 function makeRoom(id){
   const l = lessons.find(x => x.id === id);
   const code = genCode();
@@ -908,6 +1001,7 @@ function makeRoom(id){
   roomCur = code;
   $('roomCode').textContent = code;
   $('roomLink').textContent = roomUrl(code, false);
+  showQR(code);
   openM('m-room');
 }
 window.makeRoom = makeRoom;
