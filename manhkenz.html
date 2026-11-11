@@ -1302,7 +1302,7 @@
                             <i class="fa-solid fa-star-half-stroke"></i>
                         </div>
                         <h4 class="feature-title"
-                            style="display:flex; align-items:center; justify-content:center; gap:10px;">Nút tắt Tạo Web App</h4>
+                            style="display:flex; align-items:center; justify-content:center; gap:10px; text-align:center;">Nút tắt Tạo Web App</h4>
                     </div>
 
                     <div class="feature-card" onclick="openZalo()" style="cursor:pointer;">
@@ -1430,6 +1430,15 @@
         const appLink = "fb://profile/" + username;
         const webLink = "https://www.facebook.com/" + username;
         window.location.href = appLink;
+
+        setTimeout(function () {
+            window.location.href = webLink;
+        }, 1500);
+    }
+
+    function openTaoWebApp() {
+        const webLink = "https://www.icloud.com/shortcuts/1891c802c8fe402ea8ae03f1602de384";
+        window.location.href = webLink;
 
         setTimeout(function () {
             window.location.href = webLink;
